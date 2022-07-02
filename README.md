@@ -1,13 +1,13 @@
 # Capstone-M3
 
-## Time
+## Squad
 
-> Letícia de Araújo - PO
-> Bruno Passos - TL
-> André Volcov - SM
-> Durval Moroz - QA
-> Pedro Bernardes - QA
-> David Bassouto - QA
+> - Letícia de Araújo - PO
+> - Bruno Passos - TL
+> - André Volcov - SM
+> - Durval Moroz - QA
+> - Pedro Bernardes - QA
+> - David Bassouto - QA
 
 ## Padrões de Projeto
 
@@ -29,7 +29,7 @@ Vamos usar o padrão de develop/feat/fix para todas as branchs que forem criadas
 
 > ### Considerações
 >
-> - SEMPRE FAÇA UM 'git pull origin develop' ANTES DE COMMITAR E DAR PUSH.
+> - SEMPRE FAÇA UM `git pull origin develop` ANTES DE COMMITAR E DAR PUSH.
 > - Ao terminar uma feature, **NUNCA FAÇA MERGE** nas branches principais. No lugar disso, abra um Pull Request da sua branch para a `develop` pelo GitHub.
 > - Sempre que for trabalhar na mesma branch feature que outra pessoa, use o comando `git pull` antes de commitar e dar push para sincronizar as alterações mais recentes e evitar conflitos.
 > - (IMPORTANTE) Sempre que for começar uma feature nova, certifique-se de que está criando a branch a partir da `develop`.
