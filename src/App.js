@@ -1,9 +1,12 @@
+import AccommodationCard from "./components/AccommodationCard";
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-      </header>
+      
+        <AccommodationCard/>
+      
     </div>
   );
 }
