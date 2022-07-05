@@ -14,13 +14,14 @@ export const BackgroundModal = styled.div`
 `;
 
 export const ModalHeader = styled.div`
-width: 100%;
-height: 30px;
-display: flex;
-flex-direction: row;
-justify-content: space-between;
-align-items: center;
-`
+  width: 100%;
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+`;
 
 export const ModalContainer = styled.div`
   width: 100%;
@@ -37,8 +38,6 @@ export const ModalContainer = styled.div`
   transform: translate(-50%, -50%);
   position: fixed;
 `;
-
-
 
 export const StyledForm = styled.form`
   width: 100%;

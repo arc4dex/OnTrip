@@ -24,9 +24,13 @@ function Login() {
   const handleCloseModal = () => {
     setLoginModal(false);
   };
+
   const formSchema = yup.object().shape({
     email: yup.string().required("Required field").email("Invalid email"),
-    password: yup.string().required("Required field"),
+    password: yup
+      .string()
+      .required("Required field")
+      .min(6, "Password must have at least 6 characters"),
   });
 
   const {
@@ -52,9 +56,9 @@ function Login() {
             <ModalHeader>
               <p>Login</p>
               <Button
-              sx={{width:10}}
+                sx={{ minWidth: "5px" }}
                 onClick={handleCloseModal}
-                variant="contained"
+                variant="text"
                 color="secondary"
               >
                 X
@@ -67,11 +71,13 @@ function Login() {
                 {...register("email")}
                 label="Email"
                 variant="outlined"
+                color="secondary"
               />
               <StyledTextField
                 error={errors.password?.message}
                 helperText={errors.password?.message}
                 {...register("password")}
+                color="secondary"
                 type="password"
                 label="Password"
                 variant="outlined"
