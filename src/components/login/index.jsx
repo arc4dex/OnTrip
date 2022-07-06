@@ -96,6 +96,7 @@ function Login() {
                 type="submit"
                 //   onClick={handleCloseModal}
                 variant="contained"
+                sx={{ width: "100%" }}
               >
                 Login
               </Button>
