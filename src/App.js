@@ -1,8 +1,9 @@
-import SpecialOffers from "./components/SpecialOffers";
+import Routes from "./routes";
+
 function App() {
   return (
     <div className="App">
-        <SpecialOffers/>
+      <Routes />
     </div>
   );
 }
