@@ -13,16 +13,6 @@ export const BackgroundModal = styled.div`
   background: rgba(0, 0, 0, 0.5);
 `;
 
-export const ModalHeader = styled.div`
-  width: 100%;
-  height: 30px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-`;
-
 export const ModalContainer = styled.div`
   width: 100%;
   max-width: 300px;
@@ -30,13 +20,69 @@ export const ModalContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 25px;
   background: white;
   border-radius: 10px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   position: fixed;
+`;
+
+export const ModalHeader = styled.div`
+  width: 100%;
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 20px 10px 10px 10px;
+`;
+
+export const ModalHeaderButton = styled.div`
+  width: 100%;
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+`;
+
+export const ModalHeaderText = styled.div`
+  width: 100%;
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  color: #3d97b4;
+  font-weight: bolder;
+  font-size: 1.5rem;
+`;
+
+export const ModalFooter = styled.div`
+  width: 100%;
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 20px;
+  gap:10px;
+
+  p{
+    color:#3d97b4;
+    width: 100%;
+    height: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+
+  div{
+      p{
+        cursor: pointer;
+      }
+    }
 `;
 
 export const StyledForm = styled.form`

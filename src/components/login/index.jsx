@@ -4,7 +4,10 @@ import { Button, Modal } from "@mui/material";
 import {
   BackgroundModal,
   ModalContainer,
+  ModalFooter,
   ModalHeader,
+  ModalHeaderButton,
+  ModalHeaderText,
   StyledForm,
   StyledTextField,
 } from "./style";
@@ -54,15 +57,19 @@ function Login() {
         <BackgroundModal>
           <ModalContainer>
             <ModalHeader>
-              <p>Login</p>
-              <Button
-                sx={{ minWidth: "5px" }}
-                onClick={handleCloseModal}
-                variant="text"
-                color="secondary"
-              >
-                X
-              </Button>
+              <ModalHeaderButton>
+                <Button
+                  sx={{ minWidth: "5px" }}
+                  onClick={handleCloseModal}
+                  variant="text"
+                  color="secondary"
+                >
+                  X
+                </Button>
+              </ModalHeaderButton>
+              <ModalHeaderText>
+                <p>Login</p>
+              </ModalHeaderText>
             </ModalHeader>
             <StyledForm id="form" onSubmit={handleSubmit(onSubmits)}>
               <StyledTextField
@@ -83,7 +90,7 @@ function Login() {
                 variant="outlined"
               />
             </StyledForm>
-            <div>
+            <ModalFooter>
               <Button
                 form="form"
                 type="submit"
@@ -92,9 +99,13 @@ function Login() {
               >
                 Login
               </Button>
-              {/* TODO - descomentar quando tiver a parte de rotas */}
-              {/* <Link to="/register">Don’t have an account? Register</Link> */}
-            </div>
+              <p>Don’t have an account?</p>
+              <div>
+                {/* TODO - descomentar quando tiver a parte de rotas */}
+                {/* <Link to="/register" onclick{setmodalLogin(false) setmodalRegs(true)}>Register!</Link> */}
+                <p> Register!</p>
+              </div>
+            </ModalFooter>
           </ModalContainer>
         </BackgroundModal>
       </Modal>
