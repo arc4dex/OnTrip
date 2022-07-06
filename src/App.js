@@ -1,7 +1,5 @@
-import Login from "./components/login";
-
 function App() {
-  return <Login />;
+  return <div className="App"></div>;
 }
 
 export default App;
