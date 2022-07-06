@@ -10,6 +10,7 @@ export const GlobalStyle = createGlobalStyle`
         font-family: "Montserrat", sans-serif;
     }
 
+<<<<<<< HEAD
     :root{
       --red: #EE685F;
       --blue: #3d97b4;
@@ -27,6 +28,15 @@ export const GlobalStyle = createGlobalStyle`
 
     li, ul{
       list-style: none;
+=======
+    .App{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      min-width: 100vw;
+      background-color: #F5F5F5;
+>>>>>>> origin/develop
     }
 
 `;

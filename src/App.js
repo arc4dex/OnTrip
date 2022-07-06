@@ -1,11 +1,9 @@
-import Header from "./components/header";
-import HeaderDesktop from "./components/headerDesktop";
+import Routes from "./routes";
 
 function App() {
   return (
     <div className="App">
-      <Header/>
-      <HeaderDesktop/>
+      <Routes />
     </div>
   );
 }
