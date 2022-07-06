@@ -1,5 +1,11 @@
+import WhyChooseUs from "../../components/whyChooseUs";
+
 function Home() {
-  return <h1>Home</h1>;
+  return (
+    <>
+      <WhyChooseUs />
+    </>
+  );
 }
 
 export default Home;
