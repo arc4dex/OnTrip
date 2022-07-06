@@ -10,6 +10,25 @@ export const GlobalStyle = createGlobalStyle`
         font-family: "Montserrat", sans-serif;
     }
 
+    :root{
+      --red: #EE685F;
+      --blue: #3d97b4;
+      --white: #ffffff;
+      --grey0: #F3F2F0;
+    }
+
+    button{
+      cursor: pointer;
+    }
+
+    a{
+      text-decoration: none;
+    }
+
+    li, ul{
+      list-style: none;
+    }
+
 `;
 
 export const theme = createTheme({
