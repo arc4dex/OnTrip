@@ -27,6 +27,7 @@ export const GlobalStyle = createGlobalStyle`
 
     li, ul{
       list-style: none;
+
     .App{
       display: flex;
       align-items: center;
