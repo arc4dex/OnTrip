@@ -5,18 +5,24 @@ import { Paper } from '@mui/material'
 export const CardPaper = muiStyles.styled(Paper)`
  display: flex;
 
- padding: 20px;
+ padding: 1.25rem;
 
  width: 90%;
  height: auto;
 
  img{
-  max-width: 18rem;
+  max-width: 20rem;
 
   border-radius: 0.7rem;
+
+  position: relative;
  }
 
- @media(max-width: 980px){
+ .imgContainer{
+    position: relative;
+  }
+
+ @media(max-width: 1025px){
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -29,11 +35,10 @@ export const CardPaper = muiStyles.styled(Paper)`
 
   align-items: center;
 
-  padding: 10px;
+  padding: 0.62rem;
 
   img{
     max-width:13rem;
-    margin-right: 25px;
   }
  }
 `
@@ -42,15 +47,20 @@ export const ContainerInfoCard = styled.section`
   width: 50%;
   height: auto;
 
-  margin-right: 25px;
-  margin-left: 25px;
+  margin-right: 1.56rem;
+  margin-left: 1.56rem;
 
   display: flex;
   flex-direction: column;
 
   justify-content: center;
 
+ 
   gap: 0.7rem;
+
+  p{
+      text-align: justify;
+    }
  
   section{
     width: 15rem;
@@ -59,12 +69,9 @@ export const ContainerInfoCard = styled.section`
 
     justify-content: space-between;
 
-    margin-top: 15px;
+    margin-top: 1rem;
 
-    .line{
-      border-right: 2px solid grey;
-    }
-
+  
     .boldText{
       font-weight: 600;
     }
@@ -74,6 +81,10 @@ export const ContainerInfoCard = styled.section`
     width: 90%;
 
     align-items: center;
+
+    section{
+      display: none;
+    }
   }
   
 `
@@ -86,20 +97,19 @@ export const ContainerButtons = styled.section`
 
   justify-content: center;
 
-  gap: 20px;
+  gap: 1.25rem;
 
-  @media(max-width:980px){
+  @media(max-width:1025px){
     width: 100%;
-    height: 3rem;
-
+  
     flex-direction: row;
 
-    margin-top: 20px;
+    margin-top: 1.25rem;
   }
 
   
   @media(max-width:822px){
-    width: 26rem;
+    width: 90%;
   }
 
   @media(max-width: 500px){
