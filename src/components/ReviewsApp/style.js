@@ -40,7 +40,7 @@ export const DivReviews = styled.div`
 
     .swiper-slide {
       text-align: center;
-      font-size: 18px;
+      font-size: 1.125rem;
       background: #fff;
 
       /* Center slide text vertically */
