@@ -10,6 +10,24 @@ export const GlobalStyle = createGlobalStyle`
         font-family: "Montserrat", sans-serif;
     }
 
+    :root{
+      --red: #EE685F;
+      --blue: #3d97b4;
+      --white: #ffffff;
+      --grey0: #F3F2F0;
+    }
+
+    button{
+      cursor: pointer;
+    }
+
+    a{
+      text-decoration: none;
+    }
+
+    li, ul{
+      list-style: none;
+
     .App{
       display: flex;
       align-items: center;
@@ -18,7 +36,7 @@ export const GlobalStyle = createGlobalStyle`
       max-width: 100vw;
       background-color: #F5F5F5;
     }
-
+  }
 `;
 
 export const theme = createTheme({
