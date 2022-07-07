@@ -28,7 +28,7 @@ export const CardAWCU = styled.div`
     max-width: 5rem;
   }
   > div {
-    width: 30%;
+    width: 100%;
     min-width: 9rem;
     max-height: 18rem;
     height: fit-content;
