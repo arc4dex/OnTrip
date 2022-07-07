@@ -15,7 +15,7 @@ export const GlobalStyle = createGlobalStyle`
       align-items: center;
       justify-content: center;
       min-height: 100vh;
-      min-width: 100vw;
+      max-width: 100vw;
       background-color: #F5F5F5;
     }
 
