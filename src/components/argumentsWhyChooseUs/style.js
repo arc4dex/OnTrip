@@ -5,9 +5,13 @@ export const ContainerAWCU = styled.div`
   height: fit-content;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
-  gap: 0.5rem;
+  gap: 1.5rem;
+
+  @media screen and (min-width: 600px) {
+    flex-direction: row;
+  }
 `;
 
 export const CardAWCU = styled.div`
@@ -17,7 +21,7 @@ export const CardAWCU = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 1rem;
 
   img {
     width: 100%;
@@ -25,7 +29,8 @@ export const CardAWCU = styled.div`
   }
   > div {
     width: 30%;
-    min-width: 15rem;
+    min-width: 9rem;
+    max-height: 18rem;
     height: fit-content;
 
     h2 {
@@ -36,7 +41,7 @@ export const CardAWCU = styled.div`
 
     p {
       text-align: center;
-      font-size: 1rem;
+      font-size: .9rem;
     }
   }
 `;

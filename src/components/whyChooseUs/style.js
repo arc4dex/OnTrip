@@ -8,7 +8,7 @@ export const ContainerWCU = styled.div`
   justify-content: center;
   align-items: center;
   gap: 10px;
-  padding: 1.5rem;
+  padding: 1rem;
 `;
 export const HeaderWCU = styled.div`
   width: 100%;

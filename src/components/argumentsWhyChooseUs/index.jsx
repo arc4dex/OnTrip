@@ -23,7 +23,8 @@ function ArgumentsWhyChooseUs() {
           <div>
             <h2>Payment methods</h2>
             <p>
-            We checked it out, even the kid did it, but it was my mom's friend's son
+              We checked it out, even the kid did it, but it was my mom's
+              friend's son
             </p>
           </div>
         </CardAWCU>
@@ -32,7 +33,7 @@ function ArgumentsWhyChooseUs() {
           <div>
             <h2>Payment methods</h2>
             <p>
-            Is there something you don't understand? Feel free to contact us
+              Is there something you don't understand? Feel free to contact us
             </p>
           </div>
         </CardAWCU>
@@ -41,7 +42,7 @@ function ArgumentsWhyChooseUs() {
           <div>
             <h2>Payment methods</h2>
             <p>
-            Fantasy is over, there will be something really convincing here
+              Fantasy is over, there will be something really convincing here
             </p>
           </div>
         </CardAWCU>
