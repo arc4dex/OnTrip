@@ -2,13 +2,12 @@ import styled from "styled-components";
 
 export const NavDesktop = styled.nav`
   width: 90%;
-  height: 70px;
-
+  height: 4.4rem;
 
   display: none;
   justify-content: space-between;
 
-  padding: 10px;
+  padding: 1.1rem;
 
   .containerLogo{
     width: 7rem;
@@ -37,11 +36,11 @@ export const ContainerOptionsNav = styled.div`
 
   display: flex;
 
-  gap: 30px;
+  gap: 1.9rem;
 
   align-items: center;
   
-  margin-left: 70px;
+  margin-left: 4.4rem;
   
   h3{
 
@@ -62,14 +61,14 @@ export const ContainerIconsNav = styled.div`
 
   display: flex;
   
-  gap: 10px;
+  gap: 1.1rem;
 
   button{
     background-color: transparent;
     border: none;
 
     font-weight: 600;
-    font-size: 17px;
+    font-size: 1rem;
 
     color: var(--red);
   }

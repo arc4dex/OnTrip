@@ -2,14 +2,14 @@ import styled from "styled-components";
 
 export const UserMenu = styled.div`
  width: 13rem;
- height: 150px;
+ height: 9.4rem;
 
  display: flex;
  flex-direction: column;
 
- border-radius: 8px 0 0 8px;
+ border-radius: 1.1rem 0 0 1.1rem;
 
- padding: 10px;
+ padding: 1.1rem;
 
  position: fixed;
  top: 0;
@@ -37,7 +37,7 @@ export const UserMenu = styled.div`
   display: flex;
   flex-direction: column;
 
-  gap: 10px;
+  gap: 1.1rem;
 
   margin-top: 5px;
 
