@@ -1,9 +1,11 @@
+import DashBoard from "./components/dashBoard";
 import Routes from "./routes";
 
 function App() {
   return (
     <div className="App">
-      <Routes />
+      {/* <Routes /> */}
+      <DashBoard/>
     </div>
   );
 }
