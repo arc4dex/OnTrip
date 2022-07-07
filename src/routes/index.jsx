@@ -7,6 +7,7 @@ import HostDashboard from "../pages/HostDashboard";
 import NomadeDashboard from "../pages/NomadeDashboard";
 import Trips from "../pages/Trips";
 import NotFound from "../pages/NotFound";
+import RegisterAccommod from "../pages/RegisterAccommod";
 
 function Routes() {
   return (
@@ -29,6 +30,10 @@ function Routes() {
 
       <Route exact path="/hostDash/:id">
         <HostDashboard />
+      </Route>
+
+      <Route exact path="/registerAccommod/:id">
+        <RegisterAccommod />
       </Route>
 
       <Route exact path="/nomadeDash/:id">
