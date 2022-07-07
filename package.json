@@ -6,16 +6,25 @@
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
     "@fontsource/montserrat": "^4.5.11",
+<<<<<<< HEAD
+=======
+    "@hookform/resolvers": "^2.9.3",
+>>>>>>> 56906547e38c9c1c5f62f22967b4718056ff5ee3
     "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.8.7",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
+    "axios": "^0.27.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.33.1",
+    "react-router-dom": "5",
     "react-scripts": "5.0.1",
     "styled-components": "^5.3.5",
-    "web-vitals": "^2.1.0"
+    "swiper": "^8.3.0",
+    "web-vitals": "^2.1.0",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start": "react-scripts start",
