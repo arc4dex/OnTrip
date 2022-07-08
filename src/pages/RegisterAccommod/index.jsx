@@ -1,11 +1,7 @@
 import FormRegisterAccommod from "../../components/FormRegisterAccommod";
 
 function RegisterAccommod() {
-  return (
-    <>
-      <FormRegisterAccommod />
-    </>
-  );
+  return <FormRegisterAccommod />;
 }
 
 export default RegisterAccommod;
