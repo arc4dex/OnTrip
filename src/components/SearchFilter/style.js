@@ -3,7 +3,7 @@ import * as muiStyles from "@mui/material/styles";
 import styled from "styled-components";
 
 export const StyledContainer = muiStyles.styled(Container)`
-width: 70vw;
+width: 90vw;
 min-width: 600px;
 height: 5rem;
 display: flex;
