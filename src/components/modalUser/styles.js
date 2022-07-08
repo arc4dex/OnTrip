@@ -1,4 +1,41 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+
+export const Background = styled.div`
+  inset: 0;
+
+  width: 100%;
+
+  z-index: 1;
+
+  background-color: rgba(0, 0, 0, 0.1);
+
+  position: fixed;
+
+  animation: appearBackGround 1s;
+
+  ${({handleCloseUser}) => handleCloseUser && css`
+    animation: desappearBackGround 1s;
+ `
+ } 
+
+  @keyframes appearBackGround{
+  from{
+    opacity: 0;
+  }
+  to{
+    opacity: 1;
+  }
+ }
+
+ @keyframes desappearBackGround{
+  from{
+    opacity: 1;
+  }
+  to{
+    opacity: 0;
+  }
+ }
+`  
 
 export const UserMenu = styled.div`
  width: 13rem;
@@ -16,7 +53,14 @@ export const UserMenu = styled.div`
  right: 0;
  z-index: 1;
 
- background-color: var(--grey0);
+ background-color: white;
+
+  animation: appearFromRight 1s;
+ 
+${({handleCloseUser}) => handleCloseUser && css`
+  animation: closeFromRight 1s;
+ ` 
+ }
 
  .containerIcons{
   width: 100%;
@@ -52,4 +96,23 @@ export const UserMenu = styled.div`
     }
   }
  }
+ 
+ @keyframes appearFromRight{
+  from{
+    right: -100%;
+  }
+  to{
+    right: 0;
+  }
+ }
+
+ @keyframes closeFromRight{
+  from{
+    right: 0;
+  }
+  to{
+    right: -100%;
+  }
+
+}
 `

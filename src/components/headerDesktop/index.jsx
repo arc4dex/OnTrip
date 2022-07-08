@@ -4,14 +4,25 @@ import { IconButton } from "@mui/material";
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import { useState } from "react";
 import ModalUSer from "../modalUser";
+import { useHistory } from "react-router-dom";
 
 function HeaderDesktop(){
+
+  const history = useHistory()
 
   const [ language, setLanguage ] = useState(true)
   const [ modalUser, setModalUser ] = useState(false)
 
   function homePage(){
+    history.push('/')
+  }
 
+  function trips(){
+    history.push('/trips')
+  }
+
+  function aboutUs(){
+    history.push('/aboutUs')
   }
 
   function selectedLanguage(){
@@ -32,20 +43,22 @@ function HeaderDesktop(){
 
   return(
     <NavDesktop>
-      <div className="containerLogo" onClick={homePage}>
-        <h1>On</h1>
-        <h2>Trip</h2>
+      <div className="containerLogo">
+        <section onClick={homePage}>
+          <h1>On</h1>
+          <h2>Trip</h2>
+        </section>
       <ContainerOptionsNav>
-        <h3>Trips</h3>
+        <h3 onClick={trips}>Trips</h3>
         <h3>Blog</h3>
-        <h3>About us</h3>
+        <h3 onClick={aboutUs}>About us</h3>
       </ContainerOptionsNav>
       </div>
       <ContainerIconsNav>
         <IconButton>
           <AttachMoneyIcon color='primary'/>
         </IconButton>
-        {language ? <button onClick={selectedLanguage}>EN</button> : <button onClick={selectedLanguage}>BR</button>}
+        {language ? <button className="btnLanguage" onClick={selectedLanguage}>EN</button> : <button onClick={selectedLanguage}>BR</button>}
         {modalUser && <ModalUSer setModalUser={setModalUser}/>}
         <IconButton onClick={modalUserDinamic}>
           <AccountCircleOutlinedIcon color='primary'/>
