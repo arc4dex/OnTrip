@@ -1,5 +1,5 @@
 function NomadeDashboard() {
-    return <h1>NomadeDashboard</h1>;
+  return <div>Dashboard</div>;
 }
 
 export default NomadeDashboard;
