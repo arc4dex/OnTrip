@@ -2,9 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
-
 import { ThemeProvider } from "@mui/material/styles";
-
 import { GlobalStyle, theme } from "./styles/globalStyle";
 import { BrowserRouter } from "react-router-dom";
 
