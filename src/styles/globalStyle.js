@@ -15,6 +15,7 @@ export const GlobalStyle = createGlobalStyle`
       --blue: #3d97b4;
       --white: #ffffff;
       --grey0: #F3F2F0;
+      --bgColor: #f5f5f5;
     }
 
     button {
