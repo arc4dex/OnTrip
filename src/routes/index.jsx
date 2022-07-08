@@ -32,7 +32,7 @@ function Routes() {
         <HostDashboard />
       </Route>
 
-      <Route exact path="/registerAccommod/:id">
+      <Route exact path="/registerAccommod">
         <RegisterAccommod />
       </Route>
 
