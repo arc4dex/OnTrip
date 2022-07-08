@@ -10,33 +10,35 @@ export const GlobalStyle = createGlobalStyle`
         font-family: "Montserrat", sans-serif;
     }
 
-    :root{
+    :root {
       --red: #EE685F;
       --blue: #3d97b4;
       --white: #ffffff;
       --grey0: #F3F2F0;
     }
 
-    button{
+    button {
       cursor: pointer;
     }
 
-    a{
+    a {
       text-decoration: none;
     }
 
-    li, ul{
+    li, ul {
       list-style: none;
+    }
 
-    .App{
+    .App {
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       min-height: 100vh;
-      max-width: 100vw;
+      width: 100%;
       background-color: #F5F5F5;
     }
-  }
+  
 `;
 
 export const theme = createTheme({

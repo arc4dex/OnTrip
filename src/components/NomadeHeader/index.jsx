@@ -19,7 +19,7 @@ function NomadeHeader() {
             <section className="divInfo">
                 <h1>Dashboard</h1>
                 <p>Hello, userNomade!</p>
-                <p>Your next trips (filter applied)</p>
+                <span>Your next trips (filter applied)</span>
             </section>  
             <section>
                 <a href="#">Find a new trip!</a>
