@@ -72,7 +72,7 @@ export default function SearchFilter() {
               windowSize.innerWidth <= 600 ? () => handleOpen() : () => ""
             }
           >
-            <Typography color="secondary">Country, city</Typography>
+            <Typography  color="secondary">Country, city</Typography>
             <Typography>
               <input
                 type="text"

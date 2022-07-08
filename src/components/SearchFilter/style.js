@@ -23,6 +23,10 @@ box-shadow: 0px 5px 7px 5px rgba(0,0,0,0.2);
     padding-right: 0;
     
 }
+
+input{
+  background-color: var(--bgColor);
+}
 `;
 
 export const StyledBox = muiStyles.styled(Box)`
