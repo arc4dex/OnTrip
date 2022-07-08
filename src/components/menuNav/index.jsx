@@ -1,19 +1,35 @@
-import { ModalNav } from "./styles";
+import { BackGround, ModalNav } from "./styles";
 import CloseIcon from '@mui/icons-material/Close';
 import { IconButton } from "@mui/material";
+import { useHistory } from "react-router-dom";
 import { useState } from "react";
 
-function MenuNav({setModal}){
+function MenuNav({ setModal }){
 
-  const [ animation, setAnimation ] = useState(false)
+  const history = useHistory()
+
+  const [ handleAnimation, setHandleAnimation ] = useState(false)
 
   function modalClose(){
-    setModal(false)
-    setAnimation(true)
+    setHandleAnimation(true)
+
+    setTimeout(() => {
+      setModal(false)
+    }, 1000);
+  }
+
+  function trips(){
+    history.push('/trips')
+  }
+
+  function aboutUs(){
+    history.push('/aboutUs')
   }
 
   return(
-        <ModalNav>
+    <>
+      <BackGround onClick={modalClose} handleClose = { handleAnimation }/>
+        <ModalNav handleClose = { handleAnimation }>
           <div className="container">
             <div className="container_logo">
               <h1>On</h1>
@@ -24,11 +40,12 @@ function MenuNav({setModal}){
             </IconButton>
           </div>
           <div className="menu">
-            <h3>Trips</h3>
+            <h3 onClick={trips}>Trips</h3>
             <h3>Blog</h3>
-            <h3>About us</h3>
+            <h3 onClick={aboutUs}>About us</h3>
           </div>
-        </ModalNav>
+        </ModalNav> 
+    </>
   )
 }
 
