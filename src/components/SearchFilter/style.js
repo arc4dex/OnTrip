@@ -172,3 +172,12 @@ export const StyledLine = styled.div`
 export const StyledInput = styled.input`
   width: ${(props) => (props.width ? props.width : "2ch")};
 `;
+
+export const MainForm = styled.form`
+  position: relative;
+  top: -6.25rem;
+
+  div{
+    background-color: var(--bgColor);
+  }
+`
