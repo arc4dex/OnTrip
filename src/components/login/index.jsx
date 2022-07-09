@@ -100,12 +100,13 @@ function Login() {
               >
                 Login
               </Button>
-              <p>Don’t have an account?</p>
               <div>
-                {/* TODO - descomentar quando tiver a parte de rotas */}
-                {/* <Link to="/register" onclick{setmodalLogin(false) setmodalRegs(true)}>Register!</Link> */}
-                <p> Register!</p>
+                <p>Don’t have an account? </p>
+                <button className="registerButton"> Register!</button>
               </div>
+
+              {/* TODO - descomentar quando tiver a parte de rotas */}
+              {/* <Link to="/register" onclick{setmodalLogin(false) setmodalRegs(true)}>Register!</Link> */}
             </ModalFooter>
           </ModalContainer>
         </BackgroundModal>

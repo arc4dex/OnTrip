@@ -97,10 +97,20 @@ export const ModalFooter = styled.div`
   }
 
   div {
-    height: 1.25rem;
+    height: 7.25rem;
     width: 100%;
-    p {
-      cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+
+    .registerButton {
+      border: none;
+      outline: none;
+      background-color: transparent;
+      color: var(--blue);
+      font-size: 1rem;
     }
   }
 `;
