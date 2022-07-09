@@ -8,7 +8,6 @@ export const StyledFooter = styled.footer`
   height: 16.5vh;
   padding: 1.5rem 1rem 1rem 1rem;
   background-color: #f3f2f0;
-  position: fixed;
   bottom: 0;
   display: flex;
   align-items: stretch;
