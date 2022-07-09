@@ -46,7 +46,8 @@ function FormRegisterAccommod() {
   const onImageChange = (e) => {
     const [file] = e.target.files;
     if (file.type === "image/png") {
-      setImage([...image, URL.createObjectURL(file)]);
+      // setImage([...image, URL.createObjectURL(file)]);
+      setImage([URL.createObjectURL(file)]);
     }
   };
 
