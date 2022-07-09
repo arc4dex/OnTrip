@@ -3,7 +3,7 @@ import * as muiStyles from "@mui/material/styles";
 import styled from "styled-components";
 
 export const StyledContainer = muiStyles.styled(Container)`
-width: 70vw;
+width: 90vw;
 min-width: 600px;
 height: 5rem;
 display: flex;
@@ -21,7 +21,11 @@ box-shadow: 0px 5px 7px 5px rgba(0,0,0,0.2);
 
 @media (min-width: 600px){
     padding-right: 0;
-    
+    width: 80vw;    
+}
+
+input{
+  background-color: var(--bgColor);
 }
 `;
 
@@ -168,3 +172,12 @@ export const StyledLine = styled.div`
 export const StyledInput = styled.input`
   width: ${(props) => (props.width ? props.width : "2ch")};
 `;
+
+export const MainForm = styled.form`
+  position: relative;
+  top: -2.25rem;
+
+  div{
+    background-color: var(--bgColor);
+  }
+`

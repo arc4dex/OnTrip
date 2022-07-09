@@ -55,8 +55,11 @@ export const ContainerInfoCard = styled.section`
 
   justify-content: center;
 
- 
   gap: 0.7rem;
+
+  h1{
+    margin-top: 1rem;
+  }
 
   p{
       text-align: justify;
@@ -84,6 +87,13 @@ export const ContainerInfoCard = styled.section`
 
     section{
       display: none;
+    }
+  }
+
+  @media(max-width: 425px){
+    h1{
+      font-size: 1.1rem;
+      margin-top: 1rem;
     }
   }
   

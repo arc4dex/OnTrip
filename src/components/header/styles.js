@@ -8,9 +8,15 @@ export const HeaderNav = styled.nav`
 
   justify-content: space-between;
 
+  padding: 1rem 1.4rem 0 1.4rem;
+
+
+
   div{
     display: flex;
     align-items: center;
+
+    cursor: pointer;
   }
 
   h1{
