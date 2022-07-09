@@ -5,7 +5,7 @@ import banner from "./banner.png";
 export const MainCardImage = styled.div`
 	display: flex;
 	flex-direction: column;
-	width: 100%;
+	width: 90%;
 	height: 19.625rem;
 	background-image: url(${banner});
 	background-repeat: no-repeat;
