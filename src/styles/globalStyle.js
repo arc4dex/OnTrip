@@ -27,7 +27,7 @@ export const GlobalStyle = createGlobalStyle`
 
     li, ul{
       list-style: none;
-
+    }
     .App{
       display: flex;
       align-items: center;
@@ -36,7 +36,7 @@ export const GlobalStyle = createGlobalStyle`
       max-width: 100vw;
       background-color: #F5F5F5;
     }
-  }
+  
 `;
 
 export const theme = createTheme({
@@ -61,5 +61,3 @@ export const theme = createTheme({
     fontFamily: "Montserrat",
   },
 });
-
-
