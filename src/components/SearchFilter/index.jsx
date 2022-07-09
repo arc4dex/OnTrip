@@ -9,6 +9,7 @@ import {
   StyledForm,
   StyledLine,
   StyledInput,
+  MainForm,
 } from "./style";
 import { useEffect, useState } from "react";
 import { FiMinus, FiPlus, FiSearch, FiSettings } from "react-icons/fi";
@@ -63,7 +64,7 @@ export default function SearchFilter() {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmitFunction)}>
+      <MainForm className="mainForm" onSubmit={handleSubmit(onSubmitFunction)}>
         <StyledContainer>
           <StyledBox
             width="27%"
@@ -262,7 +263,7 @@ export default function SearchFilter() {
             </ModalBox>
           </Modal>
         </StyledContainer>
-      </form>
+      </MainForm>
     </>
   );
 }
