@@ -11,6 +11,7 @@ export const HeaderNav = styled.nav`
   padding: 1rem 1.4rem 0 1.4rem;
 
 
+
   div{
     display: flex;
     align-items: center;
