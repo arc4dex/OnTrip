@@ -8,6 +8,7 @@ export const NavDesktop = styled.nav`
   justify-content: space-between;
 
   border-bottom: 1px solid var(--red);
+  margin-bottom: 1rem;
 
   section{
     display: flex;

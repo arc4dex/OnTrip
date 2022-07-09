@@ -21,7 +21,7 @@ box-shadow: 0px 5px 7px 5px rgba(0,0,0,0.2);
 
 @media (min-width: 600px){
     padding-right: 0;
-    
+    width: 80vw;    
 }
 
 input{
@@ -175,7 +175,7 @@ export const StyledInput = styled.input`
 
 export const MainForm = styled.form`
   position: relative;
-  top: -6.25rem;
+  top: -2.25rem;
 
   div{
     background-color: var(--bgColor);
