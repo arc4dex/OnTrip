@@ -7,6 +7,37 @@ import { Pagination } from "swiper";
 
 import CardReviews from "../CardReviews";
 
+import { useState } from "react";
+
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 350,
+  height: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "space-evenly",
+};
+
+const textFieldStyle = {
+  width: 300,
+};
+
 function ReviewsApp() {
   // pegar reviews do state do redux
   const reviews = [
@@ -46,6 +77,27 @@ function ReviewsApp() {
     },
   ];
 
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const schema = yup.object().shape({
+    review: yup.string().min(20,"Please, type at least 20 characters")
+  });
+  
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+  
+  function onSubmitReview(data) {
+    console.log(data);
+    handleClose();
+  }
+
   return (
     <DivReviews>
       <h2>Reviews</h2>
@@ -76,7 +128,30 @@ function ReviewsApp() {
           ))}
         </Swiper>
       </div>
-      <StyledButton variant="contained">Add a Review</StyledButton>
+      <StyledButton onClick={handleOpen} variant="contained">
+        Add a Review
+      </StyledButton>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <TextField
+            id="outlined-multiline-static"
+            label="Type your Review"
+            multiline
+            rows={8}
+            sx={textFieldStyle}
+            {...register("review")}
+          />
+          <p style={{color: "#ee685f"}}>{errors.review?.message}</p>
+          <StyledButton onClick={handleSubmit(onSubmitReview)} variant="contained">
+            Submit Review
+          </StyledButton>
+        </Box>
+      </Modal>
     </DivReviews>
   );
 }
