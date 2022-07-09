@@ -7,7 +7,6 @@ export const NavDesktop = styled.nav`
   display: none;
   justify-content: space-between;
 
-  border-bottom: 1px solid var(--red);
   margin-bottom: 1rem;
 
   section{
