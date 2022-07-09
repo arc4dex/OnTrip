@@ -36,7 +36,7 @@ export const GlobalStyle = createGlobalStyle`
       align-items: center;
       justify-content: center;
       min-height: 100vh;
-      width: 100%;
+      width: 100vw;
       background-color: #F5F5F5;
     }
   
