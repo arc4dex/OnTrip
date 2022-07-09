@@ -17,6 +17,8 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 
+import { useSelector } from "react-redux";
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -82,9 +84,9 @@ function ReviewsApp() {
   const handleClose = () => setOpen(false);
 
   const schema = yup.object().shape({
-    review: yup.string().min(20,"Please, type at least 20 characters")
+    review: yup.string().min(20, "Please, type at least 20 characters"),
   });
-  
+
   const {
     register,
     handleSubmit,
@@ -92,11 +94,23 @@ function ReviewsApp() {
   } = useForm({
     resolver: yupResolver(schema),
   });
-  
+
+  function handleCheckUserState() {
+    if (userState) {
+      handleOpen();
+      console.log(userState);
+    } else {
+      //chamar a função que abre o modal de login
+      console.log("Você não está logado");
+      console.log(userState);
+    }
+  }
+
   function onSubmitReview(data) {
     console.log(data);
-    handleClose();
   }
+
+  const userState = useSelector(({ userState }) => userState);
 
   return (
     <DivReviews>
@@ -128,7 +142,7 @@ function ReviewsApp() {
           ))}
         </Swiper>
       </div>
-      <StyledButton onClick={handleOpen} variant="contained">
+      <StyledButton onClick={handleCheckUserState} variant="contained">
         Add a Review
       </StyledButton>
       <Modal
@@ -146,8 +160,11 @@ function ReviewsApp() {
             sx={textFieldStyle}
             {...register("review")}
           />
-          <p style={{color: "#ee685f"}}>{errors.review?.message}</p>
-          <StyledButton onClick={handleSubmit(onSubmitReview)} variant="contained">
+          <p style={{ color: "#ee685f" }}>{errors.review?.message}</p>
+          <StyledButton
+            onClick={handleSubmit(onSubmitReview)}
+            variant="contained"
+          >
             Submit Review
           </StyledButton>
         </Box>
