@@ -33,7 +33,7 @@ function AboutUs() {
         <StyledShowcase>
           <StyledCard>
             <ImgCard>
-              <img src={bruno} alt=""></img>
+              <img src={bruno} alt="bruno"></img>
             </ImgCard>
             <InfoCard>
               <h5>Bruno Passos</h5>
@@ -48,7 +48,7 @@ function AboutUs() {
           </StyledCard>
           <StyledCard>
             <ImgCard>
-              <img src={leticia} alt=""></img>
+              <img src={leticia} alt="leticia"></img>
             </ImgCard>
             <InfoCard>
               <h5>Letícia de Araujo</h5>
@@ -63,7 +63,7 @@ function AboutUs() {
           </StyledCard>
           <StyledCard>
             <ImgCard>
-              <img src={andre} alt=""></img>
+              <img src={andre} alt="andre"></img>
             </ImgCard>
             <InfoCard>
               <h5>André Volcov</h5>
@@ -78,7 +78,7 @@ function AboutUs() {
           </StyledCard>
           <StyledCard>
             <ImgCard>
-              <img src={pedro} alt=""></img>
+              <img src={pedro} alt="pedro"></img>
             </ImgCard>
             <InfoCard>
               <h5>Pedro Bernardes</h5>
@@ -93,7 +93,7 @@ function AboutUs() {
           </StyledCard>
           <StyledCard>
             <ImgCard>
-              <img src={david} alt=""></img>
+              <img src={david} alt="david"></img>
             </ImgCard>
             <InfoCard>
               <h5>David Bassouto</h5>
@@ -108,7 +108,7 @@ function AboutUs() {
           </StyledCard>
           <StyledCard>
             <ImgCard>
-              <img src={durval} alt=""></img>
+              <img src={durval} alt="durval"></img>
             </ImgCard>
             <InfoCard>
               <h5>Durval Moroz</h5>

@@ -21,7 +21,6 @@ export const StyledAboutUs = styled.div`
 
   @media (max-width: 768px) {
     overflow: auto;
-    padding-bottom: 6em;
   }
 `;
 
@@ -57,8 +56,8 @@ export const StyledCard = styled.div`
   background-color: var(--blue);
   border-radius: 0.5em;
   display: flex;
-  -webkit-box-shadow: 5px 5px 15px -3px #000000;
-  box-shadow: 5px 5px 15px -3px #000000;
+  -webkit-box-shadow: 5px 5px 0.938em -3px #000000;
+  box-shadow: 5px 5px 0.938em -3px #000000;
 
   @media (max-width: 768px) {
     width: 70vw;
@@ -79,8 +78,8 @@ export const ImgCard = styled.div`
     width: 100%;
     max-height: 100%;
     border-radius: 100%;
-    -webkit-box-shadow: 5px 5px 15px -3px #000000;
-    box-shadow: 5px 5px 15px -3px #000000;
+    -webkit-box-shadow: 5px 5px 0.938em -3px #000000;
+    box-shadow: 5px 5px 0.938em -3px #000000;
   }
 `;
 
@@ -102,7 +101,7 @@ export const InfoCard = styled.div`
     display: flex;
     align-items: center;
     color: #ffffff;
-    font-size: 20px;
+    font-size: 1.25em;
   }
 
   h5 {
