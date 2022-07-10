@@ -6,30 +6,33 @@ import HeaderDesktop from "../headerDesktop";
 import NomadeHeader from "../NomadeHeader";
 import { ContainerInfo, MainPaper, MainSection } from "./styles";
 
-function DashBoard(){
-
-  return(
+function DashBoard() {
+  return (
     <>
-    <MainSection>
-      <HeaderDesktop/>
-      <Header/>
-      <Divider className="btnAdd" flexItem sx={{
-        bgcolor: '#EE685F',
-        borderWidth: '1px',
-        width: '90%',
-        alignSelf: 'center',
-        }} />
-    <ContainerInfo>
-    </ContainerInfo>
-    <MainPaper elevation={2}>
-      <CardDashBoard/>
-      <CardDashBoard/>
-      <CardDashBoard/>
-    </MainPaper>
-    </MainSection>
-    <Footer/>
+      <MainSection>
+        <HeaderDesktop />
+        <Header />
+        <Divider
+          className="btnAdd"
+          flexItem
+          sx={{
+            bgcolor: "#EE685F",
+            borderWidth: "1px",
+            width: "90%",
+            alignSelf: "center",
+          }}
+        />
+        <NomadeHeader/>
+        <ContainerInfo></ContainerInfo>
+        <MainPaper elevation={2}>
+          <CardDashBoard />
+          <CardDashBoard />
+          <CardDashBoard />
+        </MainPaper>
+      </MainSection>
+      <Footer />
     </>
-  )
+  );
 }
 
-export default DashBoard
+export default DashBoard;

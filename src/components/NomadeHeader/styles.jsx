@@ -8,6 +8,10 @@ export const NomadeHeaderContent = styled.section`
     display: flex;
     align-items: end;
     width: 100vw;
+    
+    @media (min-width: 768px){
+        padding-left:2rem;
+    }
 
 
     .divInfo{

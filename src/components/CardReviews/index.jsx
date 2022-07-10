@@ -10,14 +10,15 @@ function CardReviews({ element }) {
 
   return (
     <ReviewDiv>
-      <Avatar
-        {...stringAvatar(element.name)}
+      <Avatar        
+        src={element.userPicture && element.userPicture }
+        // {...stringAvatar(element?.userName)}
         className="avatar"
         sx={{ width: "3.5rem", height: "3.5rem" }}
       />
-      <p>{element.review}</p>
+      <p>{element?.message}</p>
       <span>
-        <b>{element.name}</b>, {element.profession}
+        <b>{element?.userName}</b>
       </span>
     </ReviewDiv>
   );

@@ -5,6 +5,7 @@ export const StyledSpecialOffers = styled.section`
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    
 
     padding-top: 35px;
 
@@ -13,9 +14,15 @@ export const StyledSpecialOffers = styled.section`
     }
 
     .cards{
+        height: 100%;
+        width: 100vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         @media (min-width: 700px){
             display: flex;
             flex-direction: row;
+            flex-wrap: wrap;
         }
     }
 `
