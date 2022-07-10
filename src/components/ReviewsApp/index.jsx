@@ -7,7 +7,7 @@ import { Pagination } from "swiper";
 
 import CardReviews from "../CardReviews";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -18,6 +18,8 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 
 import { useSelector } from "react-redux";
+
+import { Api } from "../../services/api";
 
 const style = {
   position: "absolute",
@@ -42,42 +44,11 @@ const textFieldStyle = {
 
 function ReviewsApp() {
   // pegar reviews do state do redux
-  const reviews = [
-    {
-      id: 1,
-      name: "Jed Watson",
-      review:
-        "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quae odit non id ducimus velit molestias quisquam dolor quo.",
-      profession: "Publisher",
-    },
-    {
-      id: 2,
-      name: "Sarah Black",
-      review:
-        "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Numquam sunt corporis consectetur laboriosam totam dolorem eaque mollitia quia! Quae odit non id ducimus velit molestias quisquam dolor quo.",
-      profession: "Software Developer",
-    },
-    {
-      id: 3,
-      name: "Jack Cruz",
-      review:
-        "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Numquam sunt corporis consectetur laboriosam totam dolorem eaque mollitia quia! Quae odit non id ducimus velit molestias quisquam dolor quo.",
-      profession: "Software Developer",
-    },
-    {
-      id: 4,
-      name: "John White",
-      review: "Lorem ipsum, dolor sit amet consectetur adipisicing elit.",
-      profession: "Software Developer",
-    },
-    {
-      id: 5,
-      name: "Peter Smith",
-      review:
-        "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Numquam sunt corporis consectetur laboriosam totam dolorem eaque mollitia quia! Quae odit non id ducimus velit molestias quisquam dolor quo.",
-      profession: "Software Developer",
-    },
-  ];
+  const [reviews, setReviews] = useState([]);
+
+  useEffect(() => {
+    Api.get("/appReview").then((resp) => setReviews(resp.data));
+  });
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -135,7 +106,7 @@ function ReviewsApp() {
           modules={[Pagination]}
           className="mySwiper"
         >
-          {reviews.map((element) => (
+          {reviews?.map((element) => (
             <SwiperSlide key={element.id}>
               <CardReviews element={element} />
             </SwiperSlide>
