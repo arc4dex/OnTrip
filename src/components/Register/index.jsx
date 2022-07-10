@@ -3,7 +3,6 @@ import {
   Modal,
   Checkbox,
   FormControlLabel,
-  TextField,
   ThemeProvider,
 } from "@mui/material";
 
@@ -58,6 +57,7 @@ function Register({
       .string()
       .oneOf([yup.ref("password")], "Passwords don't match.")
       .required("Please confirm your password."),
+    dateOfBirth: yup.string().required("Date of Birth is required."),
     acceptTerms: yup.boolean().isTrue("You must accept the terms of service."),
   });
 
@@ -65,6 +65,7 @@ function Register({
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     resolver: yupResolver(formSchema),
   });
@@ -86,20 +87,33 @@ function Register({
   };
 
   const handleDateOfBirth = (newValue) => {
-    console.log(newValue);
     setDateOfBirth(newValue);
   };
 
+  const calculateAge = (date) => {
+    const dateBirthArray = date.split("/");
+
+    const dateBirthFixed = `${dateBirthArray[1]}/${dateBirthArray[0]}/${dateBirthArray[2]}`;
+
+    const ageMs = Date.now() - Date.parse(dateBirthFixed);
+
+    const age = Math.floor(ageMs / 31536000000);
+
+    return age;
+  };
+
   const onSubmit = (data) => {
-    console.log(data);
+    const age = calculateAge(data.dateOfBirth);
 
     const response = {
       name: data.name,
       email: data.email,
       password: data.password,
-      dateOfBirth: dateOfBirth,
+      age: age,
       profilePicture: imageUser,
     };
+
+    reset();
 
     //enviar response para API
 
@@ -177,7 +191,14 @@ function Register({
                     inputFormat="dd/MM/yyyy"
                     value={dateOfBirth}
                     onChange={handleDateOfBirth}
-                    renderInput={(params) => <StyledTextField {...params} />}
+                    renderInput={(params) => (
+                      <StyledTextField
+                        {...params}
+                        {...register("dateOfBirth")}
+                        error={errors.dateOfBirth?.message}
+                        helperText={errors.dateOfBirth?.message}
+                      />
+                    )}
                   />
                 </LocalizationProvider>
               </ThemeProvider>
