@@ -43,7 +43,6 @@ const textFieldStyle = {
 };
 
 function ReviewsApp() {
-  // pegar reviews do state do redux
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
@@ -71,14 +70,32 @@ function ReviewsApp() {
       handleOpen();
       console.log(userState);
     } else {
-      //chamar a função que abre o modal de login
       console.log("Você não está logado");
       console.log(userState);
     }
   }
 
-  function onSubmitReview(data) {
-    console.log(data);
+  async function onSubmitReview(data) {
+    const id = localStorage.getItem("userId");
+    const token = localStorage.getItem("userToken");
+    const userInfo = await Api.get(`/users/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.data)
+      .catch((err) => console.log(err));
+
+    const newReview = {
+      userName: userInfo.name,
+      userPicture: userInfo.profilePicture,
+      userId: userInfo.id,
+      message: data.review,
+    };
+
+    await Api.post("/appReview", newReview)
+      .then((response) => console.log(response.data))
+      .catch((err) => console.log(err));
   }
 
   const userState = useSelector(({ userState }) => userState);
