@@ -1,10 +1,11 @@
 import styled from "styled-components";
 
 import * as muiStyles from "@mui/material/styles";
-import { Button} from "@mui/material";
+import { Button } from "@mui/material";
 
 export const DivReviews = styled.div`
   background-color: white;
+  border-radius: 1rem;
   display: flex;
   flex-direction: column;
   width: 90vw;
@@ -14,7 +15,7 @@ export const DivReviews = styled.div`
   justify-content: space-between;
   padding: 1rem 0;
 
-  p{
+  p {
     color: #ee685f;
   }
 
@@ -40,6 +41,7 @@ export const DivReviews = styled.div`
       width: 100%;
       height: 100%;
       padding-bottom: 1.2rem;
+      border-radius: 1rem;
     }
 
     .swiper-slide {
@@ -77,8 +79,6 @@ export const DivReviews = styled.div`
       background: #ee685f;
     }
   }
-
-  
 `;
 
 export const StyledButton = muiStyles.styled(Button)`
@@ -87,5 +87,3 @@ export const StyledButton = muiStyles.styled(Button)`
     text-transform: capitalize;
 
 `;
-
-
