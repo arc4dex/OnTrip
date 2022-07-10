@@ -29,7 +29,7 @@ import { useState } from "react";
 function FormRegisterAccommod() {
   const [category, setCategory] = useState("House");
 
-  const [kind, setKind] = useState("A whole place");
+  const [kindOfPlace, setKindOfPlace] = useState("A whole place");
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -51,8 +51,8 @@ function FormRegisterAccommod() {
     }
   };
 
-  function handleChangeKind(event) {
-    setKind(event.target.value);
+  function handleChangeKindOfPlace(event) {
+    setKindOfPlace(event.target.value);
   }
 
   function handleChangeCategory(event) {
@@ -91,7 +91,24 @@ function FormRegisterAccommod() {
     }
   }
 
-  const differentials = ["Wifi", "Monitor", "AC"];
+  const categories = ["House", "Apartment", "Flat", "Inn", "Boutique Hotel"];
+
+  const kindsOfPlaces = ["A whole place", "A whole room", "A shared room"];
+
+  const highlights = [
+    "internet speed greater than 100mb/s",
+    "Ergonomic Desk Chair",
+    "Ergonomic Setup",
+    "Air conditioning",
+    "Monitor Full HD",
+    "Silent Environment",
+    "Dryer",
+    "Kitchen",
+    "Smart Place",
+    "Coffee Machine",
+    "Playroom",
+    "CoWorking",
+  ];
 
   const formSchema = yup.object().shape({});
 
@@ -124,12 +141,18 @@ function FormRegisterAccommod() {
             value={category}
             onChange={handleChangeCategory}
             size="small"
+            {...register("category")}
           >
-            <MenuItem value={"House"}>House</MenuItem>
+            {categories.map((category) => (
+              <MenuItem value={category} key={category}>
+                {category}
+              </MenuItem>
+            ))}
+            {/* <MenuItem value={"House"}>House</MenuItem>
             <MenuItem value={"Apartment"}>Apartment</MenuItem>
             <MenuItem value={"Flat"}>Flat</MenuItem>
             <MenuItem value={"Inn"}>Inn</MenuItem>
-            <MenuItem value={"Boutique Hotel"}>Boutique Hotel</MenuItem>
+            <MenuItem value={"Boutique Hotel"}>Boutique Hotel</MenuItem> */}
           </StyledSelect>
           <InputLabel id="demo-simple-select-label">
             What kind of place are you offering to guests?
@@ -138,9 +161,10 @@ function FormRegisterAccommod() {
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             variant="outlined"
-            value={kind}
-            onChange={handleChangeKind}
+            value={kindOfPlace}
+            onChange={handleChangeKindOfPlace}
             size="small"
+            {...register("kindOfPlace")}
           >
             <MenuItem value={"A whole place"}>A whole place</MenuItem>
             <MenuItem value={"A whole room"}>A whole room</MenuItem>
@@ -261,7 +285,7 @@ function FormRegisterAccommod() {
           <Autocomplete
             multiple
             id="tags-outlined"
-            options={differentials}
+            options={highlights}
             getOptionLabel={(option) => option}
             sx={{ width: "100%" }}
             renderInput={(params) => (
