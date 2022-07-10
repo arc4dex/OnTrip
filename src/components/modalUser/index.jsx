@@ -52,11 +52,13 @@ function ModalUSer({ setModalUser }) {
   };
 
   const toTrips = () => {
-    history.push("/trips");
+    let id = localStorage.getItem("userId");
+    history.push(`/nomadeDash/${id}`);
   };
 
   const toAccommodations = () => {
-    history.push("/accommodation");
+    let id = localStorage.getItem("userId");
+    history.push(`/hostDash/:id`);
   };
 
   return (
