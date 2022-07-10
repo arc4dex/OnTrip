@@ -1,5 +1,12 @@
+import DashBoard from "../../components/dashBoard";
+
 function NomadeDashboard() {
-  return <div>Dashboard</div>;
+  
+  return (
+    <>
+      <DashBoard/>
+    </>
+  )
 }
 
 export default NomadeDashboard;

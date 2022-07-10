@@ -7,8 +7,21 @@ export const NavDesktop = styled.nav`
   display: none;
   justify-content: space-between;
 
-  padding: 1.1rem;
+  
+  section{
+    display: flex;
 
+    align-items: center;
+
+    h1{
+      font-size: 25px;
+      color: var(--red);
+    }
+    h2{
+      color: var(--blue);
+    }
+  }
+  
   .containerLogo{
     width: 7rem;
 
@@ -18,12 +31,9 @@ export const NavDesktop = styled.nav`
 
     cursor: pointer;
 
-    h1{
-      color: var(--red);
-    }
-    h2{
-      color: var(--blue);
-    }
+    @media(max-width: 768px){
+  display: none;
+ }
   }
 
   @media(min-width: 768px){
@@ -57,13 +67,14 @@ export const ContainerOptionsNav = styled.div`
 `
 
 export const ContainerIconsNav = styled.div`
-  width: 8rem;
+  width: 9rem;
 
   display: flex;
+  align-items: center;
   
-  gap: 1.1rem;
+  gap: 1rem;
 
-  button{
+  .btnLanguage{
     background-color: transparent;
     border: none;
 
@@ -71,5 +82,19 @@ export const ContainerIconsNav = styled.div`
     font-size: 1rem;
 
     color: var(--red);
+  }
+
+  img{
+    max-width: 40px;
+    max-height: 50px;
+
+    border-radius: 60%;
+    border-color: black;
+
+    cursor: pointer;
+
+    :hover{
+      opacity: 0.5;
+    }
   }
 `

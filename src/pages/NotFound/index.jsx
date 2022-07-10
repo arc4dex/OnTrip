@@ -1,5 +1,20 @@
+import { MainContent } from "./style";
+
+import Header from "../../components/header";
+import HeaderDesktop from "../../components/headerDesktop";
+import Footer from "../../components/Footer";
+
+import img from "../../assets/404-page-not-found.png";
+
 function NotFound() {
-    return <h1>Page Not Found</h1>;
+  return (
+    <>
+      <Header />
+      <HeaderDesktop />      
+      <MainContent src={img} />
+      <Footer />
+    </>
+  );
 }
 
 export default NotFound;

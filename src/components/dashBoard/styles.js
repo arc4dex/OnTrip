@@ -4,11 +4,26 @@ import styled from "styled-components";
 
 export const MainSection = styled.main`
 
-  .redLine{
-    border-top: 2px solid red;
+  display: flex;
+  flex-direction: column;
 
-    margin-bottom: 0.62rem;
+  align-items: center;
+
+  gap: 1rem;
+
+/*   button{
+    font-size: 0.5rem;
+    font-weight: 800;
+    height: 3rem;
   }
+
+  @media(min-width: 420px){
+   button{
+    font-size: 0.7rem;
+    min-width: 64px;
+    font-weight: 500;
+   }
+  } */
 `
 
 export const MainPaper = muiStyles.styled(Paper)`

@@ -5,45 +5,53 @@ import { HeaderNav } from "./styles"
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import ModalUSer from "../modalUser";
+import { useHistory } from "react-router-dom";
+
 function Header(){
+
+  const history = useHistory()
 
   const [ modal, setModal ] = useState(false)
   const [ modalUser, setModalUser ] = useState(false)
+  const [isLogged, setIsLogged] = useState(true);
 
   function modalNavDinamic(){
-    if(modal === false){
-      setModal(true)
-      setModalUser(false)
-    } else{
-      setModal(false)
-    }
+   setModal(true)
   }
 
   function modalUserDinamic(){
-    if(modalUser === false){
-      setModalUser(true)
-      setModal(false)
-    }else{
-      setModalUser(false)
-    }
+   setModalUser(true)
+  }
+
+  function homePage(){
+    history.push('/')
   }
 
   return(
     <HeaderNav>
       <div>
-        {modal === true && <MenuNav setModal = {setModal}/>}
+        {modal === true && <MenuNav setModal={setModal}/>}
         <IconButton onClick={modalNavDinamic}>
           <MenuIcon/>
         </IconButton>
-        <div>
+        <div className="containerLogo" onClick={homePage}>
           <h1>On</h1>
           <h2>Trip</h2>
         </div>
         </div>
         {modalUser === true && <ModalUSer setModalUser={setModalUser}/> }
-        <IconButton onClick={modalUserDinamic}>
-          <AccountCircleOutlinedIcon color='primary'/>
-        </IconButton>
+        {isLogged ? (
+          <>
+            <img
+              src="https://mundoavatar.com.br/wp-content/uploads/2021/07/avatar-filme.jpeg"
+              alt="Avatar user" onClick={modalUserDinamic}
+            />
+          </>
+        ) : (
+          <IconButton onClick={modalUserDinamic}>
+            <AccountCircleOutlinedIcon color="primary" />
+          </IconButton>
+        )}
     </HeaderNav>
   )
 }

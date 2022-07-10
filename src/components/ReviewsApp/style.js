@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import * as muiStyles from "@mui/material/styles";
-import { Button } from "@mui/material";
+import { Button} from "@mui/material";
 
 export const DivReviews = styled.div`
   background-color: white;
@@ -13,6 +13,10 @@ export const DivReviews = styled.div`
   justify-content: space-evenly;
   justify-content: space-between;
   padding: 1rem 0;
+
+  p{
+    color: #ee685f;
+  }
 
   @media (min-width: 1000px) {
     width: 85vw;
@@ -73,6 +77,8 @@ export const DivReviews = styled.div`
       background: #ee685f;
     }
   }
+
+  
 `;
 
 export const StyledButton = muiStyles.styled(Button)`
@@ -81,3 +87,5 @@ export const StyledButton = muiStyles.styled(Button)`
     text-transform: capitalize;
 
 `;
+
+
