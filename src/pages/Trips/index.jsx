@@ -16,7 +16,7 @@ function Trips() {
 
   //state que vai receber os dados do filtro de pesquisa
   const [searchedTrips, setSearchedTrips] = useState([]);
-  const [ page, setPage ] = useState(0)
+  const [ page, setPage ] = useState(1)
   const [ numberOfPages, setNumberOfPages ] = useState(0)
   const [ listAccomodations, setListAccomodations ] = useState([])
 
@@ -52,8 +52,6 @@ function Trips() {
     setPage(newPage)
   }
 
-  console.log(listAccomodations)
-
   return (
     <>
       <Header />
@@ -75,18 +73,23 @@ function Trips() {
         color="primary"
         onChange={handleChangePage}
        />
+
       {searchedTrips.length === 0 ? (
-        <SpecialOffers />
+        listAccomodations.map((item) => {
+         return <AccommodationCard key={item.id} accom={item} />;
+        })
       ) : (
         searchedTrips.map((item) => {
           <AccommodationCard key={item.id} accomodation={item} />;
         })
       )}
+
        <Pagination 
         count={numberOfPages} 
         color="primary"
         onChange={handleChangePage}
        />
+      <SpecialOffers />
       <Footer />
     </>
   );
