@@ -13,6 +13,7 @@ function Header(){
 
   const [ modal, setModal ] = useState(false)
   const [ modalUser, setModalUser ] = useState(false)
+  const [isLogged, setIsLogged] = useState(true);
 
   function modalNavDinamic(){
    setModal(true)
@@ -39,9 +40,18 @@ function Header(){
         </div>
         </div>
         {modalUser === true && <ModalUSer setModalUser={setModalUser}/> }
-        <IconButton onClick={modalUserDinamic}>
-          <AccountCircleOutlinedIcon color='primary' fontSize="large"/>
-        </IconButton>
+        {isLogged ? (
+          <>
+            <img
+              src="https://mundoavatar.com.br/wp-content/uploads/2021/07/avatar-filme.jpeg"
+              alt="Avatar user" onClick={modalUserDinamic}
+            />
+          </>
+        ) : (
+          <IconButton onClick={modalUserDinamic}>
+            <AccountCircleOutlinedIcon color="primary" />
+          </IconButton>
+        )}
     </HeaderNav>
   )
 }

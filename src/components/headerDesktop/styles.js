@@ -7,8 +7,7 @@ export const NavDesktop = styled.nav`
   display: none;
   justify-content: space-between;
 
-  margin-bottom: 1rem;
-
+  
   section{
     display: flex;
 
@@ -68,11 +67,12 @@ export const ContainerOptionsNav = styled.div`
 `
 
 export const ContainerIconsNav = styled.div`
-  width: 8rem;
+  width: 9rem;
 
   display: flex;
+  align-items: center;
   
-  gap: 1.1rem;
+  gap: 1rem;
 
   .btnLanguage{
     background-color: transparent;
@@ -82,5 +82,19 @@ export const ContainerIconsNav = styled.div`
     font-size: 1rem;
 
     color: var(--red);
+  }
+
+  img{
+    max-width: 40px;
+    max-height: 50px;
+
+    border-radius: 60%;
+    border-color: black;
+
+    cursor: pointer;
+
+    :hover{
+      opacity: 0.5;
+    }
   }
 `

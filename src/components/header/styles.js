@@ -10,8 +10,6 @@ export const HeaderNav = styled.nav`
 
   padding: 1rem 1.4rem 0 1.4rem;
 
-
-
   div{
     display: flex;
     align-items: center;
@@ -25,6 +23,20 @@ export const HeaderNav = styled.nav`
   h2{
   color: var(--blue)
  }
+
+ img{
+    max-width: 30px;
+    max-height: 30px;
+
+    border-radius: 60%;
+    border-color: black;
+
+    cursor: pointer;
+
+    :hover{
+      opacity: 0.5;
+    }
+  }
 
  @media(min-width: 768px){
   display: none;

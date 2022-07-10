@@ -1,71 +1,89 @@
-import { ContainerIconsNav, ContainerOptionsNav, NavDesktop } from "./styles"
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import { ContainerIconsNav, ContainerOptionsNav, NavDesktop } from "./styles";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import { IconButton } from "@mui/material";
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { useState } from "react";
 import ModalUSer from "../modalUser";
 import { useHistory } from "react-router-dom";
 
-function HeaderDesktop(){
+function HeaderDesktop() {
+  const history = useHistory();
 
-  const history = useHistory()
+  const [language, setLanguage] = useState(true);
+  const [modalUser, setModalUser] = useState(false);
+  const [isLogged, setIsLogged] = useState(true);
 
-  const [ language, setLanguage ] = useState(true)
-  const [ modalUser, setModalUser ] = useState(false)
-
-  function homePage(){
-    history.push('/')
+  function homePage() {
+    history.push("/");
   }
 
-  function trips(){
-    history.push('/trips')
+  function trips() {
+    history.push("/trips");
   }
 
-  function aboutUs(){
-    history.push('/aboutUs')
+  function aboutUs() {
+    history.push("/aboutUs");
   }
 
-  function selectedLanguage(){
-    if(language === true){
-      setLanguage(false)
-    } else{
-      setLanguage(true)
+  function selectedLanguage() {
+    if (language === true) {
+      setLanguage(false);
+    } else {
+      setLanguage(true);
     }
   }
 
-  function modalUserDinamic(){
-    if(modalUser === false){
-      setModalUser(true)
-    }else{
-      setModalUser(false)
+  function modalUserDinamic() {
+    if (modalUser === false) {
+      setModalUser(true);
+    } else {
+      setModalUser(false);
     }
   }
 
-  return(
+  return (
     <NavDesktop>
       <div className="containerLogo">
         <section onClick={homePage}>
           <h1>On</h1>
           <h2>Trip</h2>
         </section>
-      <ContainerOptionsNav>
-        <h3 onClick={trips}>Trips</h3>
-        <h3>Blog</h3>
-        <h3 onClick={aboutUs}>About us</h3>
-      </ContainerOptionsNav>
+        <ContainerOptionsNav>
+          <h3 onClick={trips}>Trips</h3>
+          <h3>Blog</h3>
+          <h3 onClick={aboutUs}>About us</h3>
+        </ContainerOptionsNav>
       </div>
       <ContainerIconsNav>
         <IconButton>
-          <AttachMoneyIcon color='primary'/>
+          <AttachMoneyIcon color="primary" />
         </IconButton>
-        {language ? <button className="btnLanguage" onClick={selectedLanguage}>EN</button> : <button onClick={selectedLanguage}>BR</button>}
-        {modalUser && <ModalUSer setModalUser={setModalUser}/>}
-        <IconButton onClick={modalUserDinamic}>
-          <AccountCircleOutlinedIcon color='primary'/>
-        </IconButton>
+        {language ? (
+          <button className="btnLanguage" onClick={selectedLanguage}>
+            EN
+          </button>
+        ) : (
+          <button className="btnLanguage" onClick={selectedLanguage}>
+            BR
+          </button>
+        )}
+        {modalUser && <ModalUSer setModalUser={setModalUser} />}
+
+        {isLogged ? (
+          <>
+            <img
+              src="https://mundoavatar.com.br/wp-content/uploads/2021/07/avatar-filme.jpeg"
+              alt="Avatar user" onClick={modalUserDinamic}
+            />
+          </>
+        ) : (
+          <IconButton onClick={modalUserDinamic}>
+            <AccountCircleOutlinedIcon color="primary" />
+          </IconButton>
+        )}
       </ContainerIconsNav>
     </NavDesktop>
-  )
+  );
 }
 
-export default HeaderDesktop
+export default HeaderDesktop;
