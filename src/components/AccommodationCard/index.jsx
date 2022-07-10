@@ -1,6 +1,7 @@
 import { StyledCard, StyledPaper, StyledButton, StyledBox } from "./styles";
 
 function AccommodationCard({accom}) {
+
   function readMore() {
     console.log("Button Read More clicked");
   }

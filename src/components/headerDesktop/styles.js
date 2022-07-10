@@ -85,8 +85,8 @@ export const ContainerIconsNav = styled.div`
   }
 
   img{
-    max-width: 40px;
-    max-height: 50px;
+    width: 2.2rem;
+    height: 2.2rem;
 
     border-radius: 60%;
     border-color: black;
