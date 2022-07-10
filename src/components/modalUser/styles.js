@@ -57,6 +57,14 @@ export const UserMenu = styled.div`
 
   animation: appearFromRight 1s;
 
+  img{
+    width: 2.2rem;
+    height: 2.2rem;
+
+    border-radius: 60%;
+    border-color: black;
+  }
+
   ${({ handleCloseUser }) =>
     handleCloseUser &&
     css`
