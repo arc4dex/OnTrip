@@ -50,7 +50,14 @@ function ModalUSer({ setModalUser }) {
     localStorage.removeItem("userId");
     dispatch(changeUseState(false));
   };
-  console.log(userState);
+
+  const toTrips = () => {
+    history.push("/trips");
+  };
+
+  const toAccommodations = () => {
+    history.push("/accommodation");
+  };
 
   return (
     <>
@@ -72,8 +79,8 @@ function ModalUSer({ setModalUser }) {
             </>
           ) : (
             <>
-              <h3>My trips</h3>
-              <h3>My accommodations</h3>
+              <h3 onClick={toTrips}>My trips</h3>
+              <h3 onClick={toAccommodations}>My accommodations</h3>
               <h3 onClick={logOff}>Logout</h3>
             </>
           )}

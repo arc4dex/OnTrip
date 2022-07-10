@@ -73,7 +73,8 @@ function HeaderDesktop() {
           <>
             <img
               src="https://mundoavatar.com.br/wp-content/uploads/2021/07/avatar-filme.jpeg"
-              alt="Avatar user" onClick={modalUserDinamic}
+              alt="Avatar user"
+              onClick={modalUserDinamic}
             />
           </>
         ) : (

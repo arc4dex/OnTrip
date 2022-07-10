@@ -88,14 +88,18 @@ function ReviewsApp() {
 
     const newReview = {
       userName: userInfo.name,
-      userPicture: userInfo.profilePicture,
+      userPicture: userInfo.profilePicture[0],
       userId: userInfo.id,
       message: data.review,
     };
-
-    await Api.post("/appReview", newReview)
-      .then((response) => console.log(response.data))
+    await Api.post("/appReview", newReview, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.data)
       .catch((err) => console.log(err));
+    handleClose();
   }
 
   const userState = useSelector(({ userState }) => userState);
