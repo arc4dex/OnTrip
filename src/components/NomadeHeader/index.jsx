@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
+import StartATrip from "../startATrip";
 
 function NomadeHeader() {
     const [filterTrips, setFilterTrips] = useState('');
@@ -14,7 +15,8 @@ function NomadeHeader() {
     };   
 
     
-    return (        
+    return ( 
+        <>       
         <NomadeHeaderContent>
             <section className="divInfo">
                 <h1>Dashboard</h1>
@@ -38,10 +40,11 @@ function NomadeHeader() {
                         </StyledSelect>
                     </FormControl>
                 </Box>
-            </section> 
+            </section>
         </NomadeHeaderContent>
-
-        
+        {/* Componente que só irá aparecer quando o Nomade não tive nenhuma viagem programada */}
+        {/* <StartATrip/>  */}
+        </>
     );
 }
 

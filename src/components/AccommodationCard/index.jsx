@@ -1,8 +1,6 @@
 import { StyledCard, StyledPaper, StyledButton, StyledBox } from "./styles";
 
-import place from "./place.png";
-
-function AccommodationCard() {
+function AccommodationCard({accom}) {
   function readMore() {
     console.log("Button Read More clicked");
   }
@@ -17,7 +15,7 @@ function AccommodationCard() {
         <div
           className="divImg"
           style={{
-            backgroundImage: `url(${place})`,
+            backgroundImage: `url(${accom.imageUrl[0]})`,
             backgroundRepeat: "no-repeat",
             width: "100%",
             backgroundPosition: "center",
@@ -27,7 +25,7 @@ function AccommodationCard() {
           <StyledPaper>
             <StyledBox>
               <h4>City</h4>
-              <p>Newton Aboot</p>
+              <p>{accom?.location?.city}</p>
             </StyledBox>
             <StyledBox>
               <h4>Date</h4>
@@ -35,15 +33,13 @@ function AccommodationCard() {
             </StyledBox>
             <StyledBox>
               <h4>Price</h4>
-              <p>$50 000</p>
+              <p>{`$ ${accom?.price}`}</p>
             </StyledBox>
           </StyledPaper>
         </div>
-        <h2>St. Louis Sanatorium</h2>
+        <h2>{accom?.name}</h2>
         <p>
-          A small but cozy place to stay in Wisconsin. The resort is located on
-          the shore of the river of the same name, within walking distance of
-          the beach, pier, comic book store and Shevchenko Monument.
+          {accom?.description}
         </p>
         <div className="btn">
           <StyledButton variant="contained" onClick={() => readMore()}>

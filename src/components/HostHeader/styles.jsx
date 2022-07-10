@@ -6,7 +6,14 @@ import { Button } from "@mui/material";
 
 export const NomadeHeaderContent = styled.section`
     
+    width: 95%;
     height: 6rem;
+    margin-bottom: 4rem;
+
+    @media (min-width: 515px){
+        margin-bottom: 0;
+    }
+    
     
     .divInfo{
         display: flex;
@@ -27,7 +34,14 @@ export const NomadeHeaderContent = styled.section`
     }     
     
     .btnSection{
-        width:  18.5rem;;
+        width:  18.5rem;
+        margin-bottom: 1rem;
+        display: flex;
+        justify-content: start;
+
+        @media (min-width: 515px){
+            justify-content: end;
+        }
     }
 
     @media (min-width: 32.188rem){

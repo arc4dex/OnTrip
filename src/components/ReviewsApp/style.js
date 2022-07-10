@@ -5,6 +5,7 @@ import { Button } from "@mui/material";
 
 export const DivReviews = styled.div`
   background-color: white;
+  border-radius: 1rem;
   display: flex;
   flex-direction: column;
   width: 90vw;
@@ -13,6 +14,10 @@ export const DivReviews = styled.div`
   justify-content: space-evenly;
   justify-content: space-between;
   padding: 1rem 0;
+
+  p {
+    color: #ee685f;
+  }
 
   @media (min-width: 1000px) {
     width: 85vw;
@@ -36,6 +41,7 @@ export const DivReviews = styled.div`
       width: 100%;
       height: 100%;
       padding-bottom: 1.2rem;
+      border-radius: 1rem;
     }
 
     .swiper-slide {
