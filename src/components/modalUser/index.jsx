@@ -6,9 +6,12 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Login from "../login";
 import Register from "../Register";
+import { useDispatch, useSelector } from "react-redux";
+import { changeUseState } from "../../store/modules/userIsLogged/actions";
 
 function ModalUSer({ setModalUser }) {
-  const [isLogged, setIsLogged] = useState(false);
+  const userState = useSelector(({ userState }) => userState);
+  const dispatch = useDispatch();
 
   const [isModalClosed, setIsModalClosed] = useState(false);
 
@@ -42,6 +45,13 @@ function ModalUSer({ setModalUser }) {
     setRegisterModal(false);
   };
 
+  const logOff = () => {
+    localStorage.removeItem("userToken");
+    localStorage.removeItem("userId");
+    dispatch(changeUseState(false));
+  };
+  console.log(userState);
+
   return (
     <>
       <Background onClick={modalClose} handleCloseUser={isModalClosed} />
@@ -55,7 +65,7 @@ function ModalUSer({ setModalUser }) {
           </IconButton>
         </div>
         <div className="containerOptions">
-          {!isLogged ? (
+          {!userState ? (
             <>
               <h3 onClick={handleOpenModalLogin}>Login</h3>{" "}
               <h3 onClick={handleOpenRegisterModal}>Register</h3>{" "}
@@ -64,7 +74,7 @@ function ModalUSer({ setModalUser }) {
             <>
               <h3>My trips</h3>
               <h3>My accommodations</h3>
-              <h3>Logout</h3>
+              <h3 onClick={logOff}>Logout</h3>
             </>
           )}
         </div>

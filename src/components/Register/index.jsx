@@ -26,10 +26,13 @@ import {
   themeDate,
 } from "./styles";
 
+import { Api } from "../../services/api";
+
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState, useRef } from "react";
+
 function Register({
   registerModal,
   handleCloseRegisterModal,
@@ -102,7 +105,7 @@ function Register({
     return age;
   };
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const age = calculateAge(data.dateOfBirth);
 
     const response = {
@@ -115,7 +118,12 @@ function Register({
 
     reset();
 
-    //enviar response para API
+    await Api.post("/register", response)
+      .then(
+        (response) => response.data,
+        console.log("mostrar mensagem de registro bem sucedido")
+      )
+      .catch((err) => console.log("mostrar mensagem de registro erro"));
 
     handleCloseRegisterModal();
   };
