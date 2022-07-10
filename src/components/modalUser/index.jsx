@@ -1,53 +1,87 @@
 import { Background, UserMenu } from "./styles";
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { IconButton } from "@mui/material";
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import Login from "../login";
+import Register from "../Register";
 
-function ModalUSer({ setModalUser }){
+function ModalUSer({ setModalUser }) {
+  const [isLogged, setIsLogged] = useState(false);
 
-  const [ isLogged, setIsLogged ] = useState(false)
+  const [isModalClosed, setIsModalClosed] = useState(false);
 
-  const history = useHistory()
+  const [loginModal, setLoginModal] = useState(false);
 
-  const [ isModalClosed, setIsModalClosed ] = useState(false)
+  const [registerModal, setRegisterModal] = useState(false);
 
-  function modalClose(){
-    setIsModalClosed(true)
-   
+  const history = useHistory();
+
+  function modalClose() {
+    setIsModalClosed(true);
+
     setTimeout(() => {
-      setModalUser(false)
+      setModalUser(false);
     }, 1000);
   }
 
-  function login(){
-    history.push('/login')
-  }
+  const handleOpenModalLogin = () => {
+    setLoginModal(true);
+  };
 
-  function register(){
-    history.push('/registerAccommod/:id')
-  }
+  const handleCloseModalLogin = () => {
+    setLoginModal(false);
+  };
 
-  return(
+  const handleOpenRegisterModal = () => {
+    setRegisterModal(true);
+  };
+
+  const handleCloseRegisterModal = () => {
+    setRegisterModal(false);
+  };
+
+  return (
     <>
-      <Background onClick={modalClose} handleCloseUser = { isModalClosed }/>
-      <UserMenu handleCloseUser = { isModalClosed }>
+      <Background onClick={modalClose} handleCloseUser={isModalClosed} />
+      <UserMenu handleCloseUser={isModalClosed}>
         <div className="containerIcons">
           <IconButton>
-              <AccountCircleOutlinedIcon fontSize="large" color='primary'/>
-            </IconButton>
+            <AccountCircleOutlinedIcon fontSize="large" color="primary" />
+          </IconButton>
           <IconButton onClick={modalClose}>
-              <CloseIcon fontSize=""/>
+            <CloseIcon fontSize="" />
           </IconButton>
         </div>
         <div className="containerOptions">
-          {!isLogged ? <><h3>Login</h3> <h3 onClick={register}>Register</h3> </> :
-          <h3>Logout</h3>}
+          {!isLogged ? (
+            <>
+              <h3 onClick={handleOpenModalLogin}>Login</h3>{" "}
+              <h3 onClick={handleOpenRegisterModal}>Register</h3>{" "}
+            </>
+          ) : (
+            <>
+              <h3>My trips</h3>
+              <h3>My accommodations</h3>
+              <h3>Logout</h3>
+            </>
+          )}
         </div>
       </UserMenu>
+      <Login
+        loginModal={loginModal}
+        handleCloseModalLogin={handleCloseModalLogin}
+        handleOpenRegisterModal={handleOpenRegisterModal}
+      />
+      <Register
+        registerModal={registerModal}
+        handleOpenRegisterModal={handleOpenRegisterModal}
+        handleCloseRegisterModal={handleCloseRegisterModal}
+        handleOpenModalLogin={handleOpenModalLogin}
+      />
     </>
-  )
+  );
 }
 
-export default ModalUSer
+export default ModalUSer;
