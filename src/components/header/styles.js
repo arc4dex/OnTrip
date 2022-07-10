@@ -25,8 +25,8 @@ export const HeaderNav = styled.nav`
  }
 
  img{
-    max-width: 30px;
-    max-height: 30px;
+    width: 2.2rem;
+    height: 2.2rem;
 
     border-radius: 60%;
     border-color: black;

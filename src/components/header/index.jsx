@@ -6,13 +6,15 @@ import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import ModalUSer from "../modalUser";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function Header() {
   const history = useHistory();
+  const userState = useSelector(({ userState }) => userState);
 
   const [modal, setModal] = useState(false);
   const [modalUser, setModalUser] = useState(false);
-  const [isLogged, setIsLogged] = useState(true);
+
 
   function modalNavDinamic() {
     setModal(true);
@@ -39,7 +41,7 @@ function Header() {
         </div>
       </div>
       {modalUser === true && <ModalUSer setModalUser={setModalUser} />}
-      {isLogged ? (
+      {userState ? (
         <>
           <img
             src="https://mundoavatar.com.br/wp-content/uploads/2021/07/avatar-filme.jpeg"

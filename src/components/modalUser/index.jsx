@@ -66,9 +66,16 @@ function ModalUSer({ setModalUser }) {
       <Background onClick={modalClose} handleCloseUser={isModalClosed} />
       <UserMenu handleCloseUser={isModalClosed}>
         <div className="containerIcons">
-          <IconButton>
-            <AccountCircleOutlinedIcon fontSize="large" color="primary" />
-          </IconButton>
+          {!userState ? (
+            <IconButton>
+              <AccountCircleOutlinedIcon fontSize="large" color="primary" />
+            </IconButton>
+          ): (
+            <img
+              src="https://mundoavatar.com.br/wp-content/uploads/2021/07/avatar-filme.jpeg"
+              alt="Avatar user"
+            />
+          )}
           <IconButton onClick={modalClose}>
             <CloseIcon fontSize="" />
           </IconButton>
