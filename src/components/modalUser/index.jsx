@@ -4,13 +4,19 @@ import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import Login from "../login";
+import Register from "../Register";
 
 function ModalUSer({ setModalUser }) {
-  const [isLogged, setIsLogged] = useState(true);
-
-  const history = useHistory();
+  const [isLogged, setIsLogged] = useState(false);
 
   const [isModalClosed, setIsModalClosed] = useState(false);
+
+  const [loginModal, setLoginModal] = useState(false);
+
+  const [registerModal, setRegisterModal] = useState(false);
+
+  const history = useHistory();
 
   function modalClose() {
     setIsModalClosed(true);
@@ -20,23 +26,21 @@ function ModalUSer({ setModalUser }) {
     }, 1000);
   }
 
-  function login() {
-    history.push("/login");
-  }
+  const handleOpenModalLogin = () => {
+    setLoginModal(true);
+  };
 
-  function register() {
-    history.push("/register");
-  }
+  const handleCloseModalLogin = () => {
+    setLoginModal(false);
+  };
 
-  // const [loginModal, setLoginModal] = useState(false);
+  const handleOpenRegisterModal = () => {
+    setRegisterModal(true);
+  };
 
-  // const handleOpenModal = () => {
-  //   setLoginModal(true);
-  // };
-
-  // const handleCloseModal = () => {
-  //   setLoginModal(false);
-  // };
+  const handleCloseRegisterModal = () => {
+    setRegisterModal(false);
+  };
 
   return (
     <>
@@ -53,7 +57,8 @@ function ModalUSer({ setModalUser }) {
         <div className="containerOptions">
           {!isLogged ? (
             <>
-              <h3>Login</h3> <h3 onClick={register}>Register</h3>{" "}
+              <h3 onClick={handleOpenModalLogin}>Login</h3>{" "}
+              <h3 onClick={handleOpenRegisterModal}>Register</h3>{" "}
             </>
           ) : (
             <>
@@ -64,6 +69,17 @@ function ModalUSer({ setModalUser }) {
           )}
         </div>
       </UserMenu>
+      <Login
+        loginModal={loginModal}
+        handleCloseModalLogin={handleCloseModalLogin}
+        handleOpenRegisterModal={handleOpenRegisterModal}
+      />
+      <Register
+        registerModal={registerModal}
+        handleOpenRegisterModal={handleOpenRegisterModal}
+        handleCloseRegisterModal={handleCloseRegisterModal}
+        handleOpenModalLogin={handleOpenModalLogin}
+      />
     </>
   );
 }

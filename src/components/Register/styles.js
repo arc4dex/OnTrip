@@ -16,7 +16,6 @@ export const BackgroundRegisterModal = styled.div`
 export const RegisterModalContainer = styled.div`
   width: 100%;
   max-width: 21.875rem;
-  max-height: 39.688rem;
   display: flex;
   flex-direction: column;
   background: white;
@@ -64,6 +63,55 @@ export const StyledRegisterForm = styled.form`
   gap: 0.625rem;
   flex-direction: column;
   align-items: center;
+
+  .userImageDiv {
+    width: 60%;
+    position: relative;
+
+    button {
+      border: none;
+      outline: none;
+      background-color: transparent;
+      color: var(--blue);
+      font-size: 1.2rem;
+      position: absolute;
+      right: 0;
+    }
+
+    img {
+      width: 92%;
+    }
+  }
+
+  .imageError {
+    width: 100%;
+    font-weight: 400;
+    font-size: 0.75rem;
+    text-align: left;
+    margin-left: 1.6rem;
+    color: #d32f2f;
+  }
+
+  .css-1kfebxf-MuiInputBase-root-MuiOutlinedInput-root.Mui-error
+    .MuiOutlinedInput-notchedOutline {
+    border-color: rgb(185 185 185);
+  }
+
+  .css-1n6fnos-MuiFormLabel-root-MuiInputLabel-root.Mui-error {
+    color: rgb(185 185 185);
+  }
+
+  .css-13vppn8-MuiInputBase-root-MuiOutlinedInput-root.Mui-error
+    .MuiOutlinedInput-notchedOutline {
+    border-color: rgb(185 185 185);
+  }
+
+  .dateOfBirth {
+    width: 100%;
+    font-size: 0.9rem;
+    color: rgb(185 185 185);
+    text-align: start;
+  }
 `;
 
 export const CheckboxContainer = styled.div`
@@ -106,8 +154,36 @@ export const RegisterModalFooter = styled.div`
   color: #3d97b4;
   margin-top: 1.25rem;
   margin-bottom: 1.25rem;
+
+  div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+
+    .loginButton {
+      border: none;
+      outline: none;
+      background-color: transparent;
+      color: var(--blue);
+      font-size: 0.9rem;
+    }
+  }
 `;
 
 export const StyledTextField = muiStyles.styled(TextField)`
 width:100%;
 `;
+
+export const themeDate = muiStyles.createTheme({
+  palette: {
+    primary: {
+      main: "#3d97b4",
+    },
+  },
+  typography: {
+    fontFamily: "Montserrat",
+  },
+});

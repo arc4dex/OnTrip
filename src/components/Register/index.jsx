@@ -1,6 +1,16 @@
-import { useState } from "react";
+import {
+  Button,
+  Modal,
+  Checkbox,
+  FormControlLabel,
+  TextField,
+  ThemeProvider,
+} from "@mui/material";
 
-import { Button, Modal, Checkbox, FormControlLabel } from "@mui/material";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 
 import {
   BackgroundRegisterModal,
@@ -14,22 +24,25 @@ import {
   RegisterModalHeaderText,
   StyledRegisterForm,
   StyledTextField,
+  themeDate,
 } from "./styles";
 
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useState, useRef } from "react";
+function Register({
+  registerModal,
+  handleCloseRegisterModal,
+  handleOpenModalLogin,
+}) {
+  const [imageUser, setImageUser] = useState([]);
 
-function Register() {
-  const [registerModal, setRegisterModal] = useState(false);
+  const [imageUserError, setImageUserError] = useState(false);
 
-  const handleOpenRegisterModal = () => {
-    setRegisterModal(true);
-  };
+  const [dateOfBirth, setDateOfBirth] = useState("");
 
-  const handleCloseRegisterModal = () => {
-    setRegisterModal(false);
-  };
+  const inputRef = useRef(null);
 
   const formSchema = yup.object().shape({
     name: yup.string().required("Name is required."),
@@ -56,15 +69,45 @@ function Register() {
     resolver: yupResolver(formSchema),
   });
 
+  const onImageChange = (e) => {
+    const [file] = e.target.files;
+
+    if (file?.type === "image/png" || file?.type === "image/jpeg") {
+      setImageUserError(false);
+      setImageUser([URL.createObjectURL(file)]);
+    } else {
+      setImageUserError(true);
+    }
+  };
+
+  const deleteImage = () => {
+    inputRef.current.value = null;
+    setImageUser([]);
+  };
+
+  const handleDateOfBirth = (newValue) => {
+    console.log(newValue);
+    setDateOfBirth(newValue);
+  };
+
   const onSubmit = (data) => {
     console.log(data);
+
+    const response = {
+      name: data.name,
+      email: data.email,
+      password: data.password,
+      dateOfBirth: dateOfBirth,
+      profilePicture: imageUser,
+    };
+
+    //enviar response para API
+
+    handleCloseRegisterModal();
   };
 
   return (
     <>
-      <Button onClick={handleOpenRegisterModal} variant="contained">
-        Create account
-      </Button>
       <Modal open={registerModal} onClose={handleCloseRegisterModal}>
         <BackgroundRegisterModal>
           <RegisterModalContainer>
@@ -122,11 +165,53 @@ function Register() {
                 placeholder="Please confirm your password"
                 variant="outlined"
               />
+              <label className="dateOfBirth">Your date of birth</label>
+              <ThemeProvider theme={themeDate}>
+                <LocalizationProvider
+                  color="primary"
+                  dateAdapter={AdapterDateFns}
+                >
+                  <MobileDatePicker
+                    color="primary"
+                    placeholder="Your date of birth"
+                    inputFormat="dd/MM/yyyy"
+                    value={dateOfBirth}
+                    onChange={handleDateOfBirth}
+                    renderInput={(params) => <StyledTextField {...params} />}
+                  />
+                </LocalizationProvider>
+              </ThemeProvider>
+              <Button
+                variant="outlined"
+                component="label"
+                color="secondary"
+                sx={{ textTransform: "capitalize", width: "100%" }}
+              >
+                Upload a Profile Picture
+                <input
+                  type="file"
+                  onChange={onImageChange}
+                  hidden
+                  ref={inputRef}
+                />
+              </Button>
+              {imageUser?.map((element, index) => {
+                return (
+                  <div key={index} className="userImageDiv">
+                    <button onClick={deleteImage}>X</button>
+                    <img src={element} alt={"User Pic"} />
+                  </div>
+                );
+              })}
+              {imageUserError && (
+                <span className="imageError">
+                  Please upload a png or jpeg file.
+                </span>
+              )}
             </StyledRegisterForm>
             <CheckboxContainer>
               <FormControlLabel
                 label="I accept the Terms of Service"
-                error={!!errors.acceptTerms}
                 control={
                   <Checkbox
                     {...register("acceptTerms")}
@@ -139,19 +224,23 @@ function Register() {
               {errors.acceptTerms && <span>{errors.acceptTerms.message}</span>}
             </CheckboxErrorContainer>
             <ButtonContainer>
-              <Button
-                form="form"
-                type="submit"
-                //onClick={handleCloseRegisterModal}
-                variant="contained"
-              >
+              <Button form="form" type="submit" variant="contained">
                 Create account
               </Button>
             </ButtonContainer>
             <RegisterModalFooter>
-              <p>Already have an account? Sign In</p>
-              {/* TODO - descomentar quando tiver a parte de rotas */}
-              {/*<Link to="/login">Already have an account? Sign In</Link>*/}
+              <div>
+                <p>Already have an account? </p>
+                <button
+                  className="loginButton"
+                  onClick={() => {
+                    handleOpenModalLogin();
+                    handleCloseRegisterModal();
+                  }}
+                >
+                  Sign In
+                </button>
+              </div>
             </RegisterModalFooter>
           </RegisterModalContainer>
         </BackgroundRegisterModal>
