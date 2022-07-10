@@ -10,6 +10,9 @@ import {
   StyledTextField,
 } from "./style";
 
+import { Api } from "../../services/api";
+import { changeUseState } from "../../store/modules/userIsLogged/actions";
+import { useDispatch } from "react-redux";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -23,6 +26,8 @@ function Login({ loginModal, handleCloseModalLogin, handleOpenRegisterModal }) {
       .min(6, "Password must have at least 6 characters"),
   });
 
+  const dispatch = useDispatch();
+
   const {
     register,
     handleSubmit,
@@ -31,8 +36,18 @@ function Login({ loginModal, handleCloseModalLogin, handleOpenRegisterModal }) {
     resolver: yupResolver(formSchema),
   });
 
-  const onSubmits = (data) => {
+  const onSubmits = async (data) => {
     console.log(data);
+    const registerInfo = await Api.post("/login", data)
+      .then(
+        (response) => response.data,
+        console.log("mostrar mensagem de login bem sucedido")
+      )
+      .catch((err) => console.log("mostra mensagem de erro"));
+    localStorage.setItem("userToken", registerInfo.accessToken);
+    localStorage.setItem("userId", registerInfo.user.id);
+
+    dispatch(changeUseState(true));
     handleCloseModalLogin();
   };
 
