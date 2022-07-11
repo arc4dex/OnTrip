@@ -11,11 +11,12 @@ export const ContainerAWCU = styled.div`
 
   @media screen and (min-width: 600px) {
     flex-direction: row;
+    align-items: center;
   }
 `;
 
 export const CardAWCU = styled.div`
-  width: 20%;
+  width: 70%;
   height: 12.5rem;
   display: flex;
   flex-direction: column;
@@ -28,9 +29,17 @@ export const CardAWCU = styled.div`
     max-width: 5rem;
   }
   > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
     width: 100%;
+    max-width: 12.1rem;
     min-width: 9rem;
+    min-height: 7rem;
     max-height: 18rem;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
     height: fit-content;
 
     h2 {
@@ -41,7 +50,7 @@ export const CardAWCU = styled.div`
 
     p {
       text-align: center;
-      font-size: .9rem;
+      font-size: 0.9rem;
     }
   }
 `;
