@@ -8,8 +8,8 @@ function WhyChooseUs() {
         <h1>Why Choose Us?</h1>
         <div>
           <p>
-            The main reason is because our competitors have disgusting sites,
-            but we can' t write that here, so the text here will be different
+            We really care about your lifestyle, and we make sure you have
+            everything you need to work while exploring the world!
           </p>
         </div>
       </HeaderWCU>

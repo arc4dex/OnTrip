@@ -8,19 +8,18 @@ import ReviewsApp from "../../components/ReviewsApp";
 import Footer from "../../components/Footer";
 
 function Home() {
-  return(
+  return (
     <>
-      <Header/>
-      <HeaderDesktop/>
-      <MainCard/>
-      <SearchFilter/>
-      <WhyChooseUs/>
-      <SpecialOffers/>
-      <ReviewsApp/>
-      <Footer/>
+      <Header />
+      <HeaderDesktop />
+      <MainCard />
+      <SearchFilter />
+      <WhyChooseUs />
+      <SpecialOffers />
+      <ReviewsApp />
+      <Footer />
     </>
-  ) 
-  ;
+  );
 }
 
 export default Home;

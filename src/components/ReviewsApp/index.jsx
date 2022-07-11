@@ -45,6 +45,7 @@ const textFieldStyle = {
 function ReviewsApp() {
   const [reviews, setReviews] = useState([]);
 
+  const reviewsDescending = [...reviews].sort((a, b) => b.id - a.id);
   useEffect(() => {
     Api.get("/appReview").then((resp) => setReviews(resp.data));
   });
@@ -123,7 +124,7 @@ function ReviewsApp() {
           modules={[Pagination]}
           className="mySwiper"
         >
-          {reviews?.map((element) => (
+          {reviewsDescending?.map((element) => (
             <SwiperSlide key={element.id}>
               <CardReviews element={element} />
             </SwiperSlide>
