@@ -84,6 +84,7 @@ function FormRegisterAccommod() {
   const deleteImage = () => {
     inputRef.current.value = null;
     setImage([]);
+    setValue("imageUrl", []);
   };
 
   function handleChange(event, type) {
@@ -154,6 +155,7 @@ function FormRegisterAccommod() {
 
   function onSubmitFunction(data) {
     console.log(accommodAddress);
+
     const location = accommodAddress;
 
     console.log(data);
@@ -164,10 +166,11 @@ function FormRegisterAccommod() {
       const dataToSend = { ...data, location };
 
       console.log(dataToSend);
-      // fazer o post
+      // fazer o post na api
     } else {
       setAddressError(true);
-      // não fazer o post
+      // não fazer o post na api
+      // mensagem de erro
     }
   }
   return (
