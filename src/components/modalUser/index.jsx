@@ -70,7 +70,7 @@ function ModalUSer({ setModalUser }) {
             <IconButton>
               <AccountCircleOutlinedIcon fontSize="large" color="primary" />
             </IconButton>
-          ): (
+          ) : (
             <img
               src="https://mundoavatar.com.br/wp-content/uploads/2021/07/avatar-filme.jpeg"
               alt="Avatar user"

@@ -32,6 +32,7 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState, useRef } from "react";
+import { toast } from "react-toastify";
 
 function Register({
   registerModal,
@@ -111,24 +112,28 @@ function Register({
 
   const onSubmit = async (data) => {
     const age = calculateAge(data.dateOfBirth);
-    const response = {
-      name: data.name,
-      email: data.email,
-      password: data.password,
-      age: age,
-      profilePicture: imageUser,
-    };
+    if (age >= 18) {
+      const response = {
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        age: age,
+        profilePicture: imageUser,
+      };
 
-    reset();
+      reset();
 
-    await Api.post("/register", response)
-      .then(
-        (response) => response.data,
-        console.log("mostrar mensagem de registro bem sucedido")
-      )
-      .catch((err) => console.log("mostrar mensagem de registro erro"));
+      await Api.post("/register", response)
+        .then(
+          (response) => response.data,
+          console.log("mostrar mensagem de registro bem sucedido")
+        )
+        .catch((err) => console.log("mostrar mensagem de registro erro"));
 
-    handleCloseRegisterModal();
+      handleCloseRegisterModal();
+    } else {
+      toast.error("You gotta be at least 18 years old to register!");
+    }
   };
 
   return (
