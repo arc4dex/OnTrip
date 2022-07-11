@@ -5,13 +5,16 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import { useState } from "react";
 import ModalUSer from "../modalUser";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function HeaderDesktop() {
   const history = useHistory();
+  const userState = useSelector(({ userState }) => userState);
 
+  
   const [language, setLanguage] = useState(true);
   const [modalUser, setModalUser] = useState(false);
-  const [isLogged, setIsLogged] = useState(true);
+
 
   function homePage() {
     history.push("/");
@@ -69,11 +72,12 @@ function HeaderDesktop() {
         )}
         {modalUser && <ModalUSer setModalUser={setModalUser} />}
 
-        {isLogged ? (
+        {userState ? (
           <>
             <img
               src="https://mundoavatar.com.br/wp-content/uploads/2021/07/avatar-filme.jpeg"
-              alt="Avatar user" onClick={modalUserDinamic}
+              alt="Avatar user"
+              onClick={modalUserDinamic}
             />
           </>
         ) : (

@@ -78,7 +78,11 @@ function Register({
 
     if (file?.type === "image/png" || file?.type === "image/jpeg") {
       setImageUserError(false);
-      setImageUser([URL.createObjectURL(file)]);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImageUser([reader.result]);
+      };
+      reader.readAsDataURL(file);
     } else {
       setImageUserError(true);
     }
@@ -107,7 +111,6 @@ function Register({
 
   const onSubmit = async (data) => {
     const age = calculateAge(data.dateOfBirth);
-
     const response = {
       name: data.name,
       email: data.email,

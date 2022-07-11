@@ -1,6 +1,6 @@
 import { StyledH1 } from "./style";
 
-import { Divider } from "@mui/material";
+import { Divider, Pagination } from "@mui/material";
 
 import { useState, useEffect } from "react";
 
@@ -10,8 +10,16 @@ import SearchFilter from "../../components/SearchFilter";
 import AccommodationCard from "../../components/AccommodationCard";
 import SpecialOffers from "../../components/SpecialOffers";
 import Footer from "../../components/Footer";
+import { Api } from "../../services/api";
 
 function Trips() {
+
+  //state que vai receber os dados do filtro de pesquisa
+  const [searchedTrips, setSearchedTrips] = useState([]);
+  const [ page, setPage ] = useState(1)
+  const [ numberOfPages, setNumberOfPages ] = useState(0)
+  const [ listAccomodations, setListAccomodations ] = useState([])
+
   const [lineState, setLineState] = useState(() => {
     if (window.innerWidth < 800) {
       return "none";
@@ -21,7 +29,15 @@ function Trips() {
   });
 
   useEffect(() => {
+    Api
+      .get(`/accommodation?_page={${page}}&_limit=10`)
+      .then((response) => {
+        setListAccomodations(response.data)
+        setNumberOfPages(Math.ceil(response.data.length / 10))
+      })
+  
     function handleChangeLineState() {
+
       if (window.innerWidth < 800) {
         setLineState("none");
       } else {
@@ -30,10 +46,11 @@ function Trips() {
     }
 
     window.addEventListener("resize", handleChangeLineState);
-  });
+  }, [page]);
 
-  //state que vai receber os dados do filtro de pesquisa
-  const [searchedTrips, setSearchedTrips] = useState([]);
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage)
+  }
 
   return (
     <>
@@ -51,14 +68,28 @@ function Trips() {
       />
       <StyledH1>Trips</StyledH1>
       <SearchFilter />
+      <Pagination 
+        count={numberOfPages} 
+        color="primary"
+        onChange={handleChangePage}
+       />
+
       {searchedTrips.length === 0 ? (
-        <SpecialOffers />
+        listAccomodations.map((item) => {
+         return <AccommodationCard key={item.id} accom={item} />;
+        })
       ) : (
         searchedTrips.map((item) => {
           <AccommodationCard key={item.id} accomodation={item} />;
         })
       )}
 
+       <Pagination 
+        count={numberOfPages} 
+        color="primary"
+        onChange={handleChangePage}
+       />
+      <SpecialOffers />
       <Footer />
     </>
   );

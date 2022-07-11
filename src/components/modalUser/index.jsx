@@ -50,16 +50,32 @@ function ModalUSer({ setModalUser }) {
     localStorage.removeItem("userId");
     dispatch(changeUseState(false));
   };
-  console.log(userState);
+
+  const toTrips = () => {
+    let id = localStorage.getItem("userId");
+    history.push(`/nomadeDash/${id}`);
+  };
+
+  const toAccommodations = () => {
+    let id = localStorage.getItem("userId");
+    history.push(`/hostDash/:id`);
+  };
 
   return (
     <>
       <Background onClick={modalClose} handleCloseUser={isModalClosed} />
       <UserMenu handleCloseUser={isModalClosed}>
         <div className="containerIcons">
-          <IconButton>
-            <AccountCircleOutlinedIcon fontSize="large" color="primary" />
-          </IconButton>
+          {!userState ? (
+            <IconButton>
+              <AccountCircleOutlinedIcon fontSize="large" color="primary" />
+            </IconButton>
+          ): (
+            <img
+              src="https://mundoavatar.com.br/wp-content/uploads/2021/07/avatar-filme.jpeg"
+              alt="Avatar user"
+            />
+          )}
           <IconButton onClick={modalClose}>
             <CloseIcon fontSize="" />
           </IconButton>
@@ -72,8 +88,8 @@ function ModalUSer({ setModalUser }) {
             </>
           ) : (
             <>
-              <h3>My trips</h3>
-              <h3>My accommodations</h3>
+              <h3 onClick={toTrips}>My trips</h3>
+              <h3 onClick={toAccommodations}>My accommodations</h3>
               <h3 onClick={logOff}>Logout</h3>
             </>
           )}
