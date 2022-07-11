@@ -45,8 +45,6 @@ function Register({
 
   const [dateOfBirth, setDateOfBirth] = useState("");
 
-  const [errorAge, setErrorAge] = useState("false");
-
   const inputRef = useRef(null);
 
   const formSchema = yup.object().shape({
