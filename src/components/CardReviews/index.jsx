@@ -69,10 +69,15 @@ function CardReviews({ element }) {
       headers: {
         Authorization: `Bearer ${userToken}`,
       },
-    }).then(
-      (response) => response.data,
-      toast.success("Sua review foi alterada com sucesso!")
-    );
+    })
+      .then(
+        (response) => response.data,
+        toast.success("Sua review foi alterada com sucesso!")
+      )
+      .catch(
+        (err) => err,
+        toast.error("Opa, alguma coisa deu errado, tente novamente!")
+      );
 
     closeModal();
   }
