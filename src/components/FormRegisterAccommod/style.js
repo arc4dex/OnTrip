@@ -34,6 +34,13 @@ export const StyledPaper = muiStyles.styled(Paper)`
             font-weight: 400;
         }
 
+        .guests {
+            width: 5.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
         .rooms {
             width: 48%;
             display: flex;
@@ -70,7 +77,34 @@ export const StyledPaper = muiStyles.styled(Paper)`
             }
         }
 
-        
+        .AccommodImageDiv {
+            width: 60%;
+            position: relative;
+
+            button {
+                border: none;
+                outline: none;
+                background-color: transparent;
+                color: var(--red);
+                font-size: 1.2rem;
+                position: absolute;
+                right: 0;
+            }
+            
+
+            img {
+                width: 92%;
+            }
+  
+            .imageError {
+                width: 100%;
+                font-weight: 400;
+                font-size: 0.75rem;
+                text-align: left;
+                margin-left: 1.6rem;
+                color: #d32f2f;
+            }
+        }
     }
 
 `;
@@ -90,13 +124,16 @@ export const StyledMain = styled.main`
 
 export const StyledPaperModal = muiStyles.styled(Paper)`
     display: flex;
-    padding: 1rem; 
+    padding: 1.5rem; 
     width: 90%;
     justify-content: center;
     align-items: stretch;
     position: absolute;
-    top: 8.75%;
-    left: 5%;
+    max-width: 28.8rem;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
 
     form {
         display: flex;
