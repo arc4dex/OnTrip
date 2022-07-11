@@ -9,7 +9,7 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 
 import store from "./store";
-
+import { ToastContainer } from "react-toastify";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
@@ -17,6 +17,17 @@ root.render(
       <ThemeProvider theme={theme}>
         <BrowserRouter>
           <GlobalStyle />
+          <ToastContainer
+            position="top-center"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss={false}
+            draggable
+            pauseOnHover
+          />
 
           <App />
         </BrowserRouter>

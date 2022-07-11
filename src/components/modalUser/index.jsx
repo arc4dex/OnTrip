@@ -8,6 +8,8 @@ import Login from "../login";
 import Register from "../Register";
 import { useDispatch, useSelector } from "react-redux";
 import { changeUseState } from "../../store/modules/userIsLogged/actions";
+import { toHaveStyle } from "@testing-library/jest-dom/dist/matchers";
+import { toast } from "react-toastify";
 
 function ModalUSer({ setModalUser }) {
   const userState = useSelector(({ userState }) => userState);
@@ -48,6 +50,7 @@ function ModalUSer({ setModalUser }) {
   const logOff = () => {
     localStorage.removeItem("userToken");
     localStorage.removeItem("userId");
+    toast.success("Successfully Unlogged");
     dispatch(changeUseState(false));
   };
 
@@ -70,7 +73,7 @@ function ModalUSer({ setModalUser }) {
             <IconButton>
               <AccountCircleOutlinedIcon fontSize="large" color="primary" />
             </IconButton>
-          ): (
+          ) : (
             <img
               src="https://mundoavatar.com.br/wp-content/uploads/2021/07/avatar-filme.jpeg"
               alt="Avatar user"
