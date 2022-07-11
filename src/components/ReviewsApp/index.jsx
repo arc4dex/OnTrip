@@ -68,10 +68,6 @@ function ReviewsApp() {
   function handleCheckUserState() {
     if (userState) {
       handleOpen();
-      console.log(userState);
-    } else {
-      console.log("Você não está logado");
-      console.log(userState);
     }
   }
 
@@ -134,7 +130,7 @@ function ReviewsApp() {
           ))}
         </Swiper>
       </div>
-      <StyledButton onClick={handleCheckUserState} variant="contained">
+      <StyledButton userState={userState} onClick={handleCheckUserState} variant="contained">
         Add a Review
       </StyledButton>
       <Modal
