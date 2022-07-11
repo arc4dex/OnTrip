@@ -85,5 +85,6 @@ export const StyledButton = muiStyles.styled(Button)`
     width: 60%;
     max-width: 13rem;
     text-transform: capitalize;
+    display: ${(props) => (props.userState ? "block" : "none")};
 
 `;
