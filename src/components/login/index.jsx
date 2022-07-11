@@ -44,6 +44,7 @@ function Login({ loginModal, handleCloseModalLogin, handleOpenRegisterModal }) {
         console.log("mostrar mensagem de login bem sucedido")
       )
       .catch((err) => console.log("mostra mensagem de erro"));
+      
     localStorage.setItem("userToken", registerInfo.accessToken);
     localStorage.setItem("userId", registerInfo.user.id);
 

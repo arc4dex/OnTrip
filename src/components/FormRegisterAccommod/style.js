@@ -6,7 +6,8 @@ export const StyledPaper = muiStyles.styled(Paper)`
     display: flex;
     flex-direction: column;
     padding: 1rem; 
-    width: 95%;
+    width: 90%;
+    max-width: 30rem;
     justify-content: center;
     align-items: stretch;
     gap: 1.5rem;
@@ -73,7 +74,7 @@ export const StyledPaper = muiStyles.styled(Paper)`
             width: 100%;
 
             span {
-                color: var(--red)
+                color: var(--blue)
             }
         }
 
@@ -96,7 +97,7 @@ export const StyledPaper = muiStyles.styled(Paper)`
                 width: 92%;
             }
   
-            .imageError {
+            .imageErrorm .adressError {
                 width: 100%;
                 font-weight: 400;
                 font-size: 0.75rem;
@@ -105,6 +106,9 @@ export const StyledPaper = muiStyles.styled(Paper)`
                 color: #d32f2f;
             }
         }
+
+    
+      
     }
 
 `;
@@ -120,6 +124,7 @@ export const StyledMain = styled.main`
   justify-content: center;
   width: 100%;
   height: 100%;
+  margin: 2rem 0;
 `;
 
 export const StyledPaperModal = muiStyles.styled(Paper)`

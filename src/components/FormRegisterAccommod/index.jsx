@@ -6,27 +6,24 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-import {
-  StyledMain,
-  StyledPaper,
-  StyledPaperModal,
-  StyledSelect,
-} from "./style";
+import { StyledMain, StyledPaper } from "./style";
 import {
   Autocomplete,
   Button,
-  IconButton,
+  Checkbox,
+  FormControlLabel,
   InputLabel,
   MenuItem,
   Modal,
   TextField,
+  Tooltip,
 } from "@mui/material";
 
-import CloseIcon from "@mui/icons-material/Close";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
+import { CheckboxContainer, CheckboxErrorContainer } from "../Register/styles";
+
+import RegisterAddressForm from "./RegisterAddressForm";
 
 function FormRegisterAccommod() {
   const categories = ["House", "Apartment", "Flat", "Inn", "Boutique Hotel"];
@@ -48,9 +45,9 @@ function FormRegisterAccommod() {
     "Coworking",
   ];
 
-  const [category, setCategory] = useState(categories[0]);
+  const [category, setCategory] = useState("");
 
-  const [kindOfPlace, setKindOfPlace] = useState(kindsOfPlaces[0]);
+  const [kindOfPlace, setKindOfPlace] = useState("");
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -58,7 +55,11 @@ function FormRegisterAccommod() {
 
   const [imageError, setImageError] = useState(false);
 
+  const [addressError, setAddressError] = useState(false);
+
   const inputRef = useRef(null);
+
+  const accommodAddress = useSelector((store) => store.accommodAddress);
 
   const onImageChange = (e) => {
     const [file] = e.target.files;
@@ -104,26 +105,28 @@ function FormRegisterAccommod() {
   }
 
   const formSchema = yup.object().shape({
-    category: yup
-      .string()
-      // .oneOf(categories)
-      .required("Please select the type of space."),
-    kindOfPlace: yup
-      .string()
-      // .oneOf(kindsOfPlaces)
-      .required("Please select the kind of place."),
-    // location: yup
+    category: yup.string().required("Please select the type of space."),
+    kindOfPlace: yup.string().required("Please select the kind of place."),
+    // adress: yup
     //   .object()
-    //   .required("Please add an address to your accommodation"),
-    guests: yup.number().required("Please select a number of guests."),
-    beds: yup.number().required("Please select a number of beds."),
-    rooms: yup.number().required("Please select a number of rooms."),
-    bathrooms: yup.number().required("Please select a number of bathrooms."),
+    //   .shape(accommodAddress)
+    //   .required("Please register an address for your accommodation"),
+    guests: yup
+      .string()
+      .required("Please select a number of guests. The minimum is one."),
+    bed: yup
+      .string()
+      .required("Please select a number of beds. The minimum is one."),
+    rooms: yup
+      .string()
+      .required("Please select a number of bedrooms. The minimum is one."),
+    bathrooms: yup
+      .string()
+      .required("Please select a number of bathrooms. The minimum is one."),
     highlights: yup.array(),
     imageUrl: yup
-      .string()
-      .oneOf(image)
-      .required("Please upload a photo of your accommodation."),
+      .array()
+      .required("Please upload at least one photo of your accommodation."),
     name: yup
       .string()
       .required("Please enter a name for your accommodation.")
@@ -135,6 +138,9 @@ function FormRegisterAccommod() {
     price: yup
       .string()
       .required("Please enter a price for your accommodation."),
+    minimumRequirements: yup
+      .boolean()
+      .isTrue("Your place must have the minimum requirements."),
   });
 
   const {
@@ -144,10 +150,26 @@ function FormRegisterAccommod() {
     formState: { errors },
   } = useForm({ resolver: yupResolver(formSchema) });
 
-  function onSubmitFunction(data) {
-    console.log(data);
-  }
+  console.log(accommodAddress);
 
+  function onSubmitFunction(data) {
+    console.log(accommodAddress);
+    const location = accommodAddress;
+
+    console.log(data);
+
+    if (location !== {}) {
+      setAddressError(false);
+
+      const dataToSend = { ...data, location };
+
+      console.log(dataToSend);
+      // fazer o post
+    } else {
+      setAddressError(true);
+      // não fazer o post
+    }
+  }
   return (
     <StyledMain>
       <StyledPaper>
@@ -158,27 +180,33 @@ function FormRegisterAccommod() {
           <InputLabel id="demo-simple-select-label">
             What type of space are you going to host?
           </InputLabel>
-          <StyledSelect
+          <TextField
+            select
             {...register("category")}
-            error={errors.category?.message}
-            helperText={errors.category?.message}
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             variant="outlined"
             value={category}
             onChange={(event) => handleChange(event, "category")}
+            error={errors.category?.message}
+            helperText={errors.category?.message}
+            color="secondary"
             size="small"
+            sx={{
+              width: "100%",
+            }}
           >
             {categories.map((category) => (
               <MenuItem value={category} key={category}>
                 {category}
               </MenuItem>
             ))}
-          </StyledSelect>
+          </TextField>
           <InputLabel id="demo-simple-select-label">
             What kind of place are you offering to guests?
           </InputLabel>
-          <StyledSelect
+          <TextField
+            select
             {...register("kindOfPlace")}
             error={errors.kindOfPlace?.message}
             helperText={errors.kindOfPlace?.message}
@@ -187,14 +215,18 @@ function FormRegisterAccommod() {
             variant="outlined"
             value={kindOfPlace}
             onChange={(event) => handleChange(event, "kindOfPlace")}
+            color="secondary"
             size="small"
+            sx={{
+              width: "100%",
+            }}
           >
             {kindsOfPlaces.map((kind) => (
               <MenuItem value={kind} key={kind}>
                 {kind}
               </MenuItem>
             ))}
-          </StyledSelect>
+          </TextField>
           <InputLabel id="demo-simple-select-label">
             Where is your accommodation located?
           </InputLabel>
@@ -202,22 +234,28 @@ function FormRegisterAccommod() {
             sx={{
               textTransform: "capitalize",
               alignSelf: "flex-start",
+              width: "100%",
             }}
             variant="outlined"
             onClick={handleOpenModal}
           >
-            Register address
+            Register an address
           </Button>
+          {accommodAddress === {} && (
+            <span className="adressError">
+              Please register an address for your accommodation.
+            </span>
+          )}
           <InputLabel id="demo-simple-select-label">
             How many guests would you like to accommodate?
           </InputLabel>
           <TextField
             {...register("guests")}
             type="number"
-            defaultValue={1}
-            label="Guests"
             error={errors.guests?.message}
             helperText={errors.guests?.message}
+            size="small"
+            color="secondary"
             sx={{ width: "100%" }}
             onChange={(event) => {
               if (
@@ -236,9 +274,10 @@ function FormRegisterAccommod() {
             type="number"
             label="Beds"
             {...register("bed")}
-            defaultValue="1"
             error={errors.bed?.message}
             helperText={errors.bed?.message}
+            size="small"
+            color="secondary"
             sx={{ width: "100%" }}
             onChange={(event) => {
               if (
@@ -254,9 +293,10 @@ function FormRegisterAccommod() {
             type="number"
             label="Bedrooms"
             {...register("rooms")}
-            defaultValue="1"
             error={errors.rooms?.message}
             helperText={errors.rooms?.message}
+            size="small"
+            color="secondary"
             sx={{ width: "100%" }}
             onChange={(event) => {
               if (
@@ -272,9 +312,10 @@ function FormRegisterAccommod() {
             type="number"
             label="Bathrooms"
             {...register("bathrooms")}
-            defaultValue="1"
             error={errors.bathrooms?.message}
             helperText={errors.bathrooms?.message}
+            color="secondary"
+            size="small"
             sx={{ width: "100%" }}
             onChange={(event) => {
               if (
@@ -300,6 +341,7 @@ function FormRegisterAccommod() {
             id="tags-outlined"
             options={highlights}
             getOptionLabel={(option) => option}
+            color="secondary"
             sx={{ width: "100%" }}
             renderInput={(params) => (
               <TextField {...params} variant="outlined" size="small" />
@@ -309,15 +351,16 @@ function FormRegisterAccommod() {
             Upload photos of your accomoddation
           </InputLabel>
           <Button
-            variant="outlined"
+            variant="text"
             component="label"
+            color="secondary"
             sx={{
               textTransform: "capitalize",
-              fontSize: "0.875rem",
+              fontSize: "0.75rem",
+              border: "none",
             }}
           >
-            Upload Files
-            <input
+            <TextField
               {...register("imageUrl")}
               type="file"
               onChange={onImageChange}
@@ -325,6 +368,12 @@ function FormRegisterAccommod() {
               ref={inputRef}
               error={errors.imageUrl?.message}
               helperText={errors.imageUrl?.message}
+              size="small"
+              color="secondary"
+              sx={{
+                fontSize: "0.5rem",
+                width: "100%",
+              }}
             />
           </Button>
           {image?.map((element, index) => {
@@ -348,6 +397,7 @@ function FormRegisterAccommod() {
             error={errors.name?.message}
             helperText={errors.name?.message}
             size="small"
+            color="secondary"
             sx={{ width: "100%" }}
           />
           <InputLabel id="demo-simple-select-label">
@@ -358,8 +408,39 @@ function FormRegisterAccommod() {
             error={errors.description?.message}
             helperText={errors.description?.message}
             sx={{ width: "100%" }}
+            color="secondary"
             multiline
           />
+          <CheckboxContainer style={{ marginTop: "0", padding: "0 1rem" }}>
+            <FormControlLabel
+              control={
+                <>
+                  <Tooltip
+                    enterDelay={100}
+                    leaveDelay={100}
+                    enterTouchDelay={20}
+                    leaveTouchDelay={100}
+                    title="Internet speed over 50MB/s and minimum home office environment (desk, chair, and accessible power plugs)"
+                    arrow
+                  >
+                    <InputLabel sx={{ fontSize: "1rem", margin: "0" }}>
+                      Does your accommodation have the minimum requirements?
+                    </InputLabel>
+                  </Tooltip>
+                  <Checkbox
+                    {...register("minimumRequirements")}
+                    color="secondary"
+                    sx={{ "& .MuiSvgIcon-root": { fontSize: 20 } }}
+                  />
+                </>
+              }
+            />
+          </CheckboxContainer>
+          <CheckboxErrorContainer>
+            {errors.minimumRequirements && (
+              <span>{errors.minimumRequirements.message}</span>
+            )}
+          </CheckboxErrorContainer>
           <InputLabel id="demo-simple-select-label">
             Set a price per night
           </InputLabel>
@@ -370,6 +451,7 @@ function FormRegisterAccommod() {
               error={errors.price?.message}
               helperText={errors.price?.message}
               size="small"
+              color="secondary"
               sx={{ width: "95%" }}
             />
           </div>
@@ -394,66 +476,7 @@ function FormRegisterAccommod() {
           aria-describedby="modal-modal-description"
           className="addressModal"
         >
-          <StyledPaperModal>
-            <form>
-              <h2>Register Address</h2>
-              <TextField
-                label="Address"
-                required
-                id="outlined-basic"
-                variant="outlined"
-                sx={{ width: "100%" }}
-                size="small"
-              />
-              <TextField
-                label="Address Complement"
-                id="outlined-basic"
-                variant="outlined"
-                sx={{ width: "100%" }}
-                size="small"
-              />
-              <TextField
-                required
-                label="Zip/Postal Code"
-                id="outlined-basic"
-                variant="outlined"
-                sx={{ width: "100%" }}
-                size="small"
-              />
-              <TextField
-                required
-                label="City"
-                id="outlined-basic"
-                variant="outlined"
-                sx={{ width: "100%" }}
-                size="small"
-              />
-              <TextField
-                required
-                label="State"
-                id="outlined-basic"
-                variant="outlined"
-                sx={{ width: "100%" }}
-                size="small"
-              />
-              <TextField
-                required
-                label="Country"
-                id="outlined-basic"
-                variant="outlined"
-                sx={{ width: "100%" }}
-                size="small"
-              />
-              <Button variant="contained">Save address</Button>
-            </form>
-            <IconButton
-              onClick={handleCloseModal}
-              color="primary"
-              sx={{ padding: "7px", position: "absolute", top: 0, right: 0 }}
-            >
-              <CloseIcon />
-            </IconButton>
-          </StyledPaperModal>
+          <RegisterAddressForm handleCloseModal={handleCloseModal} />
         </Modal>
       </StyledPaper>
     </StyledMain>
