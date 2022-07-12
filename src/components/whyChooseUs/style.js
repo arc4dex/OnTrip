@@ -17,7 +17,7 @@ export const HeaderWCU = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 1.2rem;
   h1 {
     font-size: 1.5rem;
     font-weight: bolder;

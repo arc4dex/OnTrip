@@ -17,7 +17,11 @@ function SpecialOffers() {
 
   useEffect(() => {
     Api.get("/accommodation").then((resp) => setAccommodations(resp.data));
-  });
+  }, []);
+
+  const specialOffer = accommodations.filter(
+    (acomodation) => acomodation.specialOffer?.status === true
+  );
 
   return (
     <StyledSpecialOffers>
@@ -39,7 +43,7 @@ function SpecialOffers() {
           modules={[Pagination, Navigation]}
           className="mySwiper"
         >
-          {accommodations?.map((accom) => {
+          {specialOffer?.map((accom) => {
             return (
               <SwiperSlide key={accom.id}>
                 <AccommodationCard accom={accom} />

@@ -6,6 +6,8 @@ import {
   ThemeProvider,
 } from "@mui/material";
 
+import { toast } from "react-toastify";
+
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
@@ -33,6 +35,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState, useRef } from "react";
 
+
 function Register({
   registerModal,
   handleCloseRegisterModal,
@@ -55,7 +58,7 @@ function Register({
     password: yup
       .string()
       .required("Password is required.")
-      .min(6, "Password must have at least 6 characters."),
+      .min(4, "Password must have at least 4 characters."),
     confirmPassword: yup
       .string()
       .oneOf([yup.ref("password")], "Passwords don't match.")
@@ -111,24 +114,29 @@ function Register({
 
   const onSubmit = async (data) => {
     const age = calculateAge(data.dateOfBirth);
-    const response = {
-      name: data.name,
-      email: data.email,
-      password: data.password,
-      age: age,
-      profilePicture: imageUser,
-    };
+    if (age >= 18) {
+      const response = {
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        age: age,
+        profilePicture: imageUser,
+      };
 
-    reset();
+      reset();
 
     await Api.post("/register", response)
-      .then(
-        (response) => response.data,
-        console.log("mostrar mensagem de registro bem sucedido")
-      )
-      .catch((err) => console.log("mostrar mensagem de registro erro"));
+      .then((_) => {
+        toast.success("Successfully registered");
+      })
+      .catch((_) => {
+        toast.error("Something went wrong");
+      });
 
-    handleCloseRegisterModal();
+      handleCloseRegisterModal();
+    } else {
+      toast.error("You gotta be at least 18 years old to register!");
+    }
   };
 
   return (

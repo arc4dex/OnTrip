@@ -10,12 +10,16 @@ import {
   StyledTextField,
 } from "./style";
 
+import { toast } from "react-toastify";
+
 import { Api } from "../../services/api";
 import { changeUseState } from "../../store/modules/userIsLogged/actions";
 import { useDispatch } from "react-redux";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useHistory } from "react-router-dom";
+import { addData } from "../../store/modules/userData/action";
 
 function Login({ loginModal, handleCloseModalLogin, handleOpenRegisterModal }) {
   const formSchema = yup.object().shape({
@@ -23,10 +27,11 @@ function Login({ loginModal, handleCloseModalLogin, handleOpenRegisterModal }) {
     password: yup
       .string()
       .required("Required field")
-      .min(6, "Password must have at least 6 characters"),
+      .min(4, "Password must have at least 4 characters"),
   });
 
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const {
     register,
@@ -37,17 +42,19 @@ function Login({ loginModal, handleCloseModalLogin, handleOpenRegisterModal }) {
   });
 
   const onSubmits = async (data) => {
-    console.log(data);
     const registerInfo = await Api.post("/login", data)
-      .then(
-        (response) => response.data,
-        console.log("mostrar mensagem de login bem sucedido")
-      )
-      .catch((err) => console.log("mostra mensagem de erro"));
+      .then((response) => response.data, toast.success("Successfully Logged"))
+      .catch((_) => {
+        toast.error("Something went Wrong");
+      });
+
     localStorage.setItem("userToken", registerInfo.accessToken);
     localStorage.setItem("userId", registerInfo.user.id);
+    localStorage.setItem("user", JSON.stringify(registerInfo.user));
 
     dispatch(changeUseState(true));
+    history.push("/");
+    dispatch(addData(registerInfo.user));
     handleCloseModalLogin();
   };
 

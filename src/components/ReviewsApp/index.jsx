@@ -45,10 +45,10 @@ const textFieldStyle = {
 function ReviewsApp() {
   const [reviews, setReviews] = useState([]);
 
+  const reviewsDescending = [...reviews].sort((a, b) => b.id - a.id);
   useEffect(() => {
     Api.get("/appReview").then((resp) => setReviews(resp.data));
-  });
-
+  }, [reviews]);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -68,10 +68,6 @@ function ReviewsApp() {
   function handleCheckUserState() {
     if (userState) {
       handleOpen();
-      console.log(userState);
-    } else {
-      console.log("Você não está logado");
-      console.log(userState);
     }
   }
 
@@ -84,7 +80,7 @@ function ReviewsApp() {
       },
     })
       .then((response) => response.data)
-      .catch((err) => console.log(err));
+      // .catch((err) => console.log(err));
 
     const newReview = {
       userName: userInfo.name,
@@ -98,7 +94,7 @@ function ReviewsApp() {
       },
     })
       .then((response) => response.data)
-      .catch((err) => console.log(err));
+      // .catch((err) => console.log(err));
     handleClose();
   }
 
@@ -127,14 +123,18 @@ function ReviewsApp() {
           modules={[Pagination]}
           className="mySwiper"
         >
-          {reviews?.map((element) => (
+          {reviewsDescending?.map((element) => (
             <SwiperSlide key={element.id}>
               <CardReviews element={element} />
             </SwiperSlide>
           ))}
         </Swiper>
       </div>
-      <StyledButton onClick={handleCheckUserState} variant="contained">
+      <StyledButton
+        userState={userState}
+        onClick={handleCheckUserState}
+        variant="contained"
+      >
         Add a Review
       </StyledButton>
       <Modal
@@ -154,6 +154,7 @@ function ReviewsApp() {
           />
           <p style={{ color: "#ee685f" }}>{errors.review?.message}</p>
           <StyledButton
+            userState={userState}
             onClick={handleSubmit(onSubmitReview)}
             variant="contained"
           >

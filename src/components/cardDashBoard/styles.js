@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import * as muiStyles from '@mui/material/styles'
-import { Paper } from '@mui/material'
+import * as muiStyles from "@mui/material/styles";
+import { Paper } from "@mui/material";
 
 export const CardPaper = muiStyles.styled(Paper)`
  display: flex;
@@ -9,6 +9,8 @@ export const CardPaper = muiStyles.styled(Paper)`
 
  width: 90%;
  height: auto;
+
+ opacity: ${(props) => (props.opacity === "cancelled" ? 0.5 : 1)};
 
  img{
   max-width: 20rem;
@@ -41,7 +43,7 @@ export const CardPaper = muiStyles.styled(Paper)`
     max-width:13rem;
   }
  }
-`
+`;
 
 
 export const ContainerInfoCard = styled.section`
@@ -58,15 +60,15 @@ export const ContainerInfoCard = styled.section`
 
   gap: 0.7rem;
 
-  h1{
+  h1 {
     margin-top: 1rem;
   }
 
-  p{
-      text-align: justify;
-    }
- 
-  section{
+  p {
+    text-align: justify;
+  }
+
+  section {
     width: 15rem;
 
     display: flex;
@@ -75,30 +77,28 @@ export const ContainerInfoCard = styled.section`
 
     margin-top: 1rem;
 
-  
-    .boldText{
+    .boldText {
       font-weight: 600;
     }
   }
 
-  @media(max-width:822px){
+  @media (max-width: 822px) {
     width: 90%;
 
     align-items: center;
 
-    section{
+    section {
       display: none;
     }
   }
 
-  @media(max-width: 425px){
-    h1{
+  @media (max-width: 425px) {
+    h1 {
       font-size: 1.1rem;
       margin-top: 1rem;
     }
   }
-  
-`
+`;
 export const ContainerButtons = styled.section`
   width: 20%;
   height: auto;
@@ -110,22 +110,21 @@ export const ContainerButtons = styled.section`
 
   gap: 1.25rem;
 
-  @media(max-width:1025px){
+  @media (max-width: 1025px) {
     width: 100%;
-  
+
     flex-direction: row;
 
     margin-top: 1.25rem;
   }
 
-  
-  @media(max-width:822px){
+  @media (max-width: 822px) {
     width: 90%;
   }
 
-  @media(max-width: 500px){
+  @media (max-width: 500px) {
     width: 90%;
 
     flex-direction: column;
   }
-`
+`;

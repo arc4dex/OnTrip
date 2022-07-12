@@ -8,9 +8,14 @@ import Login from "../login";
 import Register from "../Register";
 import { useDispatch, useSelector } from "react-redux";
 import { changeUseState } from "../../store/modules/userIsLogged/actions";
+import { toHaveStyle } from "@testing-library/jest-dom/dist/matchers";
+import { toast } from "react-toastify";
 
 function ModalUSer({ setModalUser }) {
   const userState = useSelector(({ userState }) => userState);
+  const userData = useSelector(({ userData }) => userData);
+
+
   const dispatch = useDispatch();
 
   const [isModalClosed, setIsModalClosed] = useState(false);
@@ -46,9 +51,10 @@ function ModalUSer({ setModalUser }) {
   };
 
   const logOff = () => {
-    localStorage.removeItem("userToken");
-    localStorage.removeItem("userId");
+    localStorage.clear();
+    toast.success("Successfully Unlogged");
     dispatch(changeUseState(false));
+    history.push(`/`);
   };
 
   const toTrips = () => {
@@ -70,11 +76,8 @@ function ModalUSer({ setModalUser }) {
             <IconButton>
               <AccountCircleOutlinedIcon fontSize="large" color="primary" />
             </IconButton>
-          ): (
-            <img
-              src="https://mundoavatar.com.br/wp-content/uploads/2021/07/avatar-filme.jpeg"
-              alt="Avatar user"
-            />
+          ) : (
+            <img src={userData.profilePicture[0]} alt="Avatar user" />
           )}
           <IconButton onClick={modalClose}>
             <CloseIcon fontSize="" />

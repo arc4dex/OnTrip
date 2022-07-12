@@ -1,32 +1,66 @@
-import { Button, Paper, Rating } from "@mui/material"
-import MiniCardImg from "../miniCardImg"
-import { CardPaper, ContainerButtons, ContainerInfoCard } from "./styles"
+import { Button, Paper, Rating } from "@mui/material";
+import { useEffect, useState } from "react";
+import { Api } from "../../services/api";
+import MiniCardImg from "../miniCardImg";
+import { CardPaper, ContainerButtons, ContainerInfoCard } from "./styles";
 
+function CardDashBoard({ element, conditional }) {
+  const [reviews, setReviews] = useState();
+  const [reviewAverage, setReviewAverage] = useState(5);
+  console.log(conditional);
 
-function CardDashBoard(){
+  useEffect(() => {
+    Api.get("/accommodationReview")
+      .then((response) => setReviews(response.data))
+      .catch((err) => console.log(err));
+  }, []);
 
-  return(
-    <CardPaper elevation={3}>
+  useEffect(() => {
+    let temporaryArray = 0;
+    let counter = 0;
+    if (element && reviews) {
+      for (let i = 0; i < reviews.length; i++) {
+        if (reviews[i].idAccommodation === element.id) {
+          temporaryArray += reviews[i].review;
+          counter++;
+        }
+      }
+    }
+    let average = temporaryArray / counter;
+    setReviewAverage(average);
+  }, [reviews, element]);
+
+  return (
+    <CardPaper opacity={conditional} elevation={3}>
       <div className="imgContainer">
-        <img src="https://content.r9cdn.net/himg/cf/89/96/expediav2-15033-ed0280-550033.jpg" alt="" />
-        <MiniCardImg imgMobile/>
+        <img src={element.imageUrl[0]} alt="" />
+        <MiniCardImg imgMobile />
       </div>
       <ContainerInfoCard>
-        <h1>St. Louis Sanatorium</h1>
-        <Paper elevation={2} sx={{ width: '9rem', textAlign:'center', alignItems: 'center', borderRadius: '8px'}}>
-          <Rating name="half-rating" defaultValue={4.5} precision={0.5} />
+        <h1>{element.name}</h1>
+        <Paper
+          elevation={2}
+          sx={{
+            width: "9rem",
+            textAlign: "center",
+            alignItems: "center",
+            borderRadius: "0.5rem",
+          }}
+        >
+          <Rating name="half-rating" value={reviewAverage} precision={0.5} />
         </Paper>
-        <p>
-        orem ipsum dolor sit amet, consectetur adipiscing elit. Quisque lacus nunc, aliquet volutpat arcu vitae, auctor consectetur ex. Nunc cursus mollis consequat. Morbi consectetur molestie sapien at dictum. Aliquam hendrerit tellus a purus semper, et vestibulum nisi rhoncus. Curabitur vitae nunc justo. Interdum et malesuada fames ac ante ipsum primis in faucibus.
-        </p>
-        <MiniCardImg/>
+        <p>{element.description}</p>
+        <MiniCardImg element={element} />
       </ContainerInfoCard>
       <ContainerButtons>
-        <Button variant="contained">Edit Accommodation</Button>
-        <Button variant="outlined">Delete Accommodation</Button>
+        {conditional !== "finished" && (
+          <Button variant="contained">Book Again</Button>
+        )}
+
+        <Button variant="outlined">Read More</Button>
       </ContainerButtons>
     </CardPaper>
-  )
+  );
 }
 
-export default CardDashBoard
+export default CardDashBoard;
