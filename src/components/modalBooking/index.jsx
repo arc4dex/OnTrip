@@ -18,8 +18,8 @@ import { useEffect } from "react";
 function ModalBooking({ setModal, price }) {
   const [checkin, setCheckin] = useState(new Date());
   const [checkout, setCheckout] = useState(new Date());
-  const [ dailys, setDailys ] = useState(1)
-  const [ totalPrice, setTotalPrice ] = useState(price)
+  const [dailys, setDailys] = useState(1);
+  const [totalPrice, setTotalPrice] = useState(price);
 
   const formSchema = yup.object().shape({
     checkin: yup.string().required("Checkin is required."),
@@ -36,7 +36,6 @@ function ModalBooking({ setModal, price }) {
 
   const handleCheckin = (newValue) => {
     setCheckin(newValue);
-    
   };
 
   const handleCheckout = (newValue) => {
@@ -51,15 +50,15 @@ function ModalBooking({ setModal, price }) {
     console.log(data);
   };
 
-  useEffect(()=>{
-    const dataBooking = (checkout.getTime() - checkin.getTime()) / 86400000
-    if(dataBooking > 1) {
-      setDailys(dataBooking)
+  useEffect(() => {
+    const dataBooking = (checkout.getTime() - checkin.getTime()) / 86400000;
+    if (dataBooking > 1) {
+      setDailys(dataBooking);
     } else {
-      setDailys(1)
+      setDailys(1);
     }
-    setTotalPrice(dailys * price) 
-  },[checkin, checkout, dailys, price])
+    setTotalPrice(dailys * price);
+  }, [checkin, checkout, dailys, price]);
 
   return (
     <BackGroundModalBooking>
@@ -110,7 +109,9 @@ function ModalBooking({ setModal, price }) {
             </section>
           </form>
           <section>
-            <h1>R$ {price} x <span>{dailys}</span></h1>
+            <h1>
+              R$ {price} x <span>{dailys}</span>
+            </h1>
             <p>R$ {totalPrice}</p>
           </section>
         </div>

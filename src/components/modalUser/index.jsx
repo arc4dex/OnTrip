@@ -15,7 +15,6 @@ function ModalUSer({ setModalUser }) {
   const userState = useSelector(({ userState }) => userState);
   const userData = useSelector(({ userData }) => userData);
 
-
   const dispatch = useDispatch();
 
   const [isModalClosed, setIsModalClosed] = useState(false);
