@@ -1,10 +1,13 @@
-export const UserDataReducer = (state = [], action) => {
-  const { user } = action;
+const initialState = JSON.parse(localStorage.getItem("user")) ||{};
+
+export const userDataReducer = (state = initialState, action) => {
+  const { data } = action;
+
   switch (action.type) {
     case "USER_LOGGED":
-      return [...state, user];
+      return data;
 
     default:
-      break;
+      return state;
   }
 };

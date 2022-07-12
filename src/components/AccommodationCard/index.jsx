@@ -2,11 +2,11 @@ import { StyledCard, StyledPaper, StyledButton, StyledBox } from "./styles";
 
 function AccommodationCard({ accom }) {
   function readMore() {
-    console.log("Button Read More clicked");
+    // console.log("Button Read More clicked");
   }
 
   function booking() {
-    console.log("Button Booking clicked");
+    // console.log("Button Booking clicked");
   }
 
   return (

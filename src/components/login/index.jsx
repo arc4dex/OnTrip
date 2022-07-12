@@ -48,10 +48,10 @@ function Login({ loginModal, handleCloseModalLogin, handleOpenRegisterModal }) {
 
     localStorage.setItem("userToken", registerInfo.accessToken);
     localStorage.setItem("userId", registerInfo.user.id);
+    localStorage.setItem("user", JSON.stringify(registerInfo.user));
 
-    console.log(registerInfo);
     dispatch(changeUseState(true));
-
+    dispatch(addData(registerInfo.user));
     handleCloseModalLogin();
   };
 
