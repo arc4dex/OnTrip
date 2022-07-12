@@ -80,7 +80,7 @@ function ReviewsApp() {
       },
     })
       .then((response) => response.data)
-      .catch((err) => console.log(err));
+      // .catch((err) => console.log(err));
 
     const newReview = {
       userName: userInfo.name,
@@ -94,7 +94,7 @@ function ReviewsApp() {
       },
     })
       .then((response) => response.data)
-      .catch((err) => console.log(err));
+      // .catch((err) => console.log(err));
     handleClose();
   }
 
