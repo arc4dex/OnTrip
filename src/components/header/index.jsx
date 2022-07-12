@@ -11,10 +11,10 @@ import { useSelector } from "react-redux";
 function Header() {
   const history = useHistory();
   const userState = useSelector(({ userState }) => userState);
+  const userData = useSelector(({ userData }) => userData);
 
   const [modal, setModal] = useState(false);
   const [modalUser, setModalUser] = useState(false);
-
 
   function modalNavDinamic() {
     setModal(true);
@@ -44,7 +44,7 @@ function Header() {
       {userState ? (
         <>
           <img
-            src="https://mundoavatar.com.br/wp-content/uploads/2021/07/avatar-filme.jpeg"
+            src={userData.profilePicture[0]}
             alt="Avatar user"
             onClick={modalUserDinamic}
           />
