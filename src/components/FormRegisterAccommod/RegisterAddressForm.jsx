@@ -43,7 +43,6 @@ function RegisterAddressForm({ handleCloseModal }) {
           label="Address"
           id="outlined-basic"
           variant="outlined"
-          color="secondary"
           sx={{ width: "100%" }}
           size="small"
           error={errors.streetAddress?.message}
@@ -54,7 +53,6 @@ function RegisterAddressForm({ handleCloseModal }) {
           label="Address Complement"
           id="outlined-basic"
           variant="outlined"
-          color="secondary"
           sx={{ width: "100%" }}
           size="small"
           error={errors.complement?.message}
@@ -66,7 +64,6 @@ function RegisterAddressForm({ handleCloseModal }) {
           label="Zip/Postal Code"
           id="outlined-basic"
           variant="outlined"
-          color="secondary"
           sx={{ width: "100%" }}
           size="small"
           error={errors.zipCode?.message}
@@ -77,7 +74,6 @@ function RegisterAddressForm({ handleCloseModal }) {
           label="City"
           id="outlined-basic"
           variant="outlined"
-          color="secondary"
           sx={{ width: "100%" }}
           size="small"
           error={errors.city?.message}
@@ -88,7 +84,6 @@ function RegisterAddressForm({ handleCloseModal }) {
           label="State"
           id="outlined-basic"
           variant="outlined"
-          color="secondary"
           sx={{ width: "100%" }}
           size="small"
           error={errors.state?.message}
@@ -99,7 +94,6 @@ function RegisterAddressForm({ handleCloseModal }) {
           label="Country"
           id="outlined-basic"
           variant="outlined"
-          color="secondary"
           sx={{ width: "100%" }}
           size="small"
           error={errors.country?.message}
