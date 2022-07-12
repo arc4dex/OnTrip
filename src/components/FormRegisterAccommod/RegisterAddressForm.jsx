@@ -7,6 +7,8 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
+import { toast } from "react-toastify";
+
 import { useDispatch } from "react-redux";
 import { setAddress } from "../../store/modules/accommodAddress/actions";
 
@@ -32,6 +34,7 @@ function RegisterAddressForm({ handleCloseModal }) {
     const location = data;
     dispatch(setAddress(location));
     handleCloseModal();
+    toast.success("Address successfully saved.");
   }
 
   return (

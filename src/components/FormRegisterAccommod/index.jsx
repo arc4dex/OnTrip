@@ -6,6 +6,8 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
+import { toast } from "react-toastify";
+
 import { useSelector } from "react-redux";
 
 import { Dropzone, FileItem, FullScreenPreview } from "@dropzone-ui/react";
@@ -27,6 +29,9 @@ import {
 import { CheckboxContainer, CheckboxErrorContainer } from "../Register/styles";
 
 import RegisterAddressForm from "./RegisterAddressForm";
+
+import { Api } from "../../services/api";
+
 import axios from "axios";
 
 function FormRegisterAccommod() {
@@ -98,12 +103,13 @@ function FormRegisterAccommod() {
 
   const onDelete = (id) => {
     setFiles(files.filter((file) => file.id !== id));
-    setImage(files.filter((file) => file.id !== id));
+    setImage(image.filter((file) => file.id !== id));
     setValue(
       "imageUrl",
-      files.filter((file) => file.id !== id)
+      image.filter((file) => file.id !== id)
     );
     console.log(image);
+    console.log(files);
   };
 
   const handleSee = (imageSource) => {
@@ -148,14 +154,15 @@ function FormRegisterAccommod() {
       .string()
       .required("Please select a number of bathrooms. The minimum is one."),
     highlights: yup.array(),
-    // imageUrl: yup
-    //   .array()
-    //   .of(yup.string())
-    //   .required("Please upload at least one photo of your accommodation."),
+    imageUrl: yup
+      .array()
+      .min(1)
+      .required("Please upload at least one photo of your accommodation."),
     name: yup
       .string()
       .required("Please enter a name for your accommodation.")
-      .min(3, "Name must have at least 3 characters."),
+      .min(3, "Name must have at least 3 characters.")
+      .max(35, "Name cannot be longer than 35 characters."),
     description: yup
       .string()
       .required("Please enter a description for your accommodation.")
@@ -175,20 +182,39 @@ function FormRegisterAccommod() {
     formState: { errors },
   } = useForm({ resolver: yupResolver(formSchema) });
 
-  function onSubmitFunction(data) {
+  async function onSubmitFunction(data) {
     console.log(accommodAddress);
 
     const location = accommodAddress;
 
     console.log(data);
 
-    if (location !== {}) {
-      setAddressError(false);
+    console.log(location);
 
-      // arrumar string para número
+    //   {
+    //     "streetAddress": "5151 Rua dos Mares",
+    //     "complement": "",
+    //     "zipCode": "81210310",
+    //     "city": "Curitiba",
+    //     "state": "Paraná",
+    //     "country": "brasil"
+    // }
+
+    console.log(image);
+
+    if (
+      location.hasOwnProperty("streetAddress") &&
+      location.hasOwnProperty("complement") &&
+      location.hasOwnProperty("zipCode") &&
+      location.hasOwnProperty("city") &&
+      location.hasOwnProperty("state") &&
+      location.hasOwnProperty("country")
+    ) {
+      // setAddressError(false);
 
       const dataToSend = {
         name: data.name,
+        userId: parseInt(localStorage.getItem("userId")),
         avaliable: true,
         imageUrl: image,
         price: parseInt(data.price),
@@ -214,15 +240,23 @@ function FormRegisterAccommod() {
 
       console.log(dataToSend);
 
-      axios
-        .post("/accommodation", dataToSend, {
+      await Api.post("/accommodation", dataToSend, {
+        headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+        },
+      })
+        .then((response) => {
+          console.log(response);
+          toast.success("Accommodation successfully registered!");
         })
-        .then((response) => console.log(response))
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          console.log(error);
+          toast.error("Ops! Something went wrong.");
+        });
     } else {
-      setAddressError(true);
+      // setAddressError(true);
+      toast.error("Please register an address.");
       // não fazer o post na api
       // mensagem de erro
     }
@@ -453,6 +487,9 @@ function FormRegisterAccommod() {
             helperText={errors.name?.message}
             size="small"
             sx={{ width: "100%" }}
+            inputProps={{
+              maxlength: 35,
+            }}
           />
           <InputLabel id="demo-simple-select-label">
             Create a description for your space

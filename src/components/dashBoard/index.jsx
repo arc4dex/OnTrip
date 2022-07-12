@@ -48,6 +48,8 @@ function DashBoard() {
     setMyBookedAccommodations(temporaryArray);
   }, [myTrips, filterTrips]);
 
+
+
   return (
     <>
       <MainSection>

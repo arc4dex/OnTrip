@@ -32,11 +32,11 @@ function CardDashBoard({ element }) {
   return (
     <CardPaper elevation={3}>
       <div className="imgContainer">
-        <img src={element.imageUrl[0]} alt="" />
+        <img src={element?.imageUrl[0]} alt="" />
         <MiniCardImg imgMobile />
       </div>
       <ContainerInfoCard>
-        <h1>{element.name}</h1>
+        <h1>{element?.name}</h1>
         <Paper
           elevation={2}
           sx={{
@@ -48,7 +48,7 @@ function CardDashBoard({ element }) {
         >
           <Rating name="half-rating" value={reviewAverage} precision={0.5} />
         </Paper>
-        <p>{element.description}</p>
+        <p>{element?.description}</p>
         <MiniCardImg element={element} />
       </ContainerInfoCard>
       <ContainerButtons>
