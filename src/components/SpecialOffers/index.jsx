@@ -21,6 +21,10 @@ function SpecialOffers() {
   const specialOffer = accommodations.filter(
     (acomodation) => acomodation.specialOffer?.status === true
   );
+<<<<<<< HEAD
+=======
+  // console.log(specialOffer);
+>>>>>>> develop
 
   return (
     <StyledSpecialOffers>

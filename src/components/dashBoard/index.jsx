@@ -22,7 +22,7 @@ function DashBoard() {
   useEffect(() => {
     Api.get(`/accommodation`)
       .then((resp) => setMyTrips(resp.data))
-      .catch((err) => console.log(err));
+      // .catch((err) => console.log(err));
   }, []);
 
   useEffect(() => {
