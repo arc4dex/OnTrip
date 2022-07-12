@@ -1,4 +1,5 @@
-import { StyledCard, StyledPaper, StyledButton, StyledBox } from './styles';
+import { Paper, Rating } from '@mui/material';
+import { StyledCard, StyledPaper, StyledButton, StyledBox, ContainerRaitingReview, ContainerRaitingAccommodation } from './styles';
 
 function AccommodationCard({ accom }) {
 	function readMore() {
@@ -23,7 +24,7 @@ function AccommodationCard({ accom }) {
 					}}
 				>
 					{accom.specialOffer?.status === true ? (
-						<StyledPaper>
+						<StyledPaper elevation={1}>
 							<StyledBox>
 								<h4>City</h4>
 								<p>{accom?.location?.city}</p>
@@ -58,6 +59,9 @@ function AccommodationCard({ accom }) {
 						</StyledPaper>
 					)}
 				</div>
+				<ContainerRaitingAccommodation>
+            <Rating name="half-rating" value={4.5} precision={0.5}/>
+        </ContainerRaitingAccommodation>
 				<h2>{accom?.name}</h2>
 				<p>{accom?.description}</p>
 				<div className="btn">

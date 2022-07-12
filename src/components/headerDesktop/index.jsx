@@ -71,7 +71,7 @@ function HeaderDesktop() {
         )}
         {modalUser && <ModalUSer setModalUser={setModalUser} />}
 
-        {/* {userState ? (
+        {userState ? (
           <>
             <img
               src={userData?.profilePicture[0] && userData?.profilePicture[0]}
@@ -83,11 +83,7 @@ function HeaderDesktop() {
           <IconButton onClick={modalUserDinamic}>
             <AccountCircleOutlinedIcon color="primary" />
           </IconButton>
-        )} */}
-
-        <IconButton onClick={modalUserDinamic}>
-          <AccountCircleOutlinedIcon color="primary" />
-        </IconButton>
+        )}
       </ContainerIconsNav>
     </NavDesktop>
   );

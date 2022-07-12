@@ -1,4 +1,4 @@
-import { StyledH1 } from "./style";
+import { ContainerMainTrip, StyledH1 } from "./style";
 
 import { Divider, Pagination } from "@mui/material";
 
@@ -13,12 +13,11 @@ import Footer from "../../components/Footer";
 import { Api } from "../../services/api";
 
 function Trips() {
-
   //state que vai receber os dados do filtro de pesquisa
   const [searchedTrips, setSearchedTrips] = useState([]);
-  const [ page, setPage ] = useState(1)
-  const [ numberOfPages, setNumberOfPages ] = useState(0)
-  const [ listAccomodations, setListAccomodations ] = useState([])
+  const [page, setPage] = useState(1);
+  const [numberOfPages, setNumberOfPages] = useState(0);
+  const [listAccomodations, setListAccomodations] = useState([]);
 
   const [lineState, setLineState] = useState(() => {
     if (window.innerWidth < 800) {
@@ -29,15 +28,12 @@ function Trips() {
   });
 
   useEffect(() => {
-    Api
-      .get(`/accommodation?_page={${page}}&_limit=10`)
-      .then((response) => {
-        setListAccomodations(response.data)
-        setNumberOfPages(Math.ceil(response.data.length / 10))
-      })
-  
-    function handleChangeLineState() {
+    Api.get(`/accommodation?_page={${page}}&_limit=10`).then((response) => {
+      setListAccomodations(response.data);
+      setNumberOfPages(Math.ceil(response.data.length / 10));
+    });
 
+    function handleChangeLineState() {
       if (window.innerWidth < 800) {
         setLineState("none");
       } else {
@@ -49,8 +45,8 @@ function Trips() {
   }, [page]);
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage)
-  }
+    setPage(newPage);
+  };
 
   return (
     <>
@@ -68,27 +64,26 @@ function Trips() {
       />
       <StyledH1>Trips</StyledH1>
       <SearchFilter />
-      <Pagination 
-        count={numberOfPages} 
+      <Pagination
+        count={numberOfPages}
         color="primary"
         onChange={handleChangePage}
-       />
+      />
+      <ContainerMainTrip>
+        {searchedTrips.length === 0
+          ? listAccomodations.map((item) => {
+              return <AccommodationCard key={item.id} accom={item} />;
+            })
+          : searchedTrips.map((item) => {
+              <AccommodationCard key={item.id} accomodation={item} />;
+            })}
+      </ContainerMainTrip>
 
-      {searchedTrips.length === 0 ? (
-        listAccomodations.map((item) => {
-         return <AccommodationCard key={item.id} accom={item} />;
-        })
-      ) : (
-        searchedTrips.map((item) => {
-          <AccommodationCard key={item.id} accomodation={item} />;
-        })
-      )}
-
-       <Pagination 
-        count={numberOfPages} 
+      <Pagination
+        count={numberOfPages}
         color="primary"
         onChange={handleChangePage}
-       />
+      />
       <SpecialOffers />
       <Footer />
     </>

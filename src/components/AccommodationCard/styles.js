@@ -4,17 +4,17 @@ import * as muiStyles from '@mui/material/styles';
 
 import { Button, Paper, Box } from '@mui/material';
 
+
 export const StyledCard = styled.article`
-	margin-left: 1.25rem;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+	align-items: left;
 	max-width: 31.25rem;
 	width: 90%;
 	height: 34.375rem;
-	gap: 1rem;
-	padding: 0.625rem;
+	gap: 0.5rem;
+
+	margin-bottom: 1rem;
 
 	h2 {
 		display: flex;
@@ -22,16 +22,18 @@ export const StyledCard = styled.article`
 		align-items: center;
 		font-size: 1.25rem;
 		width: 100%;
-		height: 4.375rem;
+		height: 2rem;
 	}
 
 	p {
 		display: flex;
 		justify-content: start;
+		text-align: justify;
 		align-items: center;
 		width: 100%;
-		height: 2.5rem;
+		height: 30%;
 	}
+
 
 	@media (min-width: 37.5rem) {
 		height: 95vh;
@@ -69,7 +71,6 @@ export const StyledButton = muiStyles.styled(Button)`
     border-radius: 0.625rem;
     border: 0.125rem solid #EE685F;
 
-
     text-transform: capitalize;
 
     @media (min-width: 32.813rem){
@@ -80,7 +81,7 @@ export const StyledButton = muiStyles.styled(Button)`
 
 export const StyledPaper = muiStyles.styled(Paper)`
     position: absolute;
-    top: 64%;
+   	bottom: 1rem;
     opacity: 0.9;
     height: 4.063rem;
     width: 90%;
@@ -91,7 +92,6 @@ export const StyledPaper = muiStyles.styled(Paper)`
 `;
 
 export const StyledBox = muiStyles.styled(Box)`
-
     width: 50%;
     display: flex;
     align-items: start;
@@ -115,4 +115,18 @@ export const StyledBox = muiStyles.styled(Box)`
         }
     }
 
+`;
+
+export const ContainerRaitingAccommodation = styled.section`
+
+margin-top: 1rem;
+
+  @media (max-width: 539px) {
+    width: 100%;
+    display: flex;
+
+		align-items: flex-start;
+
+    justify-content: flex-start;
+  }
 `;
