@@ -9,6 +9,7 @@ import HeaderDesktop from "../headerDesktop";
 import NomadeHeader from "../NomadeHeader";
 import { ContainerInfo, MainPaper, MainSection, NoInfo } from "./styles";
 
+
 function DashBoard() {
   const [filterTrips, setFilterTrips] = useState("booked");
   const [myTrips, setMyTrips] = useState([]);
@@ -19,10 +20,11 @@ function DashBoard() {
   const id = localStorage.getItem("userId");
   const token = localStorage.getItem("userToken");
 
+
+
   useEffect(() => {
-    Api.get(`/accommodation`)
-      .then((resp) => setMyTrips(resp.data))
-      // .catch((err) => console.log(err));
+    Api.get(`/accommodation`).then((resp) => setMyTrips(resp.data));
+    // .catch((err) => console.log(err));
   }, []);
 
   useEffect(() => {
