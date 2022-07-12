@@ -41,10 +41,10 @@ function Header() {
         </div>
       </div>
       {modalUser === true && <ModalUSer setModalUser={setModalUser} />}
-      {userState ? (
+      {/* {userState ? (
         <>
           <img
-            src={userData.profilePicture[0]}
+            src={userData?.profilePicture[0] && userData?.profilePicture[0]}
             alt="Avatar user"
             onClick={modalUserDinamic}
           />
@@ -53,7 +53,11 @@ function Header() {
         <IconButton onClick={modalUserDinamic}>
           <AccountCircleOutlinedIcon color="primary" />
         </IconButton>
-      )}
+      )} */}
+
+      <IconButton onClick={modalUserDinamic}>
+        <AccountCircleOutlinedIcon color="primary" />
+      </IconButton>
     </HeaderNav>
   );
 }

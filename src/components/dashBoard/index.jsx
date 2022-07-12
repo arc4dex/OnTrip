@@ -68,6 +68,8 @@ function DashBoard() {
     }
   }, [myTrips, filterTrips]);
 
+
+
   return (
     <>
       <MainSection>

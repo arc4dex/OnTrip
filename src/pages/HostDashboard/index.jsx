@@ -9,26 +9,26 @@ import { Divider } from "@mui/material";
 import { useState, useEffect } from "react";
 
 function HostDashboard() {
-    const [lineState, setLineState] = useState(()=>{
-        if(window.innerWidth < 800){
-          return "none"
-        }else{
-          return "block"
-        } 
-      });
-    
-      useEffect(() => {
-        function handleChangeLineState() {
-          if(window.innerWidth < 800){
-            setLineState("none")
-          }else{
-            setLineState("block")
-          }      
-        }
-    
-        window.addEventListener("resize", handleChangeLineState);
-      });
-    
+  const [lineState, setLineState] = useState(() => {
+    if (window.innerWidth < 800) {
+      return "none";
+    } else {
+      return "block";
+    }
+  });
+
+  useEffect(() => {
+    function handleChangeLineState() {
+      if (window.innerWidth < 800) {
+        setLineState("none");
+      } else {
+        setLineState("block");
+      }
+    }
+
+    window.addEventListener("resize", handleChangeLineState);
+  });
+
   return (
     <>
       <Header />
@@ -45,6 +45,7 @@ function HostDashboard() {
         }}
       />
       <HostHeader />
+      {/* TODO Fazer um get nas minhas acomodações e fazer rendereização com map */}
       <CardDashBoard />
       <Footer />
     </>
