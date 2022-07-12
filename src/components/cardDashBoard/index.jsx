@@ -62,6 +62,7 @@ function CardDashBoard({ element, conditional }) {
   }, [reviews, element]);
 
   return (
+<<<<<<< HEAD
     <>
       <CardPaper opacity={conditional} elevation={3}>
         <div className="imgContainer">
@@ -94,6 +95,33 @@ function CardDashBoard({ element, conditional }) {
               Add Review
             </Button>
           )}
+=======
+    <CardPaper opacity={conditional} elevation={3}>
+      <div className="imgContainer">
+        <img src={element?.imageUrl[0]} alt="" />
+        <MiniCardImg imgMobile />
+      </div>
+      <ContainerInfoCard>
+        <h1>{element?.name}</h1>
+        <Paper
+          elevation={2}
+          sx={{
+            width: "9rem",
+            textAlign: "center",
+            alignItems: "center",
+            borderRadius: "0.5rem",
+          }}
+        >
+          <Rating name="half-rating" value={reviewAverage} precision={0.5} />
+        </Paper>
+        <p>{element?.description}</p>
+        <MiniCardImg element={element} />
+      </ContainerInfoCard>
+      <ContainerButtons>
+        {conditional !== "finished" && (
+          <Button variant="contained">Book Again</Button>
+        )}
+>>>>>>> develop
 
           <Button variant="outlined" onClick={readMore}>
             Read More
