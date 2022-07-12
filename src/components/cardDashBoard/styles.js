@@ -45,7 +45,6 @@ export const CardPaper = muiStyles.styled(Paper)`
  }
 `;
 
-
 export const ContainerInfoCard = styled.section`
   width: 50%;
   height: auto;
