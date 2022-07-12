@@ -23,7 +23,7 @@ function Login({ loginModal, handleCloseModalLogin, handleOpenRegisterModal }) {
     password: yup
       .string()
       .required("Required field")
-      .min(6, "Password must have at least 6 characters"),
+      .min(4, "Password must have at least 4 characters"),
   });
 
   const dispatch = useDispatch();
@@ -44,7 +44,7 @@ function Login({ loginModal, handleCloseModalLogin, handleOpenRegisterModal }) {
         console.log("mostrar mensagem de login bem sucedido")
       )
       .catch((err) => console.log("mostra mensagem de erro"));
-      
+
     localStorage.setItem("userToken", registerInfo.accessToken);
     localStorage.setItem("userId", registerInfo.user.id);
 
