@@ -18,6 +18,7 @@ import { useDispatch } from "react-redux";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useHistory } from "react-router-dom";
 
 function Login({ loginModal, handleCloseModalLogin, handleOpenRegisterModal }) {
   const formSchema = yup.object().shape({
@@ -29,6 +30,7 @@ function Login({ loginModal, handleCloseModalLogin, handleOpenRegisterModal }) {
   });
 
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const {
     register,
@@ -49,6 +51,7 @@ function Login({ loginModal, handleCloseModalLogin, handleOpenRegisterModal }) {
     localStorage.setItem("userId", registerInfo.user.id);
 
     dispatch(changeUseState(true));
+    history.push("/");
     handleCloseModalLogin();
   };
 
