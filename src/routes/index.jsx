@@ -25,7 +25,7 @@ function Routes() {
         <AboutUs />
       </Route>
 
-      <Route exact path="/accommodation">
+      <Route exact path="/accommodation/:id">
         <Accommodation />
       </Route>
 
