@@ -52,6 +52,7 @@ function ModalUSer({ setModalUser }) {
     localStorage.removeItem("userId");
     toast.success("Successfully Unlogged");
     dispatch(changeUseState(false));
+    history.push(`/`);
   };
 
   const toTrips = () => {
