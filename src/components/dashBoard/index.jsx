@@ -15,6 +15,7 @@ function DashBoard() {
   const [myTrips, setMyTrips] = useState([]);
   const [bookHistory, setBookHistory] = useState([]);
   const [myBookedAccommodations, setMyBookedAccommodations] = useState([]);
+  const [conditional, setConditional] = useState("booked");
 
   const id = localStorage.getItem("userId");
   const token = localStorage.getItem("userToken");
@@ -38,16 +39,33 @@ function DashBoard() {
 
   useEffect(() => {
     let temporaryArray = [];
+    let another = [];
     for (let i = 0; i < bookHistory.length; i++) {
       for (let j = 0; j < myTrips.length; j++) {
         if (bookHistory[i].accommodationId === myTrips[j].id) {
           if (bookHistory[i].status === filterTrips || filterTrips === "all") {
-            temporaryArray.push(myTrips[j]);
+            if (bookHistory[i].status === "booked") {
+              let copy = [...myTrips];
+              let middle = copy[j];
+              another.push("booked");
+              temporaryArray.push(middle);
+            } else if (bookHistory[i].status === "cancelled") {
+              let copy = [...myTrips];
+              let middle = copy[j];
+              another.push("cancelled");
+              temporaryArray.push(middle);
+            } else if (bookHistory[i].status === "finished") {
+              let copy = [...myTrips];
+              let middle = copy[j];
+              another.push("finished");
+              temporaryArray.push(middle);
+            }
           }
         }
       }
+      setConditional(another);
+      setMyBookedAccommodations(temporaryArray);
     }
-    setMyBookedAccommodations(temporaryArray);
   }, [myTrips, filterTrips]);
 
   return (
@@ -73,7 +91,11 @@ function DashBoard() {
         <MainPaper elevation={2}>
           {myBookedAccommodations.length >= 1 ? (
             myBookedAccommodations.map((element, index) => (
-              <CardDashBoard element={element} key={index} />
+              <CardDashBoard
+                element={element}
+                key={index}
+                conditional={conditional[index]}
+              />
             ))
           ) : (
             <NoInfo>
