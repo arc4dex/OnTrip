@@ -2,11 +2,24 @@ import { Button, Paper, Rating } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Api } from "../../services/api";
 import MiniCardImg from "../miniCardImg";
+import ModalDelAcommodation from "../modalDelAcommodation";
 import { CardPaper, ContainerButtons, ContainerInfoCard } from "./styles";
+import { toast } from "react-toastify";
 
 function CardDashBoard({ element }) {
   const [reviews, setReviews] = useState();
   const [reviewAverage, setReviewAverage] = useState(5);
+
+  const [modalDelete, setModalDelete] = useState(false);
+
+  function openModal() {
+    setModalDelete(true);
+  }
+
+  function closeModal() {
+    setModalDelete(false);
+    toast.success("Deleted!");
+  }
 
   useEffect(() => {
     Api.get("/accommodationReview")
@@ -30,32 +43,35 @@ function CardDashBoard({ element }) {
   }, [reviews, element]);
 
   return (
-    <CardPaper elevation={3}>
-      <div className="imgContainer">
-        <img src={element.imageUrl[0]} alt="" />
-        <MiniCardImg imgMobile />
-      </div>
-      <ContainerInfoCard>
-        <h1>{element.name}</h1>
-        <Paper
-          elevation={2}
-          sx={{
-            width: "9rem",
-            textAlign: "center",
-            alignItems: "center",
-            borderRadius: "0.5rem",
-          }}
-        >
-          <Rating name="half-rating" value={reviewAverage} precision={0.5} />
-        </Paper>
-        <p>{element.description}</p>
-        <MiniCardImg element={element} />
-      </ContainerInfoCard>
-      <ContainerButtons>
-        <Button variant="contained">Edit Accommodation</Button>
-        <Button variant="outlined">Delete Accommodation</Button>
-      </ContainerButtons>
-    </CardPaper>
+    <>
+      <CardPaper elevation={3}>
+        <div className="imgContainer">
+          <img src={element.imageUrl[0]} alt="" />
+          <MiniCardImg imgMobile />
+        </div>
+        <ContainerInfoCard>
+          <h1>{element.name}</h1>
+          <Paper
+            elevation={2}
+            sx={{
+              width: "9rem",
+              textAlign: "center",
+              alignItems: "center",
+              borderRadius: "0.5rem",
+            }}
+          >
+            <Rating name="half-rating" value={reviewAverage} precision={0.5} />
+          </Paper>
+          <p>{element.description}</p>
+          <MiniCardImg element={element} />
+        </ContainerInfoCard>
+        <ContainerButtons>
+          <Button variant="contained">Edit Accommodation</Button>
+          <Button variant="outlined" onClick={openModal} >Delete Accommodation</Button>
+        </ContainerButtons>
+      </CardPaper>
+      <ModalDelAcommodation modalDelete={modalDelete} openModal={openModal} closeModal={closeModal} />
+    </>
   );
 }
 

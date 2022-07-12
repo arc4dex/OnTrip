@@ -27,8 +27,7 @@ export const ModalContainer = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   position: fixed;
-  padding-top: 0.625rem;
-  padding-bottom: 0.625rem;
+  padding: 1rem;
 `;
 
 export const ModalHeader = styled.div`
@@ -78,13 +77,24 @@ width:100%;
 
 export const ModalFooter = styled.div`
   width: 100%;
-  height: 2.5rem;
+  height: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
   flex-direction: column;
-  justify-content: space-evenly;
+  -webkit-box-pack: space-evenly;
+  -webkit-justify-content: space-evenly;
+  -ms-flex-pack: space-evenly;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   padding: 1.25rem;
-  gap: 0.625rem;
+  gap: 2rem;
 
   p {
     color: #3d97b4;

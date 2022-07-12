@@ -1,4 +1,3 @@
-import { toast } from "react-toastify";
 import { Button, Modal } from "@mui/material";
 
 import {
@@ -9,23 +8,10 @@ import {
   ModalHeaderButton,
   ModalHeaderText,
 } from "./style";
-import { useState } from "react";
 
-function ModalDelAcommodation() {
-  const [modalDelete, setModalDelete] = useState(false);
-
-  function openModal() {
-    setModalDelete(true);
-  }
-
-  function closeModal() {
-    setModalDelete(false);
-    toast.success("Deleted!");
-  }
-
+function ModalDelAcommodation({ modalDelete, closeModal, openModal }) {
   return (
     <>
-      <button onClick={openModal}>Abrir modal Delete</button>
       {modalDelete && (
         <Modal open={modalDelete} onClose={closeModal}>
           <BackgroundModal>
