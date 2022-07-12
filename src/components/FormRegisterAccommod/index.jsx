@@ -32,8 +32,6 @@ import RegisterAddressForm from "./RegisterAddressForm";
 
 import { Api } from "../../services/api";
 
-import axios from "axios";
-
 function FormRegisterAccommod() {
   const categories = ["House", "Apartment", "Flat", "Inn", "Boutique Hotel"];
 
@@ -62,8 +60,6 @@ function FormRegisterAccommod() {
 
   const [image, setImage] = useState([]);
 
-  const [addressError, setAddressError] = useState(false);
-
   const inputRef = useRef(null);
 
   const accommodAddress = useSelector((store) => store.accommodAddress);
@@ -71,6 +67,16 @@ function FormRegisterAccommod() {
   const [files, setFiles] = useState([]);
 
   const [imageSrc, setImageSrc] = useState(undefined);
+
+  const [valueName, setValueName] = useState({
+    name: "",
+  });
+
+  const nameCharacterLimit = 20;
+
+  const handleChangeName = (name) => (event) => {
+    setValueName({ ...valueName, [name]: event.target.value });
+  };
 
   const updateFiles = (incommingFiles) => {
     setFiles(incommingFiles);
@@ -108,8 +114,6 @@ function FormRegisterAccommod() {
       "imageUrl",
       image.filter((file) => file.id !== id)
     );
-    console.log(image);
-    console.log(files);
   };
 
   const handleSee = (imageSource) => {
@@ -142,17 +146,33 @@ function FormRegisterAccommod() {
     category: yup.string().required("Please select the type of space."),
     kindOfPlace: yup.string().required("Please select the kind of place."),
     guests: yup
-      .string()
-      .required("Please select a number of guests. The minimum is one."),
+      .number()
+      .typeError("Please select a number of guests.")
+      .nullable()
+      .positive("Please select a number of guests.")
+      .min(1, "The minimum is one.")
+      .required("Please select a number of guests."),
     beds: yup
-      .string()
-      .required("Please select a number of beds. The minimum is one."),
+      .number()
+      .typeError("Please select a number of beds.")
+      .nullable()
+      .positive("Please select a number of beds.")
+      .min(1, "The minimum is one.")
+      .required("Please select a number of beds."),
     rooms: yup
-      .string()
-      .required("Please select a number of bedrooms. The minimum is one."),
+      .number()
+      .typeError("Please select a number of bedrooms.")
+      .nullable()
+      .positive("Please select a number of bedrooms.")
+      .min(1, "The minimum is one.")
+      .required("Please select a number of bedrooms."),
     bathrooms: yup
-      .string()
-      .required("Please select a number of bathrooms. The minimum is one."),
+      .number()
+      .typeError("Please select a number of bathrooms.")
+      .nullable()
+      .positive("Please select a number of bathrooms.")
+      .min(1, "The minimum is one.")
+      .required("Please select a number of bathrooms."),
     highlights: yup.array(),
     imageUrl: yup
       .array()
@@ -168,7 +188,11 @@ function FormRegisterAccommod() {
       .required("Please enter a description for your accommodation.")
       .min(6, "Description must have at least 6 characters."),
     price: yup
-      .string()
+      .number()
+      .typeError("Please enter a price for your accommodation.")
+      .nullable()
+      .positive("Please enter a valid price for your accommodation.")
+      .min(1, "The minimum is 1.")
       .required("Please enter a price for your accommodation."),
     minimumRequirements: yup
       .boolean()
@@ -179,28 +203,12 @@ function FormRegisterAccommod() {
     register,
     handleSubmit,
     setValue,
+    reset,
     formState: { errors },
   } = useForm({ resolver: yupResolver(formSchema) });
 
   async function onSubmitFunction(data) {
-    console.log(accommodAddress);
-
     const location = accommodAddress;
-
-    console.log(data);
-
-    console.log(location);
-
-    //   {
-    //     "streetAddress": "5151 Rua dos Mares",
-    //     "complement": "",
-    //     "zipCode": "81210310",
-    //     "city": "Curitiba",
-    //     "state": "Paraná",
-    //     "country": "brasil"
-    // }
-
-    console.log(image);
 
     if (
       location.hasOwnProperty("streetAddress") &&
@@ -210,8 +218,6 @@ function FormRegisterAccommod() {
       location.hasOwnProperty("state") &&
       location.hasOwnProperty("country")
     ) {
-      // setAddressError(false);
-
       const dataToSend = {
         name: data.name,
         userId: parseInt(localStorage.getItem("userId")),
@@ -238,8 +244,6 @@ function FormRegisterAccommod() {
         description: data.description,
       };
 
-      console.log(dataToSend);
-
       await Api.post("/accommodation", dataToSend, {
         headers: {
           "Content-Type": "application/json",
@@ -249,16 +253,14 @@ function FormRegisterAccommod() {
         .then((response) => {
           console.log(response);
           toast.success("Accommodation successfully registered!");
+          reset();
         })
         .catch((error) => {
           console.log(error);
-          toast.error("Ops! Something went wrong.");
+          toast.error("Ops! Something went wrong. Please try again");
         });
     } else {
-      // setAddressError(true);
       toast.error("Please register an address.");
-      // não fazer o post na api
-      // mensagem de erro
     }
   }
   return (
@@ -342,15 +344,6 @@ function FormRegisterAccommod() {
             type="number"
             size="small"
             sx={{ width: "100%" }}
-            onChange={(event) => {
-              if (
-                event.target.value !== " " &&
-                event.target.value !== "" &&
-                event.target.value < 1
-              ) {
-                event.target.value = 1;
-              }
-            }}
             {...register("guests")}
             error={errors.guests?.message}
             helperText={errors.guests?.message}
@@ -364,15 +357,6 @@ function FormRegisterAccommod() {
             size="small"
             sx={{ width: "100%" }}
             {...register("beds")}
-            onChange={(event) => {
-              if (
-                event.target.value !== " " &&
-                event.target.value !== "" &&
-                event.target.value < 1
-              ) {
-                event.target.value = 1;
-              }
-            }}
             error={errors.beds?.message}
             helperText={errors.beds?.message}
           />
@@ -381,15 +365,6 @@ function FormRegisterAccommod() {
             label="Bedrooms"
             size="small"
             sx={{ width: "100%" }}
-            onChange={(event) => {
-              if (
-                event.target.value !== " " &&
-                event.target.value !== "" &&
-                event.target.value < 1
-              ) {
-                event.target.value = 1;
-              }
-            }}
             {...register("rooms")}
             error={errors.rooms?.message}
             helperText={errors.rooms?.message}
@@ -399,15 +374,6 @@ function FormRegisterAccommod() {
             label="Bathrooms"
             size="small"
             sx={{ width: "100%" }}
-            onChange={(event) => {
-              if (
-                event.target.value !== " " &&
-                event.target.value !== "" &&
-                event.target.value < 1
-              ) {
-                event.target.value = 1;
-              }
-            }}
             {...register("bathrooms")}
             error={errors.bathrooms?.message}
             helperText={errors.bathrooms?.message}
@@ -435,18 +401,12 @@ function FormRegisterAccommod() {
             Upload photos of your accomoddation
           </InputLabel>
           <Dropzone
-            // style={{ minWidth: "550px" }}
-            // view={"list"}
             onChange={updateFiles}
             minHeight="120px"
             onClean={handleClean}
             value={files}
             // maxFiles={5}
-            // header={false}
-            // footer={false}
             // maxFileSize={2998000}
-            //label="Drag'n drop files here or click to browse"
-            //label="Suleta tus archivos aquí"
             accept=".png,image/*"
             // uploadingMessage={"Uploading..."}
             // url="https://my-awsome-server/upload-my-file"
@@ -454,7 +414,6 @@ function FormRegisterAccommod() {
             //uploadOnDrop
             //clickable={false}
             fakeUploading
-            //localization={"FR-fr"}
             disableScroll
           >
             {files.map((file) => (
@@ -463,7 +422,6 @@ function FormRegisterAccommod() {
                 key={file.id}
                 onDelete={onDelete}
                 onSee={handleSee}
-                //localization={"ES-es"}
                 resultOnTooltip
                 preview
                 hd
@@ -483,14 +441,19 @@ function FormRegisterAccommod() {
           </InputLabel>
           <TextField
             {...register("name")}
-            error={errors.name?.message}
-            helperText={errors.name?.message}
             size="small"
+            value={valueName.name}
+            onChange={handleChangeName("name")}
             sx={{ width: "100%" }}
             inputProps={{
-              maxlength: 35,
+              maxLength: nameCharacterLimit,
             }}
+            error={errors.name?.message}
+            helperText={errors.name?.message}
           />
+          <span style={{ fontSize: "0.63rem", paddingLeft: "0.5rem" }}>
+            {valueName.name.length}/{nameCharacterLimit}
+          </span>
           <InputLabel id="demo-simple-select-label">
             Create a description for your space
           </InputLabel>
@@ -540,6 +503,7 @@ function FormRegisterAccommod() {
               error={errors.price?.message}
               helperText={errors.price?.message}
               size="small"
+              type="number"
               sx={{ width: "95%" }}
             />
           </div>
