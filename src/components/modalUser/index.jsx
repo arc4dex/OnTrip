@@ -13,6 +13,9 @@ import { toast } from "react-toastify";
 
 function ModalUSer({ setModalUser }) {
   const userState = useSelector(({ userState }) => userState);
+  const userData = useSelector(({ userData }) => userData);
+
+
   const dispatch = useDispatch();
 
   const [isModalClosed, setIsModalClosed] = useState(false);
@@ -48,8 +51,7 @@ function ModalUSer({ setModalUser }) {
   };
 
   const logOff = () => {
-    localStorage.removeItem("userToken");
-    localStorage.removeItem("userId");
+    localStorage.clear();
     toast.success("Successfully Unlogged");
     dispatch(changeUseState(false));
     history.push(`/`);
@@ -75,10 +77,7 @@ function ModalUSer({ setModalUser }) {
               <AccountCircleOutlinedIcon fontSize="large" color="primary" />
             </IconButton>
           ) : (
-            <img
-              src="https://mundoavatar.com.br/wp-content/uploads/2021/07/avatar-filme.jpeg"
-              alt="Avatar user"
-            />
+            <img src={userData.profilePicture[0]} alt="Avatar user" />
           )}
           <IconButton onClick={modalClose}>
             <CloseIcon fontSize="" />

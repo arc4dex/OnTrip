@@ -19,6 +19,7 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import ModalDelAcommodation from "../modalDelAcommodation";
+import { addData } from "../../store/modules/userData/action";
 
 function Login({ loginModal, handleCloseModalLogin, handleOpenRegisterModal }) {
   const formSchema = yup.object().shape({
@@ -48,8 +49,10 @@ function Login({ loginModal, handleCloseModalLogin, handleOpenRegisterModal }) {
 
     localStorage.setItem("userToken", registerInfo.accessToken);
     localStorage.setItem("userId", registerInfo.user.id);
+    localStorage.setItem("user", JSON.stringify(registerInfo.user));
 
     dispatch(changeUseState(true));
+    dispatch(addData(registerInfo.user));
     handleCloseModalLogin();
   };
 
