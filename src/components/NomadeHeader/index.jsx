@@ -1,6 +1,7 @@
 import { NomadeHeaderContent, StyledSelect } from "./styles";
 import { useState } from "react";
 
+import { useSelector } from "react-redux";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -12,12 +13,14 @@ function NomadeHeader({ filterTrips, setFilterTrips }) {
     setFilterTrips(event.target.value);
   };
 
+  const userData = useSelector(({ userData }) => userData);
+
   return (
     <>
       <NomadeHeaderContent>
         <section className="divInfo">
           <h1>Dashboard</h1>
-          <p>Hello, userNomade!</p>
+          <p>Hello, {userData.name}!</p>
           <span></span>
         </section>
         <section>
