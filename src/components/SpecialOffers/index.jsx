@@ -17,11 +17,11 @@ function SpecialOffers() {
 
   useEffect(() => {
     Api.get("/accommodation").then((resp) => setAccommodations(resp.data));
-  });
+  }, []);
+
   const specialOffer = accommodations.filter(
     (acomodation) => acomodation.specialOffer?.status === true
   );
-  console.log(specialOffer);
 
   return (
     <StyledSpecialOffers>

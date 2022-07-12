@@ -48,8 +48,7 @@ function ReviewsApp() {
   const reviewsDescending = [...reviews].sort((a, b) => b.id - a.id);
   useEffect(() => {
     Api.get("/appReview").then((resp) => setReviews(resp.data));
-  });
-
+  }, [reviews]);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -81,7 +80,7 @@ function ReviewsApp() {
       },
     })
       .then((response) => response.data)
-      .catch((err) => console.log(err));
+      // .catch((err) => console.log(err));
 
     const newReview = {
       userName: userInfo.name,
@@ -95,7 +94,7 @@ function ReviewsApp() {
       },
     })
       .then((response) => response.data)
-      .catch((err) => console.log(err));
+      // .catch((err) => console.log(err));
     handleClose();
   }
 
@@ -131,7 +130,11 @@ function ReviewsApp() {
           ))}
         </Swiper>
       </div>
-      <StyledButton userState={userState} onClick={handleCheckUserState} variant="contained">
+      <StyledButton
+        userState={userState}
+        onClick={handleCheckUserState}
+        variant="contained"
+      >
         Add a Review
       </StyledButton>
       <Modal
@@ -151,6 +154,7 @@ function ReviewsApp() {
           />
           <p style={{ color: "#ee685f" }}>{errors.review?.message}</p>
           <StyledButton
+            userState={userState}
             onClick={handleSubmit(onSubmitReview)}
             variant="contained"
           >
