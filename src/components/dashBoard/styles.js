@@ -1,9 +1,8 @@
 import { Paper } from "@mui/material";
-import * as muiStyles from '@mui/material/styles'
+import * as muiStyles from "@mui/material/styles";
 import styled from "styled-components";
 
 export const MainSection = styled.main`
-
   display: flex;
   flex-direction: column;
 
@@ -11,7 +10,7 @@ export const MainSection = styled.main`
 
   gap: 1rem;
 
-/*   button{
+  /*   button{
     font-size: 0.5rem;
     font-weight: 800;
     height: 3rem;
@@ -24,7 +23,7 @@ export const MainSection = styled.main`
     font-weight: 500;
    }
   } */
-`
+`;
 
 export const MainPaper = muiStyles.styled(Paper)`
   width: 90%;
@@ -40,7 +39,7 @@ export const MainPaper = muiStyles.styled(Paper)`
   gap: 1.25rem;
 
   border-radius: 0.62rem;
-`
+`;
 export const ContainerInfo = styled.div`
   width: 90%;
 
@@ -51,15 +50,20 @@ export const ContainerInfo = styled.div`
 
   margin-bottom: 2.5rem;
 
-  h1{
+  h1 {
     color: var(--blue);
 
     font-size: 1.37rem;
     font-weight: 800;
   }
 
-  h2{
+  h2 {
     font-weight: 500;
     font-size: 1.25rem;
   }
-`
+`;
+export const NoInfo = styled.div`
+  h1 {
+    color: var(--blue);
+  }
+`;

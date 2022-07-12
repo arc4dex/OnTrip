@@ -1,5 +1,6 @@
 import { Route, Switch } from "react-router-dom";
 
+
 import AboutUs from "../pages/AboutUs";
 import Accommodation from "../pages/Accommodation";
 import Home from "../pages/Home";

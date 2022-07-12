@@ -6,6 +6,8 @@ import {
   ThemeProvider,
 } from "@mui/material";
 
+import { toast } from "react-toastify";
+
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
@@ -32,7 +34,7 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState, useRef } from "react";
-import { toast } from "react-toastify";
+
 
 function Register({
   registerModal,
@@ -56,7 +58,7 @@ function Register({
     password: yup
       .string()
       .required("Password is required.")
-      .min(6, "Password must have at least 6 characters."),
+      .min(4, "Password must have at least 4 characters."),
     confirmPassword: yup
       .string()
       .oneOf([yup.ref("password")], "Passwords don't match.")
@@ -123,12 +125,13 @@ function Register({
 
       reset();
 
-      await Api.post("/register", response)
-        .then(
-          (response) => response.data,
-          console.log("mostrar mensagem de registro bem sucedido")
-        )
-        .catch((err) => console.log("mostrar mensagem de registro erro"));
+    await Api.post("/register", response)
+      .then((_) => {
+        toast.success("Successfully registered");
+      })
+      .catch((_) => {
+        toast.error("Something went wrong");
+      });
 
       handleCloseRegisterModal();
     } else {
