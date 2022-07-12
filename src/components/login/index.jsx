@@ -16,6 +16,7 @@ import { useDispatch } from "react-redux";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { addData } from "../../store/modules/userData/action";
 
 function Login({ loginModal, handleCloseModalLogin, handleOpenRegisterModal }) {
   const formSchema = yup.object().shape({
@@ -44,11 +45,13 @@ function Login({ loginModal, handleCloseModalLogin, handleOpenRegisterModal }) {
         console.log("mostrar mensagem de login bem sucedido")
       )
       .catch((err) => console.log("mostra mensagem de erro"));
-      
+
     localStorage.setItem("userToken", registerInfo.accessToken);
     localStorage.setItem("userId", registerInfo.user.id);
 
+    console.log(registerInfo);
     dispatch(changeUseState(true));
+    dispatch(addData(registerInfo));
     handleCloseModalLogin();
   };
 
