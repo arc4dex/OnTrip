@@ -59,7 +59,7 @@ export default function SearchFilter() {
   });
 
   function onSubmitFunction(data) {
-    console.log(data);
+    // console.log(data);
   }
 
   return (
