@@ -6,8 +6,8 @@ function MiniCardImg({ element, imgMobile = false }) {
     <ContainerStyle imgMobile={imgMobile}>
       <div className={imgMobile ? "" : "desktop"}>
         <section>
-          <p>{element?.location.city}</p>
-          <p className="boldText">Superior</p>
+          <p>City</p>
+          <p className="boldText">{element?.location.city}</p>
         </section>
         <Divider
           orientation="vertical"

@@ -4,9 +4,10 @@ import { Api } from "../../services/api";
 import MiniCardImg from "../miniCardImg";
 import { CardPaper, ContainerButtons, ContainerInfoCard } from "./styles";
 
-function CardDashBoard({ element }) {
+function CardDashBoard({ element, conditional }) {
   const [reviews, setReviews] = useState();
   const [reviewAverage, setReviewAverage] = useState(5);
+  console.log(conditional);
 
   useEffect(() => {
     Api.get("/accommodationReview")
@@ -30,7 +31,7 @@ function CardDashBoard({ element }) {
   }, [reviews, element]);
 
   return (
-    <CardPaper elevation={3}>
+    <CardPaper opacity={conditional} elevation={3}>
       <div className="imgContainer">
         <img src={element.imageUrl[0]} alt="" />
         <MiniCardImg imgMobile />
@@ -52,8 +53,11 @@ function CardDashBoard({ element }) {
         <MiniCardImg element={element} />
       </ContainerInfoCard>
       <ContainerButtons>
-        <Button variant="contained">Edit Accommodation</Button>
-        <Button variant="outlined">Delete Accommodation</Button>
+        {conditional !== "finished" && (
+          <Button variant="contained">Book Again</Button>
+        )}
+
+        <Button variant="outlined">Read More</Button>
       </ContainerButtons>
     </CardPaper>
   );

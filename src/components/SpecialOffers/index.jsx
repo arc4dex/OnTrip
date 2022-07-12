@@ -21,7 +21,6 @@ function SpecialOffers() {
   const specialOffer = accommodations.filter(
     (acomodation) => acomodation.specialOffer?.status === true
   );
-  console.log(specialOffer);
 
   return (
     <StyledSpecialOffers>
