@@ -43,7 +43,7 @@ function CardDashBoard({ element }) {
             width: "9rem",
             textAlign: "center",
             alignItems: "center",
-            borderRadius: "8px",
+            borderRadius: "0.5rem",
           }}
         >
           <Rating name="half-rating" value={reviewAverage} precision={0.5} />
