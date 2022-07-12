@@ -1,55 +1,64 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import * as muiStyles from "@mui/material/styles";
+import * as muiStyles from '@mui/material/styles';
 
-import { Button, Paper, Box } from "@mui/material";
+import { Button, Paper, Box } from '@mui/material';
 
 export const StyledCard = styled.article`
-  margin-left: 1.25rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  max-width: 31.25rem;
-  width: 90%;
-  height: 34.375rem;
-  gap: 1rem;
+	margin-left: 1.25rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	max-width: 31.25rem;
+	width: 90%;
+	height: 34.375rem;
+	gap: 1rem;
+	padding: 0.625rem;
 
-  padding: 0.625rem;
+	h2 {
+		display: flex;
+		justify-content: start;
+		align-items: center;
+		font-size: 1.25rem;
+		width: 100%;
+		height: 4.375rem;
+	}
 
-  @media (min-width: 37.5rem) {
-    height: 95vh;
-    justify-content: center;
-  }
+	p {
+		display: flex;
+		justify-content: start;
+		align-items: center;
+		width: 100%;
+		height: 2.5rem;
+	}
 
-  .divImg {
-    position: relative;
-    width: 100%;
-    height: 40%;
-    border-radius: 1.25rem;
-    img {
-      width: 100%;
-    }
-  }
+	@media (min-width: 37.5rem) {
+		height: 95vh;
+	}
 
-  p {
-    @media (min-width: 37.5rem) {
-      height: max-content;
-    }
-  }
+	.divImg {
+		position: relative;
+		width: 100%;
+		height: 40%;
+		border-radius: 1.25rem;
+		img {
+			width: 100%;
+		}
+	}
 
-  .btn {
-    height: 7rem;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+	.btn {
+		height: 7rem;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
 
-    @media (min-width: 32.813rem) {
-      flex-direction: row;
-      height: 3rem;
-    }
-  }
+		@media (min-width: 32.813rem) {
+			flex-direction: row;
+			height: 3rem;
+		}
+	}
 `;
 
 export const StyledButton = muiStyles.styled(Button)`
@@ -78,6 +87,7 @@ export const StyledPaper = muiStyles.styled(Paper)`
     left: 5%;
     border-radius: 0.875rem;
     display: flex;
+    justify-content: space-around;
 `;
 
 export const StyledBox = muiStyles.styled(Box)`
