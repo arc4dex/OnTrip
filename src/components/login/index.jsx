@@ -51,7 +51,7 @@ function Login({ loginModal, handleCloseModalLogin, handleOpenRegisterModal }) {
 
     console.log(registerInfo);
     dispatch(changeUseState(true));
-    dispatch(addData(registerInfo));
+
     handleCloseModalLogin();
   };
 
