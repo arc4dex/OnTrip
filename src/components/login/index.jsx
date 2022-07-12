@@ -25,7 +25,7 @@ function Login({ loginModal, handleCloseModalLogin, handleOpenRegisterModal }) {
     password: yup
       .string()
       .required("Required field")
-      .min(6, "Password must have at least 6 characters"),
+      .min(4, "Password must have at least 4 characters"),
   });
 
   const dispatch = useDispatch();

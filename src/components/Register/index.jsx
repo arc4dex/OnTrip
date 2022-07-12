@@ -58,7 +58,7 @@ function Register({
     password: yup
       .string()
       .required("Password is required.")
-      .min(6, "Password must have at least 6 characters."),
+      .min(4, "Password must have at least 4 characters."),
     confirmPassword: yup
       .string()
       .oneOf([yup.ref("password")], "Passwords don't match.")

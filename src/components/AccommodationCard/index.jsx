@@ -1,8 +1,6 @@
 import { StyledCard, StyledPaper, StyledButton, StyledBox } from "./styles";
 
-function AccommodationCard({accom}) {
-
-  
+function AccommodationCard({ accom }) {
   function readMore() {
     console.log("Button Read More clicked");
   }
@@ -31,18 +29,20 @@ function AccommodationCard({accom}) {
             </StyledBox>
             <StyledBox>
               <h4>Date</h4>
-              <p>18.09 - 21.09</p>
+              <p>{accom?.specialOffer?.date}</p>
             </StyledBox>
             <StyledBox>
               <h4>Price</h4>
-              <p>{`$ ${accom?.price}`}</p>
+              <p>{`$ ${
+                accom?.specialOffer === true
+                  ? accom?.specialOffer.price
+                  : accom?.price
+              }`}</p>
             </StyledBox>
           </StyledPaper>
         </div>
         <h2>{accom?.name}</h2>
-        <p>
-          {accom?.description}
-        </p>
+        <p>{accom?.description}</p>
         <div className="btn">
           <StyledButton variant="contained" onClick={() => readMore()}>
             Booking
