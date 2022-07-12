@@ -10,6 +10,8 @@ import {
   StyledTextField,
 } from "./style";
 
+import { toast } from "react-toastify";
+
 import { Api } from "../../services/api";
 import { changeUseState } from "../../store/modules/userIsLogged/actions";
 import { useDispatch } from "react-redux";
@@ -37,13 +39,11 @@ function Login({ loginModal, handleCloseModalLogin, handleOpenRegisterModal }) {
   });
 
   const onSubmits = async (data) => {
-    console.log(data);
     const registerInfo = await Api.post("/login", data)
-      .then(
-        (response) => response.data,
-        console.log("mostrar mensagem de login bem sucedido")
-      )
-      .catch((err) => console.log("mostra mensagem de erro"));
+      .then((response) => response.data, toast.success("Successfully Logged"))
+      .catch((_) => {
+        toast.error("Something went Wrong");
+      });
 
     localStorage.setItem("userToken", registerInfo.accessToken);
     localStorage.setItem("userId", registerInfo.user.id);
