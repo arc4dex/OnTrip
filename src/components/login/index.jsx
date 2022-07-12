@@ -18,6 +18,7 @@ import { useDispatch } from "react-redux";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import ModalDelAcommodation from "../modalDelAcommodation";
 
 function Login({ loginModal, handleCloseModalLogin, handleOpenRegisterModal }) {
   const formSchema = yup.object().shape({
@@ -112,6 +113,7 @@ function Login({ loginModal, handleCloseModalLogin, handleOpenRegisterModal }) {
                   {" "}
                   Register!
                 </button>
+                <ModalDelAcommodation />
               </div>
             </ModalFooter>
           </ModalContainer>
