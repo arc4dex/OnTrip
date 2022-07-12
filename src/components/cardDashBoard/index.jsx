@@ -11,16 +11,17 @@ function CardDashBoard({ element, conditional }) {
   const [reviewAverage, setReviewAverage] = useState(5);
   console.log(conditional);
 
-  const [modalDelete, setModalDelete] = useState(false);
+  // const [modalDelete, setModalDelete] = useState(false);(VAI EXISTIR NO CARD DO HOST)
+  //<ModalDelAcommodation modalDelete={modalDelete} OpenModal={OpenModal} closeModal={closeModal}/>
 
-  function openModal() {
-    setModalDelete(true);
-  }
+  // function openModal() {
+  //   setModalDelete(true);
+  // }
 
-  function closeModal() {
-    setModalDelete(false);
-    toast.success("Deleted!");
-  }
+  // function closeModal() {
+  //   setModalDelete(false);
+  //   toast.success("Deleted!");
+  // }
 
   useEffect(() => {
     Api.get("/accommodationReview")
