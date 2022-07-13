@@ -70,8 +70,6 @@ function Trips() {
     setPage(numPag);
   };
 
-
-
   return (
     <>
       <Header />
