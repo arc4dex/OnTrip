@@ -62,15 +62,13 @@ function FormRegisterAccommod() {
 
   const [openModal, setOpenModal] = useState(false);
 
-  const [image, setImage] = useState([]);
+  const [images, setImages] = useState([]);
 
   const inputRef = useRef(null);
 
   const dispatch = useDispatch();
 
   const accommodAddress = useSelector((store) => store.accommodAddress);
-
-  const [files, setFiles] = useState([]);
 
   const [imageSrc, setImageSrc] = useState(undefined);
 
@@ -84,55 +82,6 @@ function FormRegisterAccommod() {
 
   const handleChangeName = (name) => (event) => {
     setValueName({ ...valueName, [name]: event.target.value });
-  };
-
-  const updateFiles = (incommingFiles) => {
-    setFiles(incommingFiles);
-
-    const rawFiles = [];
-
-    incommingFiles.forEach((fileObj) => {
-      rawFiles.push(fileObj.file);
-    });
-
-    const reader = new FileReader();
-
-    rawFiles.forEach((file, index) => {
-      if (index === 0) {
-        reader.readAsDataURL(file);
-      }
-
-      if (reader.result) {
-        reader.readAsDataURL(file);
-      }
-    });
-
-    reader.onload = function () {
-      const url = reader.result;
-
-      setImage([...image, url]);
-      setValue("imageUrl", [...image, url]);
-    };
-  };
-
-  const onDelete = (id) => {
-    setFiles(files.filter((file) => file.id !== id));
-    setImage(image.filter((file) => file.id !== id));
-    setValue(
-      "imageUrl",
-      image.filter((file) => file.id !== id)
-    );
-  };
-
-  const handleSeeImage = (imageSource) => {
-    setImageSrc(imageSource);
-  };
-
-  const handleCleanImage = (files) => {
-    console.log("list cleaned", files);
-    setFiles([]);
-    setImage([]);
-    setValue("imageUrl", []);
   };
 
   function handleChange(event, type) {
@@ -221,8 +170,6 @@ function FormRegisterAccommod() {
   async function onSubmitFunction(data) {
     const location = accommodAddress;
 
-    console.log(image);
-
     if (
       location.hasOwnProperty("streetAddress") &&
       location.hasOwnProperty("complement") &&
@@ -235,7 +182,7 @@ function FormRegisterAccommod() {
         name: data.name,
         userId: parseInt(localStorage.getItem("userId")),
         avaliable: true,
-        imageUrl: image,
+        imageUrl: images,
         price: parseInt(data.price),
         location: {
           streetAddress: location.streetAddress,
@@ -264,13 +211,11 @@ function FormRegisterAccommod() {
         },
       })
         .then((response) => {
-          console.log(response);
           toast.success("Accommodation successfully registered!");
           history.push(`/hostDash/${params.id}`);
           dispatch(setAccommodationData(dataToSend));
         })
         .catch((error) => {
-          console.log(error);
           toast.error("Ops! Something went wrong. Please try again.");
         });
     } else {
@@ -279,6 +224,35 @@ function FormRegisterAccommod() {
   }
 
   const nameCharacterLimit = 35;
+
+
+  const onImageChange = (e) => {
+
+    const [file] = e.target.files;
+
+    if (file?.type === "image/png" || file?.type === "image/jpeg" || file?.type === "image/jpg") {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setValue("imageUrl",[...images, reader.result]);
+        setImages([...images, reader.result]);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      console.log("favor colocar o tipo correto")
+    }
+  };
+
+  const deleteImage = (element) => {
+    const newImagesList = images.filter((image)=>{
+      if(image !== element){
+        return image;
+      }
+    })
+    inputRef.current.value = null;
+    setValue("imageUrl",[...newImagesList]);
+    setImages([...newImagesList]);
+  };
+
 
   return (
     <StyledMain>
@@ -418,39 +392,28 @@ function FormRegisterAccommod() {
           <InputLabel id="demo-simple-select-label">
             Upload photos of your accomoddation
           </InputLabel>
-          <Dropzone
-            onChange={updateFiles}
-            minHeight="120px"
-            onClean={handleCleanImage}
-            value={files}
-            // maxFiles={5}
-            // maxFileSize={2998000}
-            accept=".png,image/*"
-            // uploadingMessage={"Uploading..."}
-            // url="https://my-awsome-server/upload-my-file"
-            //of course this url doens´t work, is only to make upload button visible
-            //uploadOnDrop
-            //clickable={false}
-            fakeUploading
-            disableScroll
-          >
-            {files.map((file) => (
-              <FileItem
-                {...file}
-                key={file.id}
-                onDelete={onDelete}
-                onSee={handleSeeImage}
-                resultOnTooltip
-                preview
-                hd
-              />
-            ))}
-            <FullScreenPreview
-              imgSource={imageSrc}
-              openImage={imageSrc}
-              onClose={(e) => handleSeeImage(undefined)}
-            />
-          </Dropzone>
+          <Button
+                variant="outlined"
+                component="label"
+                color="secondary"
+                sx={{ textTransform: "capitalize", width: "100%" }}
+              >
+                Upload photos
+                <input
+                  type="file"                  
+                  onChange={onImageChange}
+                  hidden
+                  ref={inputRef}                  
+                />
+              </Button>
+              {images?.map((element, index) => {
+                return (
+                  <div key={index} className="userImageDiv">
+                    <button type="button" onClick={() => deleteImage(element)}>X</button>
+                    <img src={element} alt={"User Pic"} />
+                  </div>
+                );
+              })}
           {errors.imageUrl && (
             <span className="imageError">{errors.imageUrl.message}</span>
           )}
