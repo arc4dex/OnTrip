@@ -1,4 +1,3 @@
-import CardDashBoard from "../../components/cardDashBoard";
 import Footer from "../../components/Footer";
 import Header from "../../components/header";
 import HeaderDesktop from "../../components/headerDesktop";
@@ -7,8 +6,14 @@ import HostHeader from "../../components/HostHeader";
 import { Divider } from "@mui/material";
 
 import { useState, useEffect } from "react";
+import { Api } from "../../services/api";
+import CardDashBoardHost from "../../components/CardDashBoardHost";
 
 function HostDashboard() {
+  const [myAccommodations, setMyAccommodations] = useState([]);
+
+  const [user, setUser] = useState({});
+
   const [lineState, setLineState] = useState(() => {
     if (window.innerWidth < 800) {
       return "none";
@@ -27,7 +32,27 @@ function HostDashboard() {
     }
 
     window.addEventListener("resize", handleChangeLineState);
-  });
+  }, []);
+
+  useEffect(() => {
+    const userToken = localStorage.getItem("userToken");
+
+    const userId = localStorage.getItem("userId");
+
+    setUser(JSON.parse(localStorage.getItem("user")));
+
+    Api.get(`users/${userId}/accommodation`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userToken}`,
+      },
+    })
+      .then((response) => {
+        console.log(response);
+        setMyAccommodations(response.data);
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   return (
     <>
@@ -44,9 +69,15 @@ function HostDashboard() {
           display: lineState,
         }}
       />
-      <HostHeader />
-      {/* TODO Fazer um get nas minhas acomodações e fazer rendereização com map */}
-      <CardDashBoard />
+      <HostHeader user={user} />
+
+      {myAccommodations.length > 0 &&
+        myAccommodations.map((element) => {
+          return <CardDashBoardHost key={element.id} element={element} />;
+        })}
+
+      {/* <TODO>Caso o host não tenha nenhuma acomodação, renderizar que ele nao tem nenhuma, e botão para adicionar centralizado</TODO> */}
+
       <Footer />
     </>
   );

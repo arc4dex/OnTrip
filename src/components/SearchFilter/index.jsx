@@ -1,4 +1,10 @@
-import { Modal, Typography, TextField } from "@mui/material";
+import { Modal, Typography } from "@mui/material";
+
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
+import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import { toast } from "react-toastify";
 import {
   InlineBox,
   SpecialButton,
@@ -10,16 +16,29 @@ import {
   StyledLine,
   StyledInput,
   MainForm,
+  StyledTextField,
 } from "./style";
+
 import { useEffect, useState } from "react";
 import { FiMinus, FiPlus, FiSearch, FiSettings } from "react-icons/fi";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
+import { Api } from "../../services/api";
+
+import { useHistory } from "react-router-dom";
+
+import { useDispatch } from "react-redux";
+
+import { searchFilters } from "../../store/modules/userFilterTrips/actions";
+
 export default function SearchFilter() {
   const [windowSize, setWindowSize] = useState(getWindowSize());
   const [open, setOpen] = useState(false);
+  const [bookingsListFiltereds, setBookingListFiltereds] = useState([]);
+  const [newBookingList, setNewBookingList] = useState([]);
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -46,8 +65,8 @@ export default function SearchFilter() {
 
   const formSchema = yup.object().shape({
     countryCity: yup.string(),
-    people: yup.number(),
-    rooms: yup.number(),
+    checkin: yup.string(),
+    checkout: yup.string(),
   });
 
   const {
@@ -58,9 +77,115 @@ export default function SearchFilter() {
     resolver: yupResolver(formSchema),
   });
 
-  function onSubmitFunction(data) {
-    // console.log(data);
+  const history = useHistory();
+
+  const dispatch = useDispatch();
+
+  async function onSubmitFunction({ countryCity, checkin, checkout }) {
+    const checkinYear = checkin.substring(0, 4);
+    const checkinMonth = checkin.substring(5, 7);
+    const checkinDay = checkin.substring(8, 10);
+    const newCheckin = `${checkinMonth}/${checkinDay}/${checkinYear}`;
+
+    const checkoutYear = checkout.substring(0, 4);
+    const checkoutMonth = checkout.substring(5, 7);
+    const checkoutDay = checkout.substring(8, 10);
+    const newCheckout = `${checkoutMonth}/${checkoutDay}/${checkoutYear}`;
+
+    const places = await Api.get("/accommodation").then((resp) => resp.data);
+    const bookings = await Api.get("/bookings").then((resp) => resp.data);
+
+    const filteredPlaces = places.filter((place) => {
+      if (
+        place?.location?.state
+          ?.toLowerCase()
+          .includes(countryCity.toLowerCase()) ||
+        place?.location?.city
+          ?.toLowerCase()
+          .includes(countryCity.toLowerCase()) ||
+        place?.location?.country
+          ?.toLowerCase()
+          .includes(countryCity.toLowerCase())
+      ) {
+        return place;
+      }
+    });
+
+    console.log(bookings);
+    console.log(filteredPlaces);
+
+    let arr = [];
+
+    for (let i = 0; i < filteredPlaces.length; i++) {
+      for (let y = 0; y < bookings.length; y++) {
+        if (bookings[y].accommodationId === filteredPlaces[i].id) {
+          arr.push(bookings[y]);
+        }
+      }
+    }
+
+    let placesRetirar = [];
+
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i].checkin === newCheckin || arr[i].checkout === newCheckout) {
+        filteredPlaces.filter((place) => {
+          if (place.id === arr[i].accommodationId) {
+            placesRetirar.push(place);
+          }
+        });
+      }
+    }
+
+    let finalPlaces = [];
+
+    if (placesRetirar.length < 1) {
+      finalPlaces.push([...filteredPlaces]);
+    } else {
+      for (let i = 0; i < filteredPlaces.length; i++) {
+        for (let j = 0; j < placesRetirar.length; j++) {
+          if (filteredPlaces[i].id !== placesRetirar[j].id) {
+            finalPlaces.push(filteredPlaces[i]);
+          }
+        }
+      }
+    }
+
+    if(finalPlaces.length > 0){
+      dispatch(searchFilters(...finalPlaces));
+      history.push("/trips")
+    }else{
+      console.log("indisponível")
+    }      
   }
+
+  const [peopleQt, setPeople] = useState(1);
+  const [roomsQt, setRooms] = useState(1);
+
+  function handleSubPeople() {
+    if (peopleQt > 1) {
+      setPeople(peopleQt - 1);
+    }
+  }
+
+  function handleAddPeople() {
+    setPeople(peopleQt + 1);
+  }
+
+  function handleSubRoom() {
+    if (roomsQt > 1) {
+      setRooms(roomsQt - 1);
+    }
+  }
+
+  function handleAddRoom() {
+    setRooms(roomsQt + 1);
+  }
+
+  const [checkinDate, setCheckinDate] = useState("");
+
+  const handleCheckinDate = (newValue) => {
+    setCheckinDate(newValue);
+  };
 
   return (
     <>
@@ -73,11 +198,11 @@ export default function SearchFilter() {
               windowSize.innerWidth <= 600 ? () => handleOpen() : () => ""
             }
           >
-            <Typography  color="secondary">Country, city</Typography>
+            <Typography color="secondary">Country, city</Typography>
             <Typography>
               <input
                 type="text"
-                value={"Estonia"}
+                placeholder="Type your next trip"
                 {...register("countryCity")}
               ></input>
             </Typography>
@@ -88,11 +213,14 @@ export default function SearchFilter() {
               People
             </Typography>
             <InlineBox>
-              <SpecialButton>
+              <SpecialButton onClick={handleSubPeople}>
                 <FiMinus />
               </SpecialButton>
-              <StyledInput value={"2"} {...register("people")}></StyledInput>
-              <SpecialButton>
+              <StyledInput
+                value={peopleQt}
+                {...register("people")}
+              ></StyledInput>
+              <SpecialButton onClick={handleAddPeople}>
                 <FiPlus />
               </SpecialButton>
             </InlineBox>
@@ -102,22 +230,45 @@ export default function SearchFilter() {
               Rooms
             </Typography>
             <InlineBox>
-              <SpecialButton>
+              <SpecialButton onClick={handleSubRoom}>
                 <FiMinus />
               </SpecialButton>
-              <StyledInput value={"2"} {...register("rooms")}></StyledInput>
-              <SpecialButton>
+              <StyledInput value={roomsQt} {...register("rooms")}></StyledInput>
+              <SpecialButton onClick={handleAddRoom}>
                 <FiPlus />
               </SpecialButton>
             </InlineBox>
           </StyledBox>
           <StyledBox width="25.84%" border="secondary">
             <Typography color="secondary" paddingLeft="8%">
-              Dates
+              Check-in
             </Typography>
             <InlineBox sx={{ minWidth: "134px" }}>
-              30.12.21 – 07.01.22
+              <input {...register("checkin")} type="date" />
+              {/* <LocalizationProvider
+                color="primary"
+                dateAdapter={AdapterDateFns}
+              >
+                <DesktopDatePicker
+                  color="primary"
+                  inputFormat="dd/MM/yyyy"
+                  value={checkinDate}
+                  onChange={handleCheckinDate}
+                  renderInput={(params) => (
+                    <StyledTextField
+                      {...params}
+                      placeholder={"Checkin date"}
+                    />
+                  )}
+                />
+              </LocalizationProvider> */}
             </InlineBox>
+          </StyledBox>
+          <StyledBox>
+            <Typography color="secondary" paddingLeft="8%">
+              Check-out
+            </Typography>
+            <input {...register("checkout")} type="date" />
           </StyledBox>
           <StyledButton
             variant="contained"
@@ -175,7 +326,6 @@ export default function SearchFilter() {
                       <StyledInput
                         width={"90%"}
                         type="text"
-                        value={"Estonia"}
                         {...register("countryCity")}
                       ></StyledInput>
                     </InlineBox>

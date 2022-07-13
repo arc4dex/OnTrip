@@ -10,7 +10,6 @@ export const CardPaper = muiStyles.styled(Paper)`
  width: 90%;
  height: auto;
 
- opacity: ${(props) => (props.opacity === "cancelled" ? 0.5 : 1)};
 
  img{
   max-width: 20rem;
@@ -40,10 +39,11 @@ export const CardPaper = muiStyles.styled(Paper)`
   padding: 0.62rem;
 
   img{
-    max-width:13rem;
+    max-width: 13rem;
   }
  }
 `;
+
 
 export const ContainerInfoCard = styled.section`
   width: 50%;

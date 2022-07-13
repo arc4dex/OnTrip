@@ -62,8 +62,8 @@ function ModalUSer({ setModalUser }) {
   };
 
   const toAccommodations = () => {
-    let id = localStorage.getItem("userId");
-    history.push(`/hostDash/:id`);
+    const id = localStorage.getItem("userId");
+    history.push(`/hostDash/${id}`);
   };
 
   return (

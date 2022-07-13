@@ -1,54 +1,79 @@
 import { Button, Modal } from "@mui/material";
+import { Api } from "../../services/api";
 
 import {
   BackgroundModal,
   ModalContainer,
   ModalFooter,
   ModalHeader,
-  ModalHeaderButton,
   ModalHeaderText,
 } from "./style";
 
-function ModalDelAcommodation({ modalDelete, closeModal, openModal }) {
+import { toast } from "react-toastify";
+
+function ModalDelAcommodation({
+  modalDelete,
+  closeModal,
+  openModal,
+  idAccommodation,
+}) {
+  // toast.success("Accommodation successfully deleted!");
+
+  async function deleteAccommodation() {
+    await Api.delete(`/accommodation/${idAccommodation}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+      },
+    })
+      .then((response) => {
+        console.log(response);
+        toast.success("Accommodation successfully deleted!");
+        // <TODO>A função deletar está funcionando, porém os cards não atualizam sozinhos.</TODO>
+        closeModal();
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Ops! Something went wrong. Please try again.");
+        closeModal();
+      });
+  }
+
   return (
     <>
       {modalDelete && (
         <Modal open={modalDelete} onClose={closeModal}>
           <BackgroundModal>
             <ModalContainer>
+              <Button
+                sx={{ minWidth: "6px" }}
+                onClick={closeModal}
+                variant="text"
+                color="secondary"
+                className="closeButton"
+              >
+                X
+              </Button>
+
               <ModalHeader>
-                <ModalHeaderButton>
-                  <Button
-                    sx={{ minWidth: "5px" }}
-                    onClick={closeModal}
-                    variant="text"
-                    color="secondary"
-                  >
-                    X
-                  </Button>
-                </ModalHeaderButton>
                 <ModalHeaderText>
-                  <p>You really want to delete?</p>
+                  <p>Are you sure you want to delete this accommodation?</p>
                 </ModalHeaderText>
               </ModalHeader>
 
               <ModalFooter>
                 <Button
-                  onClick={closeModal}
-                  // fazer a função que deleta na api
-
-                  variant="outlined"
-                  color="secondary"
-                  sx={{ width: "100%" }}
+                  onClick={deleteAccommodation}
+                  variant="contained"
+                  sx={{ width: "100%", textTransform: "capitalize" }}
                 >
                   Yes
                 </Button>
                 <Button
-                  variant="contained"
-                  sx={{ width: "100%" }}
-                  onClick={closeModal}
+                  variant="outlined"
+                  sx={{ width: "100%", textTransform: "capitalize" }}
+                  onClick={deleteAccommodation}
                 >
-                  No
+                  Cancel
                 </Button>
               </ModalFooter>
             </ModalContainer>
