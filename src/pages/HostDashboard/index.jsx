@@ -35,6 +35,8 @@ function HostDashboard() {
   }, []);
 
   useEffect(() => {
+    // TODO Deixar esse useEffect rodando tbm quando alterar a lista --> para quando for editar ou deletar acomodação
+
     const userToken = localStorage.getItem("userToken");
 
     const userId = localStorage.getItem("userId");
@@ -52,6 +54,8 @@ function HostDashboard() {
       })
       .catch((error) => console.log(error));
   }, []);
+
+  console.log(myAccommodations);
 
   return (
     <>
@@ -74,8 +78,8 @@ function HostDashboard() {
         myAccommodations.map((element) => {
           return <CardDashBoardHost key={element.id} element={element} />;
         })}
-
-      {/* <TODO>Caso o host não tenha nenhuma acomodação, renderizar que ele nao tem nenhuma, e botão para adicionar centralizado</TODO> */}
+      {/* 
+    TODO Caso o host não tenha nenhuma acomodação, renderizar que ele nao tem nenhuma, e botão para adicionar centralizado */}
 
       <Footer />
     </>
