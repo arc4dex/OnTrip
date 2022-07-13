@@ -54,7 +54,7 @@ function Trips() {
       }
     }
 
-    if (userTripsSearchsReducer.length === 0) {
+    if (userTripsSearchsReducer?.length === 0) {
       Api.get("/accommodation").then((resp) => setSearchedTrips(resp.data));
     }
 
@@ -87,11 +87,11 @@ function Trips() {
         onChange={handleChangePage}
       />
 
-      {userTripsSearchsReducer.length > 0
-        ? userTripsSearchsReducer.map((accommodation) => (
+      {userTripsSearchsReducer?.length > 0
+        ? userTripsSearchsReducer?.map((accommodation) => (
             <AccommodationCard accom={accommodation} />
           ))
-        : searchedTrips.map((accommodation) => (
+        : searchedTrips?.map((accommodation) => (
             <AccommodationCard accom={accommodation} />
           ))}
 

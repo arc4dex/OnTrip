@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 import ModalBooking from "../modalBooking";
 
-function CardDashBoard({ element, conditional }) {
+function CardDashBoard({ element, conditional, userBookings, setRenderAgain }) {
   const [reviews, setReviews] = useState();
   const [reviewAverage, setReviewAverage] = useState(5);
   const [modal, setModal] = useState(false);
@@ -24,6 +24,30 @@ function CardDashBoard({ element, conditional }) {
 
   function readMore() {
     history.push(`/accommodation/${element.id}`);
+  }
+
+  function cancelTrip() {
+    const id = localStorage.getItem("userId");
+    const token = localStorage.getItem("userToken");
+
+    Api.patch(
+      `/bookings/${userBookings.id}`,
+      {
+        userId: id,
+        status: "cancelled",
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+      .then(
+        (response) => response.data,
+        toast.success("Your trip has been cancelled!"),
+        setRenderAgain(true)
+      )
+      .catch((err) => toast.error("Something went bad, try again!"));
   }
 
   function bookingModal() {
@@ -48,7 +72,6 @@ function CardDashBoard({ element, conditional }) {
     let average = temporaryArray / counter;
     setReviewAverage(average);
   }, [reviews, element]);
-
   return (
     <>
       <CardPaper opacity={conditional} elevation={3}>
@@ -73,13 +96,17 @@ function CardDashBoard({ element, conditional }) {
           <MiniCardImg element={element} />
         </ContainerInfoCard>
         <ContainerButtons>
-          {conditional !== "finished" ? (
+          {conditional === "cancelled" ? (
             <Button variant="contained" onClick={bookingModal}>
               Book Again
             </Button>
-          ) : (
+          ) : conditional === "finished" ? (
             <Button variant="contained" onClick={openReviewModal}>
               Add Review
+            </Button>
+          ) : (
+            <Button variant="contained" onClick={cancelTrip}>
+              Cancel Trip
             </Button>
           )}
 
