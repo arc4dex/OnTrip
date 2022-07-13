@@ -54,6 +54,10 @@ function CardDashBoard({ element, conditional, userBookings, setRenderAgain }) {
     setModal(true);
   }
 
+  function openReviewModal() {
+    setReviewAccommodation(!reviewAccommodation);
+  }
+
   useEffect(() => {
     let temporaryArray = 0;
     let counter = 0;
@@ -92,12 +96,12 @@ function CardDashBoard({ element, conditional, userBookings, setRenderAgain }) {
           <MiniCardImg element={element} />
         </ContainerInfoCard>
         <ContainerButtons>
-        {conditional === "cancelled" ? (
+          {conditional === "cancelled" ? (
             <Button variant="contained" onClick={bookingModal}>
               Book Again
             </Button>
           ) : conditional === "finished" ? (
-            <Button variant="contained" onClick={() => setReviewAccommodation(!reviewAccommodation)}>
+            <Button variant="contained" onClick={openReviewModal}>
               Add Review
             </Button>
           ) : (
@@ -116,6 +120,7 @@ function CardDashBoard({ element, conditional, userBookings, setRenderAgain }) {
         <ModalReviewAccommodation
           reviews={reviews && reviews[0].idAccommodation}
           setReviewAccommodation={setReviewAccommodation}
+          element={element.id}
         />
       )}
     </>
