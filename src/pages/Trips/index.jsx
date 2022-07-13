@@ -70,7 +70,7 @@ function Trips() {
     setPage(numPag);
   };
 
-  // console.log(userTripsSearchsReducer);
+  console.log(userTripsSearchsReducer);
 
   return (
     <>

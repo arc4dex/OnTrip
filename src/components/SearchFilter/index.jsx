@@ -147,17 +147,16 @@ export default function SearchFilter() {
       }
     }
 
-    const newArr = finalPlaces[0]
+    const newArr = finalPlaces[0];
 
-    console.log(newArr)
+    console.log(newArr);
 
-    if(finalPlaces.length > 0){
-      console.log("teste")
-      dispatch(searchFilters(...newArr));
-      history.push("/trips")
-    }else{
-      console.log("indisponível")
-    }      
+    if (finalPlaces.length > 0) {
+      dispatch(searchFilters([...newArr]));
+      history.push("/trips");
+    } else {
+      console.log("indisponível");
+    }
   }
 
   const [peopleQt, setPeople] = useState(1);
