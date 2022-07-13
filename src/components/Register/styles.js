@@ -15,7 +15,15 @@ export const BackgroundRegisterModal = styled.div`
 
 export const RegisterModalContainer = styled.div`
   width: 100%;
-  max-width: 21.875rem;
+  max-width: 25rem;
+  max-height: 38rem;
+  overflow-y: scroll;
+
+  /* width */
+  ::-webkit-scrollbar {
+    width: 0.5rem;
+  }
+
   display: flex;
   flex-direction: column;
   background: white;

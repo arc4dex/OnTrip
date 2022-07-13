@@ -51,13 +51,13 @@ export const UserMenu = styled.div`
   position: fixed;
   top: 0;
   right: 0;
-  z-index: 1;
+  z-index: 1500;
 
   background-color: white;
 
   animation: appearFromRight 1s;
 
-  img{
+  img {
     width: 2.2rem;
     height: 2.2rem;
 
