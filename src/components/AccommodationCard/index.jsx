@@ -8,15 +8,18 @@ import {
   MainSection,
 } from "./styles";
 import { Rating } from "@mui/material";
+import { useState } from "react";
+import ModalBooking from "../modalBooking";
 
 function AccommodationCard({ accom, reviewAccommodation }) {
+  const [modal, setModal] = useState(false);
   const history = useHistory();
   function readMore() {
     history.push(`/accommodation/${accom.id}`);
   }
 
   function booking() {
-    console.log("Button Booking clicked");
+    setModal(true);
   }
 
   const reviewRating =
@@ -78,14 +81,21 @@ function AccommodationCard({ accom, reviewAccommodation }) {
         <h2>{accom?.name}</h2>
         <p>{accom?.description}</p>
         <div className="btn">
-          <StyledButton variant="contained" onClick={() => readMore()}>
+          <StyledButton variant="contained" onClick={() => booking()}>
             Booking
           </StyledButton>
-          <StyledButton variant="outlined" onClick={() => booking()}>
+          <StyledButton variant="outlined" onClick={() => readMore()}>
             Read More
           </StyledButton>
         </div>
       </StyledCard>
+      {modal && (
+        <ModalBooking
+          setModal={setModal}
+          price={accom.price}
+          idAccommodation={accom.id}
+        />
+      )}
     </>
   );
 }
