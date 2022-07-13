@@ -46,6 +46,10 @@ p{
     padding-left: 0px;
 }
 
+.checkoutInput{
+  padding-left: 8%;
+}
+
 input{  
  border: none;
  max-width: 90%;

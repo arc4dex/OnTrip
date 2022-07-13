@@ -111,9 +111,6 @@ export default function SearchFilter() {
       }
     });
 
-    console.log(bookings);
-    console.log(filteredPlaces);
-
     let arr = [];
 
     for (let i = 0; i < filteredPlaces.length; i++) {
@@ -150,12 +147,14 @@ export default function SearchFilter() {
       }
     }
 
-    if(finalPlaces.length > 0){
-      dispatch(searchFilters(...finalPlaces));
-      history.push("/trips")
-    }else{
-      console.log("indisponível")
-    }      
+    const newArr = finalPlaces[0];
+
+   
+
+    if (finalPlaces.length > 0) {
+      dispatch(searchFilters([...newArr]));
+      history.push("/trips");
+    } 
   }
 
   const [peopleQt, setPeople] = useState(1);
@@ -207,68 +206,19 @@ export default function SearchFilter() {
               ></input>
             </Typography>
           </StyledBox>
-
-          <StyledBox width="13.37%" border="secondary">
-            <Typography color="secondary" paddingLeft="8%">
-              People
-            </Typography>
-            <InlineBox>
-              <SpecialButton onClick={handleSubPeople}>
-                <FiMinus />
-              </SpecialButton>
-              <StyledInput
-                value={peopleQt}
-                {...register("people")}
-              ></StyledInput>
-              <SpecialButton onClick={handleAddPeople}>
-                <FiPlus />
-              </SpecialButton>
-            </InlineBox>
-          </StyledBox>
-          <StyledBox width="13.63%" border="secondary">
-            <Typography color="secondary" paddingLeft="8%">
-              Rooms
-            </Typography>
-            <InlineBox>
-              <SpecialButton onClick={handleSubRoom}>
-                <FiMinus />
-              </SpecialButton>
-              <StyledInput value={roomsQt} {...register("rooms")}></StyledInput>
-              <SpecialButton onClick={handleAddRoom}>
-                <FiPlus />
-              </SpecialButton>
-            </InlineBox>
-          </StyledBox>
           <StyledBox width="25.84%" border="secondary">
             <Typography color="secondary" paddingLeft="8%">
               Check-in
             </Typography>
             <InlineBox sx={{ minWidth: "134px" }}>
               <input {...register("checkin")} type="date" />
-              {/* <LocalizationProvider
-                color="primary"
-                dateAdapter={AdapterDateFns}
-              >
-                <DesktopDatePicker
-                  color="primary"
-                  inputFormat="dd/MM/yyyy"
-                  value={checkinDate}
-                  onChange={handleCheckinDate}
-                  renderInput={(params) => (
-                    <StyledTextField
-                      {...params}
-                      placeholder={"Checkin date"}
-                    />
-                  )}
-                />
-              </LocalizationProvider> */}
             </InlineBox>
           </StyledBox>
-          <StyledBox>
+          <StyledBox width="27%">
             <Typography color="secondary" paddingLeft="8%">
               Check-out
             </Typography>
-            <input {...register("checkout")} type="date" />
+            <input className="checkoutInput" {...register("checkout")} type="date" />
           </StyledBox>
           <StyledButton
             variant="contained"
@@ -330,59 +280,7 @@ export default function SearchFilter() {
                       ></StyledInput>
                     </InlineBox>
                   </StyledLine>
-                </div>
-
-                <div>
-                  <StyledLine
-                    width="40%"
-                    border="secondary"
-                    flexDirection="column"
-                    height="80px"
-                    padding="3%"
-                  >
-                    <Typography color="secondary" paddingLeft="8%">
-                      People
-                    </Typography>
-                    <InlineBox justify="space-around" paddingLeft="0">
-                      <SpecialButton>
-                        <FiMinus />
-                      </SpecialButton>
-                      <StyledInput
-                        type="number"
-                        value={"2"}
-                        {...register("people")}
-                      ></StyledInput>
-                      <SpecialButton>
-                        <FiPlus />
-                      </SpecialButton>
-                    </InlineBox>
-                  </StyledLine>
-
-                  <StyledLine
-                    width="40%"
-                    border="secondary"
-                    flexDirection="column"
-                    height="80px"
-                    padding="3%"
-                  >
-                    <Typography color="secondary" paddingLeft="8%">
-                      Rooms
-                    </Typography>
-                    <InlineBox justify="space-around" paddingLeft="0">
-                      <SpecialButton>
-                        <FiMinus />
-                      </SpecialButton>
-                      <StyledInput
-                        type="number"
-                        value={"2"}
-                        {...register("rooms")}
-                      ></StyledInput>
-                      <SpecialButton>
-                        <FiPlus />
-                      </SpecialButton>
-                    </InlineBox>
-                  </StyledLine>
-                </div>
+                </div>               
 
                 <div>
                   <StyledLine
@@ -393,7 +291,23 @@ export default function SearchFilter() {
                     padding="3%"
                   >
                     <Typography color="secondary" paddingLeft="4%">
-                      Date
+                      Checkin
+                    </Typography>
+                    <InlineBox justify="space-around" paddingLeft="0">
+                      <StyledInput width={"90%"} type="date"></StyledInput>
+                    </InlineBox>
+                  </StyledLine>
+                </div>
+                <div>
+                  <StyledLine
+                    width="100%"
+                    border="secondary"
+                    flexDirection="column"
+                    height="80px"
+                    padding="3%"
+                  >
+                    <Typography color="secondary" paddingLeft="4%">
+                      Checkout
                     </Typography>
                     <InlineBox justify="space-around" paddingLeft="0">
                       <StyledInput width={"90%"} type="date"></StyledInput>

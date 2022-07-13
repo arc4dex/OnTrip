@@ -24,7 +24,7 @@ function NomadeHeader({ filterTrips, setFilterTrips }) {
           <span></span>
         </section>
         <section>
-          <a href="#">Find a new trip!</a>
+          <a href="/trips">Find a new trip!</a>
           <Box sx={{ minWidth: 120 }}>
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">

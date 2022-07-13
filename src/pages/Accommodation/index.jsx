@@ -7,15 +7,22 @@ import { Api } from "../../services/api";
 function Accommodation() {
   const params = useParams();
 
-  const [accommodation, setAccommodation] = useState([]);
+  const [ accommodation, setAccommodation ] = useState([])
+  const [reviewUser, setReviewUser] = useState([]);
 
   useEffect(() => {
     Api.get(`/accommodation/${params.id}`).then((response) => {
       setAccommodation(response.data);
     });
+    Api.get("/accommodationReview").then((response) => {
+      setReviewUser(response.data);
+    });
   }, []);
 
-  return <AccomodationCardPage accommodation={accommodation} />;
+  const reviewAccommodation = reviewUser?.filter((item) => {
+    return item.idAccommodation === parseInt(params.id)
+  }) 
+  return <AccomodationCardPage accommodation={ accommodation } reviewAccommodation={reviewAccommodation}/>;
 }
 
 export default Accommodation;
