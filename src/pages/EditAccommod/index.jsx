@@ -13,10 +13,19 @@ import { useParams } from "react-router-dom";
 import { Api } from "../../services/api";
 import { useState } from "react";
 
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+
 function EditAccommod() {
   const params = useParams();
 
   const [currentAccommodation, setCurrentAccommodation] = useState(null);
+
+  const userIsLoggedReducer = useSelector(
+    ({ userState }) => userState
+  );
+
+  const history = useHistory();
 
   useEffect(() => {
     const userToken = localStorage.getItem("userToken");
@@ -48,7 +57,8 @@ function EditAccommod() {
   }, []);
 
   return (
-    <ErrorBoundary FallbackComponent={ErrorFallback}>
+    <>
+      {userIsLoggedReducer ? <ErrorBoundary FallbackComponent={ErrorFallback}>
       <Header />
       <HeaderDesktop />
       {currentAccommodation ? (
@@ -59,7 +69,9 @@ function EditAccommod() {
       )}
 
       <Footer />
-    </ErrorBoundary>
+    </ErrorBoundary> : history.push("/")}
+    </>
+    
   );
 }
 

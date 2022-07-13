@@ -71,16 +71,16 @@ function ModalUSer({ setModalUser }) {
       <Background onClick={modalClose} handleCloseUser={isModalClosed} />
       <UserMenu handleCloseUser={isModalClosed}>
         <div className="containerIcons">
-          {/* {!userState ? (
+          {!userState ? (
             <IconButton>
               <AccountCircleOutlinedIcon fontSize="large" color="primary" />
             </IconButton>
           ) : (
             <img src={userData.profilePicture[0]} alt="Avatar user" />
-          )} */}
-          <IconButton>
+          )}
+          {/* <IconButton>
             <AccountCircleOutlinedIcon fontSize="large" color="primary" />
-          </IconButton>
+          </IconButton> */}
           <IconButton onClick={modalClose}>
             <CloseIcon fontSize="" />
           </IconButton>

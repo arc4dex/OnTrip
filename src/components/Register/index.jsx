@@ -35,7 +35,6 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState, useRef } from "react";
 
-
 function Register({
   registerModal,
   handleCloseRegisterModal,
@@ -125,13 +124,13 @@ function Register({
 
       reset();
 
-    await Api.post("/register", response)
-      .then((_) => {
-        toast.success("Successfully registered");
-      })
-      .catch((_) => {
-        toast.error("Something went wrong");
-      });
+      await Api.post("/register", response)
+        .then((_) => {
+          toast.success("Successfully registered");
+        })
+        .catch((_) => {
+          toast.error("Something went wrong");
+        });
 
       handleCloseRegisterModal();
     } else {
