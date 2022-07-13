@@ -213,6 +213,7 @@ function Register({
                         {...register("dateOfBirth")}
                         error={errors.dateOfBirth?.message}
                         helperText={errors.dateOfBirth?.message}
+                        placeholder={"set"}
                       />
                     )}
                   />

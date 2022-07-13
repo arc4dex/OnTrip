@@ -1,6 +1,7 @@
 import { StyledCard, StyledPaper, StyledButton, StyledBox } from "./styles";
 
 function AccommodationCard({accom}) {
+  //console.log(accom)
 
   
   function readMore() {
@@ -17,7 +18,7 @@ function AccommodationCard({accom}) {
         <div
           className="divImg"
           style={{
-            backgroundImage: `url(${accom.imageUrl[0]})`,
+            backgroundImage: `url(${accom?.imageUrl[0]})`,
             backgroundRepeat: "no-repeat",
             width: "100%",
             backgroundPosition: "center",
