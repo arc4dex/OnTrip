@@ -19,7 +19,7 @@ function Trips() {
   );
   //state que vai receber os dados do filtro de pesquisa
 
-  const [pages, setPage] = useState(2);
+  const [pages, setPage] = useState(1);
   const [numberOfPages, setNumberOfPages] = useState(0);
   const [listAccomodations, setListAccomodations] = useState([]);
 
