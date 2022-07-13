@@ -4,40 +4,49 @@ import * as muiStyles from "@mui/material/styles";
 
 import { Button, Paper, Box } from "@mui/material";
 
+
 export const StyledCard = styled.article`
-  margin-left: 1.25rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  max-width: 31.25rem;
-  width: 90%;
-  height: 34.375rem;
-  gap: 1rem;
-  padding: 0.625rem;
+	margin-left: 1.25rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	max-width: 31.25rem;
+	width: 90%;
+	height: 37.375rem;
+	gap: 1rem;
+	padding: 0.625rem;
 
-  z-index: 3;
+	h2 {
+		display: flex;
+		justify-content: start;
+		align-items: flex-start;
+		font-size: 1.25rem;
+		width: 100%;
+		height: 6rem;
+	}
 
-  h2 {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    font-size: 1.25rem;
-    width: 100%;
-    height: 4.375rem;
-  }
+	p {
+		display: flex;
+		justify-content: start;
+		align-items: flex-start;
+		width: 100%;
+		height: 13rem;
+	}
 
-  p {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    width: 100%;
-    height: 2.5rem;
-  }
+	@media (min-width: 37.5rem) {
+		height: 32rem;
+	}
 
-  @media (min-width: 37.5rem) {
-    height: 95vh;
-  }
+	.divImg {
+		position: relative;
+		width: 100%;
+		height: 25rem;
+		border-radius: 1.25rem;
+		img {
+			width: 100%;
+		}
+	}
 
   .divImg {
     position: relative;
@@ -82,7 +91,7 @@ export const StyledButton = muiStyles.styled(Button)`
 
 export const StyledPaper = muiStyles.styled(Paper)`
     position: absolute;
-    top: 64%;
+    bottom: 0.5rem;
     opacity: 0.9;
     height: 4.063rem;
     width: 90%;
@@ -116,5 +125,13 @@ export const StyledBox = muiStyles.styled(Box)`
             display: flex;
         }
     }
-
 `;
+
+export const ContainerRaitingAccommodation = styled.section`
+  display: flex;
+  justify-content: flex-start;
+	
+  width: 100%;
+  height: 1rem;
+
+`
