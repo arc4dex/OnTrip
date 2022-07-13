@@ -30,7 +30,7 @@ import ModalBooking from "../modalBooking";
 import ModalReadMore from "../modalReadMore";
 import HighLights from "../highLights";
 
-function AccomodationCardPage({accommodation}) {
+function AccomodationCardPage({accommodation, reviewAccommodation}) {
 
   const [modal, setModal] = useState(false);
   const [ modalReadMore, setModalReadMore ] = useState(false)
@@ -42,6 +42,8 @@ function AccomodationCardPage({accommodation}) {
   function handleModalReadMore(){
     setModalReadMore(true)
   }
+
+  const reviewRating = reviewAccommodation?.reduce((a,b)=>(a + b.review),0) / reviewAccommodation.length
 
   return (
     <>
@@ -66,7 +68,7 @@ function AccomodationCardPage({accommodation}) {
                   <ContainerPriceCity>
                     <div>
                       <h1>City</h1>
-                      <p>{accommodation.name}</p>
+                      <p>{accommodation?.location?.city}</p>
                     </div>
                     <Divider
                       orientation="vertical"
@@ -88,7 +90,7 @@ function AccomodationCardPage({accommodation}) {
         </>
         <ContainerAccommodation>
           <h1>{accommodation.name}</h1>
-          <MiniCardImg name={accommodation.name} price={accommodation.price}/>
+          <MiniCardImg element={accommodation}/>
         </ContainerAccommodation>
         <ContainerRaiting>
           <Paper
@@ -100,7 +102,7 @@ function AccomodationCardPage({accommodation}) {
               borderRadius: "8px",
             }}
           >
-            <Rating name="half-rating" defaultValue={4.5} precision={0.5} />
+            <Rating value={reviewRating} precision={0.5} readOnly/>
           </Paper>
         </ContainerRaiting>
        <HighLights accommodation={ accommodation }/>
@@ -119,10 +121,8 @@ function AccomodationCardPage({accommodation}) {
         </ContainerInfo>
         <ContainerReviews>
           <h1>Reviews</h1>
-          <div>
-            <MiniCardReview handleModalReadMore={handleModalReadMore} modalReadMore={modalReadMore} setModalReadMore={setModalReadMore} />
-            <MiniCardReview />
-            <MiniCardReview />
+          <div className="reviews">
+            <MiniCardReview handleModalReadMore={handleModalReadMore} modalReadMore={modalReadMore} setModalReadMore={setModalReadMore} reviewAccommodation={reviewAccommodation} />
           </div>
         </ContainerReviews>
       </CardPaper>
