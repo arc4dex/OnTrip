@@ -1,4 +1,4 @@
-import { StyledH1 } from "./style";
+import { ContainerSearch, MainSection, StyledH1 } from "./style";
 
 import { Divider, Pagination } from "@mui/material";
 
@@ -23,6 +23,7 @@ function Trips() {
   const [pages, setPage] = useState(1);
   const [numberOfPages, setNumberOfPages] = useState(0);
   const [listAccomodations, setListAccomodations] = useState([]);
+  const [reviewUser, setReviewUser] = useState([]);
 
   const [lineState, setLineState] = useState(() => {
     if (window.innerWidth < 800) {
@@ -38,6 +39,20 @@ function Trips() {
       setNumberOfPages(Math.ceil(response.data.length / 5));
     });
   }
+
+  useEffect(()=>{
+    Api.get("/accommodationReview").then((response) => {
+      setReviewUser(response.data);
+    });
+  },[])
+
+  const reviewAccommodation = reviewUser.filter((item) => {
+    for(let i = 0; i < listAccomodations.length; i++){
+      if(item.idAccommodation === listAccomodations[i].id){
+       return item
+      }
+    }
+  })
 
   useEffect(() => {
     getAccommodAuto(pages);
@@ -70,8 +85,6 @@ function Trips() {
     setPage(numPag);
   };
 
-  console.log(userTripsSearchsReducer);
-
   return (
     <>
       <Header />
@@ -86,20 +99,22 @@ function Trips() {
           display: lineState,
         }}
       />
-      <StyledH1>Trips</StyledH1>
-      <SearchFilter />
+      <ContainerSearch>
+        <StyledH1>Trips</StyledH1>
+        <SearchFilter />
+      </ContainerSearch>
       <Pagination
         count={numberOfPages}
         color="primary"
         onClick={handleChangePage}
       />
-
+      <MainSection>
       {userTripsSearchsReducer?.length > 0
         ? userTripsSearchsReducer.map((accommodation) => (
-            <AccommodationCard key={accommodation.id} accom={accommodation} />
+            <AccommodationCard key={accommodation.id} accom={accommodation} reviewAccommodation={reviewAccommodation} />
           ))
         : listAccomodations.map((accommodation) => (
-            <AccommodationCard key={accommodation.id} accom={accommodation} />
+            <AccommodationCard key={accommodation.id} accom={accommodation} reviewAccommodation={reviewAccommodation}/>
           ))}
 
       {/* {searchedTrips.length === 0 ? (
@@ -111,7 +126,7 @@ function Trips() {
           <AccommodationCard key={item.id} accomodation={item} />;
         })
       )} */}
-
+      </MainSection>
       <Pagination
         count={numberOfPages}
         color="primary"
