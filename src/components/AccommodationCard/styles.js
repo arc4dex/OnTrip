@@ -17,6 +17,8 @@ export const StyledCard = styled.article`
 	gap: 1rem;
 	padding: 0.625rem;
 
+  margin-bottom: 2rem;
+
 	h2 {
 		display: flex;
 		justify-content: start;
@@ -51,7 +53,7 @@ export const StyledCard = styled.article`
   .divImg {
     position: relative;
     width: 100%;
-    height: 40%;
+    height: 48rem;
     border-radius: 1.25rem;
     img {
       width: 100%;
@@ -80,8 +82,9 @@ export const StyledButton = muiStyles.styled(Button)`
     border-radius: 0.625rem;
     border: 0.125rem solid #EE685F;
 
-
     text-transform: capitalize;
+
+    margin-bottom: 0.5rem;
 
     @media (min-width: 32.813rem){
             width: 45%;
