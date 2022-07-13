@@ -1,64 +1,66 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-import * as muiStyles from '@mui/material/styles';
+import * as muiStyles from "@mui/material/styles";
 
-import { Button, Paper, Box } from '@mui/material';
+import { Button, Paper, Box } from "@mui/material";
 
 export const StyledCard = styled.article`
-	margin-left: 1.25rem;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	max-width: 31.25rem;
-	width: 90%;
-	height: 34.375rem;
-	gap: 1rem;
-	padding: 0.625rem;
+  margin-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 31.25rem;
+  width: 90%;
+  height: 34.375rem;
+  gap: 1rem;
+  padding: 0.625rem;
 
-	h2 {
-		display: flex;
-		justify-content: start;
-		align-items: center;
-		font-size: 1.25rem;
-		width: 100%;
-		height: 4.375rem;
-	}
+  z-index: 3;
 
-	p {
-		display: flex;
-		justify-content: start;
-		align-items: center;
-		width: 100%;
-		height: 2.5rem;
-	}
+  h2 {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    font-size: 1.25rem;
+    width: 100%;
+    height: 4.375rem;
+  }
 
-	@media (min-width: 37.5rem) {
-		height: 95vh;
-	}
+  p {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+    height: 2.5rem;
+  }
 
-	.divImg {
-		position: relative;
-		width: 100%;
-		height: 40%;
-		border-radius: 1.25rem;
-		img {
-			width: 100%;
-		}
-	}
+  @media (min-width: 37.5rem) {
+    height: 95vh;
+  }
 
-	.btn {
-		height: 7rem;
-		width: 100%;
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
+  .divImg {
+    position: relative;
+    width: 100%;
+    height: 40%;
+    border-radius: 1.25rem;
+    img {
+      width: 100%;
+    }
+  }
 
-		@media (min-width: 32.813rem) {
-			flex-direction: row;
-			height: 3rem;
-		}
-	}
+  .btn {
+    height: 7rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    @media (min-width: 32.813rem) {
+      flex-direction: row;
+      height: 3rem;
+    }
+  }
 `;
 
 export const StyledButton = muiStyles.styled(Button)`
