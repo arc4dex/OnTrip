@@ -1,10 +1,9 @@
 import { Button, Paper, Rating } from "@mui/material"
 import { ContainerMiniCardReview, ContainerRaitingReview } from "./styles"
-import Pedro from '../../imgs/pedro.jfif'
 import ModalReadMore from "../modalReadMore"
 import { useState } from "react"
 
-function MiniCardReview(){
+function MiniCardReview({reviewAccommodation}){
 
   const [ modalReadMore, setModalReadMore ] = useState(false)
 
@@ -12,23 +11,26 @@ function MiniCardReview(){
     setModalReadMore(true)
   }
 
-  const review = 'Quando a realidade supera a expectativa. Equipe super prestativa, casa muito bem desenhada com casa detalhe pensado para o máximo de conforto para duas pessoas. Uma experiência única.'
+  const commentModal = reviewAccommodation?.comment
 
   return(
     <>
-    {modalReadMore && <ModalReadMore title={'casa'} description={review} setModalReadMore={setModalReadMore}/>}
-    <Paper sx={{padding: '0.5rem'}}>
+    {modalReadMore && <ModalReadMore title={'casa'} description={commentModal} setModalReadMore={setModalReadMore}/>}
+    { reviewAccommodation?.map((review, index) => {
+    return <Paper key={index} sx={{padding: '0.5rem'}}>
     <ContainerMiniCardReview>
       <div>
-        <img src={Pedro} alt="" />
+        <img src={review?.userPicture} alt={review?.userName} />
       </div>
       <ContainerRaitingReview>
-          <Rating name="half-rating" defaultValue={3} precision={0.5} size='small' />
+          <Rating value={review?.review} precision={0.5} size='small' readOnly/>
       </ContainerRaitingReview>
-      <p>{review.substring(0, 180)}{review.length >= 181 && <Button size="small" onClick={handleModalReadMoreReview}>...more</Button>}</p>
-      <h2>Jannike Borg</h2>
+      <p>{review?.comment?.substring(0, 180)}{review?.comment?.length >= 181 && <Button size="small" onClick={handleModalReadMoreReview}>...more</Button>}</p>
+      <h2>{review?.userName}</h2>
     </ContainerMiniCardReview>
     </Paper>
+      })
+    }
     </>
   )
 }

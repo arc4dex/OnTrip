@@ -1,14 +1,14 @@
 import { Divider } from "@mui/material";
 import { ContainerStyle } from "./styles";
 
-function MiniCardImg({ imgMobile = false, name, price}) {
+function MiniCardImg({ imgMobile = false, element}) {
 
   return (
     <ContainerStyle imgMobile={imgMobile}>
       <div className={imgMobile ? "" : "desktop"}>
         <section>
           <p>City</p>
-          <p className="boldText">{name}</p>
+          <p className="boldText">{element?.location?.city}</p>
         </section>
         <Divider
           orientation="vertical"
@@ -20,7 +20,7 @@ function MiniCardImg({ imgMobile = false, name, price}) {
         />
         <section>
           <p>Price</p>
-          <p className="boldText">${price}</p>
+          <p className="boldText">${element?.price}</p>
         </section>
       </div>
     </ContainerStyle>

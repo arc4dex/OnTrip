@@ -73,7 +73,6 @@ function Trips() {
         color="primary"
         onChange={handleChangePage}
        />
-
       {searchedTrips.length === 0 ? (
         listAccomodations.map((item) => {
          return <AccommodationCard key={item.id} accom={item} />;
@@ -83,7 +82,6 @@ function Trips() {
           <AccommodationCard key={item.id} accomodation={item} />;
         })
       )}
-
        <Pagination 
         count={numberOfPages} 
         color="primary"

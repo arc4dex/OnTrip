@@ -9,14 +9,23 @@ function Accommodation() {
   const params = useParams();
 
   const [ accommodation, setAccommodation ] = useState([])
+  const [reviewUser, setReviewUser] = useState([]);
 
   useEffect(() => {
     Api.get(`/accommodation/1`).then((response) => {
       setAccommodation(response.data)
     });
+    Api.get("/accommodationReview").then((response) => {
+      setReviewUser(response.data);
+    });
   }, []);
 
-  return <AccomodationCardPage accommodation={ accommodation }/>;
+  console.log(accommodation)
+
+  const reviewAccommodation = reviewUser?.filter((item) => {
+    return item.idAccommodation === parseInt(params.id)
+  }) 
+  return <AccomodationCardPage accommodation={ accommodation } reviewAccommodation={reviewAccommodation}/>;
 }
 
 export default Accommodation;

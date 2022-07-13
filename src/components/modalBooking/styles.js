@@ -1,11 +1,17 @@
 import styled from "styled-components";
 
 export const BackGroundModalBooking = styled.div`
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   inset: 0;
 
-  width: 100%;
+  width: 100vw;
+  height: 100vh;
 
-  z-index: 1;
+  z-index: 101;
 
   background-color: rgba(0, 0, 0, 0.1);
 
