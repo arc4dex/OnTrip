@@ -130,6 +130,9 @@ function FormRegisterAccommod() {
 
   const handleCleanImage = (files) => {
     console.log("list cleaned", files);
+    setFiles([]);
+    setImage([]);
+    setValue("imageUrl", []);
   };
 
   function handleChange(event, type) {

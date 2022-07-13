@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable no-use-before-define */
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -34,9 +34,8 @@ import EditAddressForm from "./EditAddressForm";
 import { Api } from "../../services/api";
 
 import { useHistory, useParams } from "react-router-dom";
-import { useCallback } from "react";
 
-// TODO Os valores da acomodação específica chegam, mas não consegui renderizar esses valores nos inputs
+import { setAccommodationData } from "../../store/modules/accommodationData/actions";
 
 function FormEditAccommod({ currentAccommodation }) {
   const categories = ["House", "Apartment", "Flat", "Inn", "Boutique Hotel"];
@@ -58,8 +57,6 @@ function FormEditAccommod({ currentAccommodation }) {
     "Coworking",
   ];
 
-  // console.log(currentAccommodation);
-
   const [category, setCategory] = useState("");
 
   const [kindOfPlace, setKindOfPlace] = useState("");
@@ -76,7 +73,7 @@ function FormEditAccommod({ currentAccommodation }) {
     name: "",
   });
 
-  const inputRef = useRef(null);
+  const params = useParams();
 
   const dispatch = useDispatch();
 
@@ -210,74 +207,32 @@ function FormEditAccommod({ currentAccommodation }) {
   });
 
   const {
-    register,
     handleSubmit,
     setValue,
-    reset,
+    control,
     formState: { errors },
   } = useForm({
-    // defaultValues: {
-    //   category: currentAccommodation.category,
-    //   kindOfPlace: currentAccommodation.kindOfPlace,
-    //   guests: currentAccommodation.accommodation?.guests,
-    //   beds: currentAccommodation.accommodation?.beds,
-    //   rooms: currentAccommodation.accommodation?.rooms,
-    //   bathrooms: currentAccommodation.accommodation?.bathrooms,
-    //   highlights: currentAccommodation.accommodation?.highlights,
-    //   imageUrl: currentAccommodation.imageUrl,
-    //   name: currentAccommodation.name,
-    //   description: currentAccommodation.description,
-    //   minimumRequirements: true,
-    //   price: currentAccommodation.price,
-    // },
+    defaultValues: {
+      category: currentAccommodation[0].category,
+      kindOfPlace: currentAccommodation[0].kindOfPlace,
+      guests: currentAccommodation[0].accommodation?.guests,
+      beds: currentAccommodation[0].accommodation?.beds,
+      rooms: currentAccommodation[0].accommodation?.rooms,
+      bathrooms: currentAccommodation[0].accommodation?.bathrooms,
+      highlights: currentAccommodation[0].accommodation?.highlights,
+      imageUrl: currentAccommodation[0].imageUrl,
+      name: currentAccommodation[0].name,
+      description: currentAccommodation[0].description,
+      minimumRequirements: true,
+      price: currentAccommodation[0].price,
+    },
     resolver: yupResolver(formSchema),
   });
-
-  const resetAsyncForm = useCallback(async () => {
-    const result = {
-      category: currentAccommodation.category,
-      kindOfPlace: currentAccommodation.kindOfPlace,
-      guests: currentAccommodation.accommodation?.guests,
-      beds: currentAccommodation.accommodation?.beds,
-      rooms: currentAccommodation.accommodation?.rooms,
-      bathrooms: currentAccommodation.accommodation?.bathrooms,
-      highlights: currentAccommodation.accommodation?.highlights,
-      imageUrl: currentAccommodation.imageUrl,
-      name: currentAccommodation.name,
-      description: currentAccommodation.description,
-      minimumRequirements: true,
-      price: currentAccommodation.price,
-    }; // result: { firstName: 'test', lastName: 'test2' }
-
-    reset(result);
-    // asynchronously reset your form values
-  }, [reset]);
-
-  useEffect(() => {
-    resetAsyncForm();
-  }, [resetAsyncForm]);
-
-  // useEffect(() => {
-  //   reset({
-  //     category: currentAccommodation?.category,
-  //     kindOfPlace: currentAccommodation?.kindOfPlace,
-  //     guests: currentAccommodation.accommodation?.guests,
-  //     beds: currentAccommodation.accommodation?.beds,
-  //     rooms: currentAccommodation.accommodation?.rooms,
-  //     bathrooms: currentAccommodation.accommodation?.bathrooms,
-  //     highlights: currentAccommodation.accommodation?.highlights,
-  //     imageUrl: currentAccommodation?.imageUrl,
-  //     name: currentAccommodation?.name,
-  //     description: currentAccommodation?.description,
-  //     minimumRequirements: true,
-  //     price: currentAccommodation?.price,
-  //   });
-  // }, []);
 
   async function onSubmitFunction(data) {
     const location = accommodAddress;
 
-    console.log(image);
+    // console.log(image);
 
     if (
       location.hasOwnProperty("streetAddress") &&
@@ -289,9 +244,12 @@ function FormEditAccommod({ currentAccommodation }) {
     ) {
       const dataToSend = {
         name: data.name,
-        userId: parseInt(localStorage.getItem("userId")),
+        // userId: parseInt(localStorage.getItem("userId")),
         avaliable: true,
-        imageUrl: image,
+
+        // TODO Arrumar dado de imagem enviado
+
+        imageUrl: currentAccommodation[0].imageUrl,
         price: parseInt(data.price),
         location: {
           streetAddress: location.streetAddress,
@@ -312,26 +270,27 @@ function FormEditAccommod({ currentAccommodation }) {
         },
         description: data.description,
       };
+      console.log(currentAccommodation);
+      console.log(dataToSend);
 
-      {
-        /* <TODO> mudar para patch </TODO> */
-      }
-      // await Api.post("/accommodation", dataToSend, {
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //     Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-      //   },
-      // })
-      //   .then((response) => {
-      //     console.log(response);
-      //     toast.success("Accommodation successfully registered!");
-      //     history.push(`/hostDash/${params.id}`);
-      //     dispatch(setAccommodationData(dataToSend));
-      //   })
-      //   .catch((error) => {
-      //     console.log(error);
-      //     toast.error("Ops! Something went wrong. Please try again.");
-      //   });
+      const accommodationId = currentAccommodation[0].id;
+
+      await Api.patch(`/accommodation/${accommodationId}`, dataToSend, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+        },
+      })
+        .then((response) => {
+          console.log(response);
+          toast.success("Accommodation successfully edited!");
+          history.push(`/hostDash/${params.id}`);
+          dispatch(setAccommodationData(dataToSend));
+        })
+        .catch((error) => {
+          console.log(error);
+          toast.error("Ops! Something went wrong. Please try again.");
+        });
     } else {
       toast.error("Please register an address.");
     }
@@ -349,51 +308,64 @@ function FormEditAccommod({ currentAccommodation }) {
           <InputLabel id="demo-simple-select-label">
             What type of space are you going to host?
           </InputLabel>
-          <TextField
-            select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            variant="outlined"
-            {...register("category")}
-            value={category}
-            onChange={(event) => handleChange(event, "category")}
-            error={errors.category?.message}
-            helperText={errors.category?.message}
-            size="small"
-            sx={{
-              width: "100%",
-            }}
-          >
-            {categories.map((category) => (
-              <MenuItem value={category} key={category}>
-                {category}
-              </MenuItem>
-            ))}
-          </TextField>
+          <Controller
+            control={control}
+            name="category"
+            render={({ field: { onChange, value, ref } }) => (
+              <TextField
+                select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                variant="outlined"
+                inputRef={ref}
+                value={value}
+                onChange={onChange}
+                error={errors.category?.message}
+                helperText={errors.category?.message}
+                size="small"
+                sx={{
+                  width: "100%",
+                }}
+              >
+                {categories.map((category) => (
+                  <MenuItem value={category} key={category}>
+                    {category}
+                  </MenuItem>
+                ))}
+              </TextField>
+            )}
+          />
+
           <InputLabel id="demo-simple-select-label">
             What kind of place are you offering to guests?
           </InputLabel>
-          <TextField
-            {...register("kindOfPlace")}
-            select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            variant="outlined"
-            value={kindOfPlace}
-            onChange={(event) => handleChange(event, "kindOfPlace")}
-            size="small"
-            sx={{
-              width: "100%",
-            }}
-            error={errors.kindOfPlace?.message}
-            helperText={errors.kindOfPlace?.message}
-          >
-            {kindsOfPlaces.map((kind) => (
-              <MenuItem value={kind} key={kind}>
-                {kind}
-              </MenuItem>
-            ))}
-          </TextField>
+          <Controller
+            control={control}
+            name="kindOfPlace"
+            render={({ field: { onChange, value, ref } }) => (
+              <TextField
+                select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                variant="outlined"
+                inputRef={ref}
+                value={value}
+                onChange={onChange}
+                size="small"
+                sx={{
+                  width: "100%",
+                }}
+                error={errors.kindOfPlace?.message}
+                helperText={errors.kindOfPlace?.message}
+              >
+                {kindsOfPlaces.map((kind) => (
+                  <MenuItem value={kind} key={kind}>
+                    {kind}
+                  </MenuItem>
+                ))}
+              </TextField>
+            )}
+          />
           <InputLabel id="demo-simple-select-label">
             Where is your accommodation located?
           </InputLabel>
@@ -408,87 +380,156 @@ function FormEditAccommod({ currentAccommodation }) {
           >
             Register an address
           </Button>
-          {accommodAddress === {} && (
-            <span className="adressError">
-              Please register an address for your accommodation.
-            </span>
-          )}
           <InputLabel id="demo-simple-select-label">
             How many guests would you like to accommodate?
           </InputLabel>
-          <TextField
-            type="number"
-            size="small"
-            sx={{ width: "100%" }}
-            {...register("guests")}
-            error={errors.guests?.message}
-            helperText={errors.guests?.message}
+
+          <Controller
+            control={control}
+            name="guests"
+            render={({ field: { onChange, value, ref } }) => (
+              <TextField
+                type="number"
+                size="small"
+                sx={{ width: "100%" }}
+                inputRef={ref}
+                value={value}
+                onChange={onChange}
+                error={errors.guests?.message}
+                helperText={errors.guests?.message}
+              />
+            )}
           />
           <InputLabel id="demo-simple-select-label">
             How many beds, bedrooms and bathrooms does your place have?
           </InputLabel>
-          <TextField
-            type="number"
-            label="Beds"
-            size="small"
-            sx={{ width: "100%" }}
-            {...register("beds")}
-            error={errors.beds?.message}
-            helperText={errors.beds?.message}
+
+          <Controller
+            control={control}
+            name="beds"
+            render={({ field: { onChange, value, ref } }) => (
+              <TextField
+                type="number"
+                label="Beds"
+                size="small"
+                sx={{ width: "100%" }}
+                inputRef={ref}
+                value={value}
+                onChange={onChange}
+                error={errors.beds?.message}
+                helperText={errors.beds?.message}
+              />
+            )}
           />
-          <TextField
-            type="number"
-            label="Bedrooms"
-            size="small"
-            sx={{ width: "100%" }}
-            {...register("rooms")}
-            error={errors.rooms?.message}
-            helperText={errors.rooms?.message}
+
+          <Controller
+            control={control}
+            name="rooms"
+            render={({ field: { onChange, value, ref } }) => (
+              <TextField
+                type="number"
+                label="Bedrooms"
+                size="small"
+                sx={{ width: "100%" }}
+                inputRef={ref}
+                value={value}
+                onChange={onChange}
+                error={errors.rooms?.message}
+                helperText={errors.rooms?.message}
+              />
+            )}
           />
-          <TextField
-            type="number"
-            label="Bathrooms"
-            size="small"
-            sx={{ width: "100%" }}
-            {...register("bathrooms")}
-            error={errors.bathrooms?.message}
-            helperText={errors.bathrooms?.message}
+
+          <Controller
+            control={control}
+            name="bathrooms"
+            render={({ field: { onChange, value, ref } }) => (
+              <TextField
+                type="number"
+                label="Bathrooms"
+                size="small"
+                sx={{ width: "100%" }}
+                inputRef={ref}
+                value={value}
+                onChange={onChange}
+                error={errors.bathrooms?.message}
+                helperText={errors.bathrooms?.message}
+              />
+            )}
           />
+
           <InputLabel id="demo-simple-select-label">
             What makes your space special?
           </InputLabel>
-          <Autocomplete
-            {...register("highlights")}
-            error={errors.highlights?.message}
-            helperText={errors.highlights?.message}
-            onChange={(event, value) => {
-              setValue("highlights", value);
-            }}
-            multiple
-            id="tags-outlined"
-            options={highlights}
-            getOptionLabel={(option) => option}
-            sx={{ width: "100%" }}
-            renderInput={(params) => (
-              <TextField {...params} variant="outlined" size="small" />
+
+          <Controller
+            control={control}
+            name="highlights"
+            render={({ field }) => (
+              <Autocomplete
+                {...field}
+                onChange={(_, data) => field.onChange(data)}
+                error={errors.highlights?.message}
+                helperText={errors.highlights?.message}
+                multiple
+                id="tags-outlined"
+                options={highlights}
+                getOptionLabel={(option) => option}
+                sx={{ width: "100%" }}
+                renderInput={(params) => (
+                  <TextField {...params} variant="outlined" size="small" />
+                )}
+              />
             )}
           />
+
           <InputLabel id="demo-simple-select-label">
             Upload photos of your accomoddation
           </InputLabel>
-          <Dropzone
+          <Controller
+            control={control}
+            name="imageUrl"
+            render={({ field: { onChange, value, ref } }) => (
+              <Dropzone
+                inputRef={ref}
+                value={value}
+                onChange={onChange}
+                minHeight="120px"
+                onClean={handleCleanImage}
+                accept=".png,image/*"
+                fakeUploading
+                disableScroll
+              >
+                {/* {console.log(value)} */}
+
+                {files.map((file) => (
+                  <FileItem
+                    {...file}
+                    key={file.id}
+                    onDelete={onDelete}
+                    onSee={handleSeeImage}
+                    resultOnTooltip
+                    preview
+                    hd
+                  />
+                ))}
+                <FullScreenPreview
+                  imgSource={imageSrc}
+                  openImage={imageSrc}
+                  onClose={(e) => handleSeeImage(undefined)}
+                />
+              </Dropzone>
+            )}
+          />
+
+          {/* TODO Arrumar para aparecer as imagens da acomodação */}
+
+          {/* <Dropzone
             onChange={updateFiles}
             minHeight="120px"
             onClean={handleCleanImage}
             value={files}
-            // maxFiles={5}
-            // maxFileSize={2998000}
             accept=".png,image/*"
-            // uploadingMessage={"Uploading..."}
-            // url="https://my-awsome-server/upload-my-file"
-            //of course this url doens´t work, is only to make upload button visible
-            //uploadOnDrop
-            //clickable={false}
             fakeUploading
             disableScroll
           >
@@ -508,38 +549,59 @@ function FormEditAccommod({ currentAccommodation }) {
               openImage={imageSrc}
               onClose={(e) => handleSeeImage(undefined)}
             />
-          </Dropzone>
+          </Dropzone> */}
+
           {errors.imageUrl && (
             <span className="imageError">{errors.imageUrl.message}</span>
           )}
+
           <InputLabel id="demo-simple-select-label">
             Name your accommodation
           </InputLabel>
-          <TextField
-            {...register("name")}
-            size="small"
-            value={valueName.name}
-            onChange={handleChangeName("name")}
-            sx={{ width: "100%" }}
-            inputProps={{
-              maxLength: nameCharacterLimit,
-            }}
-            error={errors.name?.message}
-            helperText={errors.name?.message}
+          <Controller
+            control={control}
+            name="name"
+            render={({ field: { onChange, value, ref } }) => (
+              <>
+                <TextField
+                  size="small"
+                  inputRef={ref}
+                  value={value}
+                  onChange={onChange}
+                  sx={{ width: "100%" }}
+                  inputProps={{
+                    maxLength: nameCharacterLimit,
+                  }}
+                  error={errors.name?.message}
+                  helperText={errors.name?.message}
+                />
+
+                <span style={{ fontSize: "0.63rem", paddingLeft: "0.5rem" }}>
+                  {value.length}/{nameCharacterLimit}
+                </span>
+              </>
+            )}
           />
-          <span style={{ fontSize: "0.63rem", paddingLeft: "0.5rem" }}>
-            {valueName.name.length}/{nameCharacterLimit}
-          </span>
+
           <InputLabel id="demo-simple-select-label">
             Create a description for your space
           </InputLabel>
-          <TextField
-            {...register("description")}
-            error={errors.description?.message}
-            helperText={errors.description?.message}
-            sx={{ width: "100%" }}
-            multiline
+          <Controller
+            control={control}
+            name="description"
+            render={({ field: { onChange, value, ref } }) => (
+              <TextField
+                inputRef={ref}
+                value={value}
+                onChange={onChange}
+                error={errors.description?.message}
+                helperText={errors.description?.message}
+                sx={{ width: "100%" }}
+                multiline
+              />
+            )}
           />
+
           <CheckboxContainer style={{ marginTop: "0", padding: "0 1rem" }}>
             <FormControlLabel
               control={
@@ -556,9 +618,17 @@ function FormEditAccommod({ currentAccommodation }) {
                       Does your accommodation have the minimum requirements?
                     </InputLabel>
                   </Tooltip>
-                  <Checkbox
-                    {...register("minimumRequirements")}
-                    sx={{ "& .MuiSvgIcon-root": { fontSize: 20 } }}
+                  <Controller
+                    control={control}
+                    name="minimumRequirements"
+                    render={({ field: { onChange, value, ref } }) => (
+                      <Checkbox
+                        onChange={onChange}
+                        checked={value}
+                        inputRef={ref}
+                        sx={{ "& .MuiSvgIcon-root": { fontSize: 20 } }}
+                      />
+                    )}
                   />
                 </>
               }
@@ -574,13 +644,21 @@ function FormEditAccommod({ currentAccommodation }) {
           </InputLabel>
           <div className="price">
             <span>$</span>
-            <TextField
-              {...register("price")}
-              error={errors.price?.message}
-              helperText={errors.price?.message}
-              size="small"
-              type="number"
-              sx={{ width: "95%" }}
+            <Controller
+              control={control}
+              name="price"
+              render={({ field: { onChange, value, ref } }) => (
+                <TextField
+                  inputRef={ref}
+                  value={value}
+                  onChange={onChange}
+                  error={errors.price?.message}
+                  helperText={errors.price?.message}
+                  size="small"
+                  type="number"
+                  sx={{ width: "95%" }}
+                />
+              )}
             />
           </div>
           <Button
@@ -604,7 +682,10 @@ function FormEditAccommod({ currentAccommodation }) {
           aria-describedby="modal-modal-description"
           className="addressModal"
         >
-          <EditAddressForm handleCloseModal={handleCloseModal} />
+          <EditAddressForm
+            handleCloseModal={handleCloseModal}
+            currentAccommodation={currentAccommodation}
+          />
         </Modal>
       </StyledPaper>
     </StyledMain>
