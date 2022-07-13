@@ -1,0 +1,1 @@
+export const USER_SEARCH_TRIPS = "USER_SEARCH_TRIPS";
