@@ -3,40 +3,41 @@ import * as muiStyles from "@mui/material/styles";
 import { TextField } from "@mui/material";
 
 export const BackgroundModal = styled.div`
-  padding: 0.625rem;
-  width: 100vw;
-  height: 100vh;
-  margin: auto;
-  top: 0;
-  left: 0;
-  position: fixed;
+  height: 100%;
   background: rgba(0, 0, 0, 0.5);
 `;
 
 export const ModalContainer = styled.div`
-  width: 100%;
-  max-width: 21.875rem;
-  height: 24rem;
+  width: 85%;
+  max-width: 21rem;
+  height: 13rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  justify-content: center;
+  gap: 1rem;
   background: white;
   border-radius: 0.625rem;
   top: 50%;
   left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   position: fixed;
-  padding: 1rem;
+  padding: 1.2rem;
+
+  .closeButton {
+    position: absolute;
+    position: absolute;
+    top: 3px;
+    right: 7px;
+  }
 `;
 
 export const ModalHeader = styled.div`
   width: 100%;
   height: 4rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
+  text-align: center;
 `;
 
 export const ModalHeaderButton = styled.div`
@@ -50,14 +51,12 @@ export const ModalHeaderButton = styled.div`
 
 export const ModalHeaderText = styled.div`
   width: 100%;
-  height: 2rem;
   display: flex;
   flex-direction: row;
-  justify-content: start;
   color: #3d97b4;
   font-weight: bolder;
-  font-size: 1.5rem;
-  padding: 0 0 0 1.25rem;
+  align-items: center;
+  justify-content: center;
 `;
 export const StyledForm = styled.form`
   width: 100%;
@@ -77,23 +76,9 @@ width:100%;
 
 export const ModalFooter = styled.div`
   width: 100%;
-  height: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-pack: space-evenly;
-  -webkit-justify-content: space-evenly;
-  -ms-flex-pack: space-evenly;
   justify-content: center;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
-  padding: 1.25rem;
   gap: 2rem;
 
   p {

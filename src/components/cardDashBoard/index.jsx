@@ -2,7 +2,6 @@ import { Button, Paper, Rating } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Api } from "../../services/api";
 import MiniCardImg from "../miniCardImg";
-import ModalDelAcommodation from "../modalDelAcommodation";
 import { CardPaper, ContainerButtons, ContainerInfoCard } from "./styles";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
@@ -15,17 +14,8 @@ function CardDashBoard({ element, conditional, userBookings, setRenderAgain }) {
 
   const history = useHistory();
 
-  // const [modalDelete, setModalDelete] = useState(false);(VAI EXISTIR NO CARD DO HOST)
-  //<ModalDelAcommodation modalDelete={modalDelete} OpenModal={OpenModal} closeModal={closeModal}/>
+  const price = "";
 
-  // function openModal() {
-  //   setModalDelete(true);
-  // }
-
-  // function closeModal() {
-  //   setModalDelete(false);
-  //   toast.success("Deleted!");
-  // }
   useEffect(() => {
     Api.get("/accommodationReview")
       .then((response) => setReviews(response.data))
