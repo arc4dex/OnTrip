@@ -1,7 +1,7 @@
 import { Divider } from "@mui/material";
 import { ContainerStyle } from "./styles";
 
-function MiniCardImg({ imgMobile = false, element }) {
+function MiniCardImg({ element, imgMobile = false }) {
   return (
     <ContainerStyle imgMobile={imgMobile}>
       <div className={imgMobile ? "" : "desktop"}>

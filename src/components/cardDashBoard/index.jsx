@@ -13,6 +13,7 @@ function CardDashBoard({ element, conditional, userBookings, setRenderAgain }) {
   const [reviewAverage, setReviewAverage] = useState(5);
   const [modal, setModal] = useState(false);
   const [reviewAccommodation, setReviewAccommodation] = useState(false);
+  const [reload, setReload] = useState(false);
 
   const history = useHistory();
 
@@ -45,7 +46,8 @@ function CardDashBoard({ element, conditional, userBookings, setRenderAgain }) {
       .then(
         (response) => response.data,
         toast.success("Your trip has been cancelled!"),
-        setRenderAgain(true)
+        setRenderAgain(true),
+        setReload(!reload)
       )
       .catch((err) => toast.error("Something went bad, try again!"));
   }
@@ -71,13 +73,13 @@ function CardDashBoard({ element, conditional, userBookings, setRenderAgain }) {
     }
     let average = temporaryArray / counter;
     setReviewAverage(average);
-  }, [reviews, element]);
+  }, [reviews, element, reload]);
   return (
     <>
       <CardPaper opacity={conditional} elevation={3}>
         <div className="imgContainer">
           <img src={element?.imageUrl[0]} alt="" />
-          <MiniCardImg imgMobile />
+          <MiniCardImg element={element} imgMobile />
         </div>
         <ContainerInfoCard>
           <h1>{element?.name}</h1>
