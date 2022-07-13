@@ -92,7 +92,12 @@ function CardDashBoard({ element, conditional, userBookings, setRenderAgain }) {
               borderRadius: "0.5rem",
             }}
           >
-            <Rating name="half-rating" value={reviewAverage} precision={0.5} />
+            <Rating
+              name="half-rating"
+              value={reviewAverage}
+              precision={0.5}
+              readOnly
+            />
           </Paper>
           <p>{element?.description}</p>
           <MiniCardImg element={element} />
@@ -117,7 +122,13 @@ function CardDashBoard({ element, conditional, userBookings, setRenderAgain }) {
           </Button>
         </ContainerButtons>
       </CardPaper>
-      {modal && <ModalBooking setModal={setModal} price={element.price} />}
+      {modal && (
+        <ModalBooking
+          setModal={setModal}
+          price={element.price}
+          idAccommodation={element.id}
+        />
+      )}
       {reviewAccommodation && (
         <ModalReviewAccommodation
           reviews={reviews && reviews[0].idAccommodation}
