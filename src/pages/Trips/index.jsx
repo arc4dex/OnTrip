@@ -85,10 +85,6 @@ function Trips() {
         count={numberOfPages}
         color="primary"
         onChange={handleChangePage}
-<<<<<<< HEAD
-       />
-      {searchedTrips.length === 0 ? (
-=======
       />
 
       {userTripsSearchsReducer?.length > 0
@@ -100,7 +96,6 @@ function Trips() {
           ))}
 
       {/* {searchedTrips.length === 0 ? (
->>>>>>> 0aabee97a1774eac1adb6ecf3dff5b621d9a6af8
         listAccomodations.map((item) => {
          return <AccommodationCard key={item.id} accom={item} />;
         })
@@ -108,16 +103,10 @@ function Trips() {
         searchedTrips.map((item) => {
           <AccommodationCard key={item.id} accomodation={item} />;
         })
-<<<<<<< HEAD
-      )}
-       <Pagination 
-        count={numberOfPages} 
-=======
       )} */}
 
       <Pagination
         count={numberOfPages}
->>>>>>> 0aabee97a1774eac1adb6ecf3dff5b621d9a6af8
         color="primary"
         onChange={handleChangePage}
       />
