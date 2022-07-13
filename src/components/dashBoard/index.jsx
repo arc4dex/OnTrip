@@ -6,6 +6,7 @@ import CardDashBoard from "../cardDashBoard";
 import Footer from "../Footer";
 import Header from "../header";
 import HeaderDesktop from "../headerDesktop";
+import ModalReviewAccommodation from "../ModalReviewAccommodation";
 import NomadeHeader from "../NomadeHeader";
 import { ContainerInfo, MainPaper, MainSection, NoInfo } from "./styles";
 
@@ -74,7 +75,11 @@ function DashBoard() {
       setMyBookedAccommodations(temporaryArray);
       setRenderAgain(false);
     }
+<<<<<<< HEAD
+  }, [myTrips, filterTrips]);
+=======
   }, [myTrips, filterTrips, renderAgain]);
+>>>>>>> develop
 
   return (
     <>

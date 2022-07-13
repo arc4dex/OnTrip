@@ -6,16 +6,27 @@ import { CardPaper, ContainerButtons, ContainerInfoCard } from "./styles";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 import ModalBooking from "../modalBooking";
+import ModalReviewAccommodation from "../ModalReviewAccommodation";
 
 function CardDashBoard({ element, conditional, userBookings, setRenderAgain }) {
   const [reviews, setReviews] = useState();
   const [reviewAverage, setReviewAverage] = useState(5);
   const [modal, setModal] = useState(false);
+  const [reviewAccommodation, setReviewAccommodation] = useState(false);
 
   const history = useHistory();
 
-  const price = "";
+  // const [modalDelete, setModalDelete] = useState(false);(VAI EXISTIR NO CARD DO HOST)
+  //<ModalDelAcommodation modalDelete={modalDelete} OpenModal={OpenModal} closeModal={closeModal}/>
 
+  // function openModal() {
+  //   setModalDelete(true);
+  // }
+
+  // function closeModal() {
+  //   setModalDelete(false);
+  //   toast.success("Deleted!");
+  // }
   useEffect(() => {
     Api.get("/accommodationReview")
       .then((response) => setReviews(response.data))
@@ -52,10 +63,6 @@ function CardDashBoard({ element, conditional, userBookings, setRenderAgain }) {
 
   function bookingModal() {
     setModal(true);
-  }
-
-  function openReviewModal() {
-    console.log("open review modal");
   }
 
   useEffect(() => {
@@ -100,8 +107,11 @@ function CardDashBoard({ element, conditional, userBookings, setRenderAgain }) {
             <Button variant="contained" onClick={bookingModal}>
               Book Again
             </Button>
-          ) : conditional === "finished" ? (
-            <Button variant="contained" onClick={openReviewModal}>
+          ) : (
+            <Button
+              variant="contained"
+              onClick={() => setReviewAccommodation(true)}
+            >
               Add Review
             </Button>
           ) : (
@@ -116,6 +126,12 @@ function CardDashBoard({ element, conditional, userBookings, setRenderAgain }) {
         </ContainerButtons>
       </CardPaper>
       {modal && <ModalBooking setModal={setModal} price={element.price} />}
+      {reviewAccommodation && (
+        <ModalReviewAccommodation
+          reviews={reviews && reviews[0].idAccommodation}
+          setReviewAccommodation={setReviewAccommodation}
+        />
+      )}
     </>
   );
 }
