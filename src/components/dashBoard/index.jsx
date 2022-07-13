@@ -75,11 +75,7 @@ function DashBoard() {
       setMyBookedAccommodations(temporaryArray);
       setRenderAgain(false);
     }
-<<<<<<< HEAD
-  }, [myTrips, filterTrips]);
-=======
   }, [myTrips, filterTrips, renderAgain]);
->>>>>>> develop
 
   return (
     <>

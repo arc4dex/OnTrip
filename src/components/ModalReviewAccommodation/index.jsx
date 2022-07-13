@@ -67,7 +67,7 @@ export default function ModalReviewAccommodation({
 
   return (
     <Modal>
-      <div class="modal-content">
+      <div>
         <span>
           <AiOutlineClose onClick={() => setReviewAccommodation(false)} />
         </span>

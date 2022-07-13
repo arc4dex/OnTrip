@@ -16,17 +16,6 @@ function CardDashBoard({ element, conditional, userBookings, setRenderAgain }) {
 
   const history = useHistory();
 
-  // const [modalDelete, setModalDelete] = useState(false);(VAI EXISTIR NO CARD DO HOST)
-  //<ModalDelAcommodation modalDelete={modalDelete} OpenModal={OpenModal} closeModal={closeModal}/>
-
-  // function openModal() {
-  //   setModalDelete(true);
-  // }
-
-  // function closeModal() {
-  //   setModalDelete(false);
-  //   toast.success("Deleted!");
-  // }
   useEffect(() => {
     Api.get("/accommodationReview")
       .then((response) => setReviews(response.data))
@@ -103,15 +92,12 @@ function CardDashBoard({ element, conditional, userBookings, setRenderAgain }) {
           <MiniCardImg element={element} />
         </ContainerInfoCard>
         <ContainerButtons>
-          {conditional === "cancelled" ? (
+        {conditional === "cancelled" ? (
             <Button variant="contained" onClick={bookingModal}>
               Book Again
             </Button>
-          ) : (
-            <Button
-              variant="contained"
-              onClick={() => setReviewAccommodation(true)}
-            >
+          ) : conditional === "finished" ? (
+            <Button variant="contained" onClick={() => setReviewAccommodation(!reviewAccommodation)}>
               Add Review
             </Button>
           ) : (
