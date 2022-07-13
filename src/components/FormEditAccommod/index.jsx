@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable no-use-before-define */
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -28,15 +29,16 @@ import {
 
 import { CheckboxContainer, CheckboxErrorContainer } from "../Register/styles";
 
-import RegisterAddressForm from "./RegisterAddressForm";
+import EditAddressForm from "./EditAddressForm";
 
 import { Api } from "../../services/api";
 
 import { useHistory, useParams } from "react-router-dom";
+import { useCallback } from "react";
 
-import { setAccommodationData } from "../../store/modules/accommodationData/actions";
+// TODO Os valores da acomodação específica chegam, mas não consegui renderizar esses valores nos inputs
 
-function FormRegisterAccommod() {
+function FormEditAccommod({ currentAccommodation }) {
   const categories = ["House", "Apartment", "Flat", "Inn", "Boutique Hotel"];
 
   const kindsOfPlaces = ["A whole place", "A whole room", "A shared room"];
@@ -56,6 +58,8 @@ function FormRegisterAccommod() {
     "Coworking",
   ];
 
+  // console.log(currentAccommodation);
+
   const [category, setCategory] = useState("");
 
   const [kindOfPlace, setKindOfPlace] = useState("");
@@ -63,12 +67,6 @@ function FormRegisterAccommod() {
   const [openModal, setOpenModal] = useState(false);
 
   const [image, setImage] = useState([]);
-
-  const inputRef = useRef(null);
-
-  const dispatch = useDispatch();
-
-  const accommodAddress = useSelector((store) => store.accommodAddress);
 
   const [files, setFiles] = useState([]);
 
@@ -78,9 +76,13 @@ function FormRegisterAccommod() {
     name: "",
   });
 
-  const history = useHistory();
+  const inputRef = useRef(null);
 
-  const params = useParams();
+  const dispatch = useDispatch();
+
+  const accommodAddress = useSelector((store) => store.accommodAddress);
+
+  const history = useHistory();
 
   const handleChangeName = (name) => (event) => {
     setValueName({ ...valueName, [name]: event.target.value });
@@ -213,7 +215,64 @@ function FormRegisterAccommod() {
     setValue,
     reset,
     formState: { errors },
-  } = useForm({ resolver: yupResolver(formSchema) });
+  } = useForm({
+    // defaultValues: {
+    //   category: currentAccommodation.category,
+    //   kindOfPlace: currentAccommodation.kindOfPlace,
+    //   guests: currentAccommodation.accommodation?.guests,
+    //   beds: currentAccommodation.accommodation?.beds,
+    //   rooms: currentAccommodation.accommodation?.rooms,
+    //   bathrooms: currentAccommodation.accommodation?.bathrooms,
+    //   highlights: currentAccommodation.accommodation?.highlights,
+    //   imageUrl: currentAccommodation.imageUrl,
+    //   name: currentAccommodation.name,
+    //   description: currentAccommodation.description,
+    //   minimumRequirements: true,
+    //   price: currentAccommodation.price,
+    // },
+    resolver: yupResolver(formSchema),
+  });
+
+  const resetAsyncForm = useCallback(async () => {
+    const result = {
+      category: currentAccommodation.category,
+      kindOfPlace: currentAccommodation.kindOfPlace,
+      guests: currentAccommodation.accommodation?.guests,
+      beds: currentAccommodation.accommodation?.beds,
+      rooms: currentAccommodation.accommodation?.rooms,
+      bathrooms: currentAccommodation.accommodation?.bathrooms,
+      highlights: currentAccommodation.accommodation?.highlights,
+      imageUrl: currentAccommodation.imageUrl,
+      name: currentAccommodation.name,
+      description: currentAccommodation.description,
+      minimumRequirements: true,
+      price: currentAccommodation.price,
+    }; // result: { firstName: 'test', lastName: 'test2' }
+
+    reset(result);
+    // asynchronously reset your form values
+  }, [reset]);
+
+  useEffect(() => {
+    resetAsyncForm();
+  }, [resetAsyncForm]);
+
+  // useEffect(() => {
+  //   reset({
+  //     category: currentAccommodation?.category,
+  //     kindOfPlace: currentAccommodation?.kindOfPlace,
+  //     guests: currentAccommodation.accommodation?.guests,
+  //     beds: currentAccommodation.accommodation?.beds,
+  //     rooms: currentAccommodation.accommodation?.rooms,
+  //     bathrooms: currentAccommodation.accommodation?.bathrooms,
+  //     highlights: currentAccommodation.accommodation?.highlights,
+  //     imageUrl: currentAccommodation?.imageUrl,
+  //     name: currentAccommodation?.name,
+  //     description: currentAccommodation?.description,
+  //     minimumRequirements: true,
+  //     price: currentAccommodation?.price,
+  //   });
+  // }, []);
 
   async function onSubmitFunction(data) {
     const location = accommodAddress;
@@ -254,22 +313,25 @@ function FormRegisterAccommod() {
         description: data.description,
       };
 
-      await Api.post("/accommodation", dataToSend, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-        },
-      })
-        .then((response) => {
-          console.log(response);
-          toast.success("Accommodation successfully registered!");
-          history.push(`/hostDash/${params.id}`);
-          dispatch(setAccommodationData(dataToSend));
-        })
-        .catch((error) => {
-          console.log(error);
-          toast.error("Ops! Something went wrong. Please try again.");
-        });
+      {
+        /* <TODO> mudar para patch </TODO> */
+      }
+      // await Api.post("/accommodation", dataToSend, {
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+      //   },
+      // })
+      //   .then((response) => {
+      //     console.log(response);
+      //     toast.success("Accommodation successfully registered!");
+      //     history.push(`/hostDash/${params.id}`);
+      //     dispatch(setAccommodationData(dataToSend));
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //     toast.error("Ops! Something went wrong. Please try again.");
+      //   });
     } else {
       toast.error("Please register an address.");
     }
@@ -281,7 +343,7 @@ function FormRegisterAccommod() {
     <StyledMain>
       <StyledPaper>
         <header>
-          <h3>Register an accommodation</h3>
+          <h3>Edit an accommodation</h3>
         </header>
         <form onSubmit={handleSubmit(onSubmitFunction)}>
           <InputLabel id="demo-simple-select-label">
@@ -531,7 +593,7 @@ function FormRegisterAccommod() {
               maxWidth: "15.75rem",
             }}
           >
-            Register accommodation
+            Edit accommodation
           </Button>
         </form>
 
@@ -542,11 +604,11 @@ function FormRegisterAccommod() {
           aria-describedby="modal-modal-description"
           className="addressModal"
         >
-          <RegisterAddressForm handleCloseModal={handleCloseModal} />
+          <EditAddressForm handleCloseModal={handleCloseModal} />
         </Modal>
       </StyledPaper>
     </StyledMain>
   );
 }
 
-export default FormRegisterAccommod;
+export default FormEditAccommod;

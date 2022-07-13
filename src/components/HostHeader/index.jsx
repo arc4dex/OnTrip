@@ -2,28 +2,29 @@ import { NomadeHeaderContent, StyledButton } from "./styles";
 
 import { useHistory } from "react-router-dom";
 
-function HostHeader() {    
+function HostHeader({ user }) {
+  const history = useHistory();
 
-    const history = useHistory();
+  function handleAddAccommodation() {
+    history.push(`/registerAccommod/${user.id}`);
+  }
 
-    //Alterar essa função caso não vá encaminhar para a página e sim fazer um modal.
-    function handleAddAccommodation(){
-        history.push("/registerAccommod/1")
-    }
-    
-    return (        
-        <NomadeHeaderContent>
-            <section className="divInfo">
-                <h1>Dashboard</h1>
-                <p>Hello, userHost!</p>
-            </section>  
-            <section className="btnSection">
-                <StyledButton onClick={() => handleAddAccommodation()} variant="contained">Add Accommodation</StyledButton>
-            </section>
-        </NomadeHeaderContent>
-
-        
-    );
+  return (
+    <NomadeHeaderContent>
+      <section className="divInfo">
+        <h1>Dashboard</h1>
+        <p>Hello, {user.name}!</p>
+      </section>
+      <section className="btnSection">
+        <StyledButton
+          onClick={() => handleAddAccommodation()}
+          variant="contained"
+        >
+          Add Accommodation
+        </StyledButton>
+      </section>
+    </NomadeHeaderContent>
+  );
 }
 
 export default HostHeader;
