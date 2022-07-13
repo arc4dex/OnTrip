@@ -43,7 +43,10 @@ function Login({ loginModal, handleCloseModalLogin, handleOpenRegisterModal }) {
 
   const onSubmits = async (data) => {
     const registerInfo = await Api.post("/login", data)
-      .then((response) => response.data, toast.success("Successfully Logged"))
+      .then((response) => {
+        toast.success("Successfully Logged");
+        return response.data;
+      })
       .catch((_) => {
         toast.error("Something went Wrong");
       });

@@ -70,8 +70,6 @@ function Trips() {
     setPage(numPag);
   };
 
-  console.log(userTripsSearchsReducer);
-
   return (
     <>
       <Header />
