@@ -18,13 +18,9 @@ function Trips() {
   const userTripsSearchsReducer = useSelector(
     ({ userTripsSearch }) => userTripsSearch
   );
-
-  console.log(userTripsSearchsReducer)
-
-
   //state que vai receber os dados do filtro de pesquisa
-  const [searchedTrips, setSearchedTrips] = useState([]);
-  const [page, setPage] = useState(1);
+
+  const [pages, setPage] = useState(1);
   const [numberOfPages, setNumberOfPages] = useState(0);
   const [listAccomodations, setListAccomodations] = useState([]);
 
@@ -36,37 +32,45 @@ function Trips() {
     }
   });
 
-  useEffect(() => {
-    Api.get(`/accommodation?_page={${page}}&_limit=10`).then((response) => {
+  function getAccommodAuto(numPage) {
+    Api.get(`/accommodation?_page=${numPage}&_limit=10`).then((response) => {
       setListAccomodations(response.data);
-      setNumberOfPages(Math.ceil(response.data.length / 10));
-    },[]);
-    Api.get(`/accommodation?_page={${page}}&_limit=10`).then(
-      (response) => {
-        setListAccomodations(response.data);
-        setNumberOfPages(Math.ceil(response.data.length / 10));
-      },
-      [listAccomodations]
-    );
+      setNumberOfPages(Math.ceil(response.data.length / 5));
+    });
+  }
 
-    function handleChangeLineState() {
-      if (window.innerWidth < 800) {
-        setLineState("none");
-      } else {
-        setLineState("block");
-      }
+  useEffect(() => {
+    getAccommodAuto(pages);
+  }, [pages]);
+
+  // Api.get(`/accommodation?_page={${page}}&_limit=10`).then(
+  //   (response) => {
+  //     setListAccomodations(response.data);
+  //     setNumberOfPages(Math.ceil(response.data.length / 10));
+  //   },
+  //   [listAccomodations]);
+
+  function handleChangeLineState() {
+    if (window.innerWidth < 800) {
+      setLineState("none");
+    } else {
+      setLineState("block");
     }
+  }
 
-    if (userTripsSearchsReducer?.length === 0) {
-      Api.get("/accommodation").then((resp) => setSearchedTrips(resp.data));
-    }
-
+  // if (userTripsSearchsReducer?.length === 0) {
+  //   Api.get("/accommodation").then((resp) => setSearchedTrips(resp.data));
+  // }
+  useEffect(() => {
     window.addEventListener("resize", handleChangeLineState);
-  }, [page]);
+  }, [pages]);
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
+  const handleChangePage = (event) => {
+    const numPag = event.target.textContent;
+    setPage(numPag);
   };
+
+  console.log(userTripsSearchsReducer);
 
   return (
     <>
@@ -87,15 +91,15 @@ function Trips() {
       <Pagination
         count={numberOfPages}
         color="primary"
-        onChange={handleChangePage}
+        onClick={handleChangePage}
       />
 
       {userTripsSearchsReducer?.length > 0
-        ? userTripsSearchsReducer?.map((accommodation) => (
-            <AccommodationCard accom={accommodation} />
+        ? userTripsSearchsReducer.map((accommodation) => (
+            <AccommodationCard key={accommodation.id} accom={accommodation} />
           ))
-        : listAccomodations?.map((accommodation) => (
-            <AccommodationCard accom={accommodation} />
+        : listAccomodations.map((accommodation) => (
+            <AccommodationCard key={accommodation.id} accom={accommodation} />
           ))}
 
       {/* {searchedTrips.length === 0 ? (
