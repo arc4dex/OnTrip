@@ -301,6 +301,7 @@ function FormRegisterAccommod() {
             error={errors.category?.message}
             helperText={errors.category?.message}
             size="small"
+            git
             sx={{
               width: "100%",
             }}
