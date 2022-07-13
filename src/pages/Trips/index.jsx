@@ -3,6 +3,7 @@ import { StyledH1 } from "./style";
 import { Divider, Pagination } from "@mui/material";
 
 import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 
 import Header from "../../components/header";
 import HeaderDesktop from "../../components/headerDesktop";
@@ -17,6 +18,8 @@ function Trips() {
   const userTripsSearchsReducer = useSelector(
     ({ userTripsSearch }) => userTripsSearch
   );
+
+  console.log(userTripsSearchsReducer)
 
 
   //state que vai receber os dados do filtro de pesquisa
@@ -91,7 +94,7 @@ function Trips() {
         ? userTripsSearchsReducer?.map((accommodation) => (
             <AccommodationCard accom={accommodation} />
           ))
-        : searchedTrips?.map((accommodation) => (
+        : listAccomodations?.map((accommodation) => (
             <AccommodationCard accom={accommodation} />
           ))}
 

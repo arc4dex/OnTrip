@@ -1,9 +1,9 @@
 import { USER_SEARCH_TRIPS } from "./actionsTypes";
 
 const userTripsSearchsReducer = (state = [], action) => {
+  console.log(action.value)
   switch (action.type) {
     case USER_SEARCH_TRIPS:
-        console.log(action.value);
       return action.value;
 
     default:
