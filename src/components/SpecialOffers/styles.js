@@ -60,13 +60,12 @@ export const StyledSpecialOffers = styled.section`
 
       article {
         margin-left: 0;
-        padding: 0 1.3rem;
+        padding: 1rem;
         max-width: 37.25rem;
-        height: 20rem;
-        height: 39rem;
-
+        height: 25rem;
+        
         @media (min-width: 1000px) {
-          height: 50rem;
+          height: 35rem;
         }
       }
     }

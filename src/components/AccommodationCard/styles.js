@@ -1,8 +1,9 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-import * as muiStyles from '@mui/material/styles';
+import * as muiStyles from "@mui/material/styles";
 
-import { Button, Paper, Box } from '@mui/material';
+import { Button, Paper, Box } from "@mui/material";
+
 
 export const StyledCard = styled.article`
 	margin-left: 1.25rem;
@@ -12,53 +13,63 @@ export const StyledCard = styled.article`
 	align-items: center;
 	max-width: 31.25rem;
 	width: 90%;
-	height: 34.375rem;
+	height: 37.375rem;
 	gap: 1rem;
 	padding: 0.625rem;
 
 	h2 {
 		display: flex;
 		justify-content: start;
-		align-items: center;
+		align-items: flex-start;
 		font-size: 1.25rem;
 		width: 100%;
-		height: 4.375rem;
+		height: 6rem;
 	}
 
 	p {
 		display: flex;
 		justify-content: start;
-		align-items: center;
+		align-items: flex-start;
 		width: 100%;
-		height: 2.5rem;
+		height: 13rem;
 	}
 
 	@media (min-width: 37.5rem) {
-		height: 95vh;
+		height: 32rem;
 	}
 
 	.divImg {
 		position: relative;
 		width: 100%;
-		height: 40%;
+		height: 25rem;
 		border-radius: 1.25rem;
 		img {
 			width: 100%;
 		}
 	}
 
-	.btn {
-		height: 7rem;
-		width: 100%;
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
+  .divImg {
+    position: relative;
+    width: 100%;
+    height: 40%;
+    border-radius: 1.25rem;
+    img {
+      width: 100%;
+    }
+  }
 
-		@media (min-width: 32.813rem) {
-			flex-direction: row;
-			height: 3rem;
-		}
-	}
+  .btn {
+    height: 7rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    @media (min-width: 32.813rem) {
+      flex-direction: row;
+      height: 3rem;
+    }
+  }
 `;
 
 export const StyledButton = muiStyles.styled(Button)`
@@ -80,7 +91,7 @@ export const StyledButton = muiStyles.styled(Button)`
 
 export const StyledPaper = muiStyles.styled(Paper)`
     position: absolute;
-    top: 64%;
+    bottom: 0.5rem;
     opacity: 0.9;
     height: 4.063rem;
     width: 90%;
@@ -114,5 +125,13 @@ export const StyledBox = muiStyles.styled(Box)`
             display: flex;
         }
     }
-
 `;
+
+export const ContainerRaitingAccommodation = styled.section`
+  display: flex;
+  justify-content: flex-start;
+	
+  width: 100%;
+  height: 1rem;
+
+`
