@@ -19,8 +19,6 @@ function Accommodation() {
     });
   }, []);
 
-  console.log(accommodation)
-
   const reviewAccommodation = reviewUser?.filter((item) => {
     return item.idAccommodation === parseInt(params.id)
   }) 
