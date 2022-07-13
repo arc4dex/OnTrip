@@ -30,14 +30,7 @@ function ModalBooking({ setModal, price }) {
   const [checkout, setCheckout] = useState(new Date());
   const [dailys, setDailys] = useState(1);
   const [totalPrice, setTotalPrice] = useState(price);
-  const [booking, setBooking] = useState({
-    userId: userData.id,
-    accommodationId: Number(params.id),
-    checkin: "",
-    checkout: "",
-    status: "booked",
-  });
-
+ 
   const formSchema = yup.object().shape({
     checkin: yup.string().required("Checkin is required."),
     checkout: yup.string().required("Date of Birth is required."),
@@ -53,6 +46,7 @@ function ModalBooking({ setModal, price }) {
 
   const handleCheckin = (newValue) => {
     setCheckin(newValue);
+    setCheckout(checkout < newValue? newValue : checkout);
   };
 
   const handleCheckout = (newValue) => {
@@ -74,20 +68,20 @@ function ModalBooking({ setModal, price }) {
   }, [checkin, checkout, dailys, price]);
 
   const onSubmitFunction = (data) => {
-    setBooking({
+    const booking = {
       userId: userData.id,
       accommodationId: parseInt(params.id),
       checkin: data.checkin,
       checkout: data.checkout,
       status: "booked",
-    });
+    };
 
     Api.post("/bookings/", 
       booking, 
       { headers: {Authorization: `Bearer ${token}`}}
     )
       .then((response) => {
-        console.log(response);
+        setModal(false)
         toast.success('Booking done')
       })
       .catch((_) =>{
@@ -114,6 +108,7 @@ function ModalBooking({ setModal, price }) {
                 label="Checkin"
                 value={checkin}
                 onChange={handleCheckin}
+                disablePast
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -128,6 +123,8 @@ function ModalBooking({ setModal, price }) {
                 label="Checkout"
                 value={checkout}
                 onChange={handleCheckout}
+                disablePast
+                minDate={checkin}
                 renderInput={(params) => (
                   <TextField
                     {...params}
