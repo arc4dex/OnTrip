@@ -1,15 +1,13 @@
 import styled from "styled-components";
 
 export const StyledAboutUs = styled.div`
-  width: 100vw;
-  height: calc(100vh - 4.688em);
-  background-color: #f8edeb;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-content: center;
   padding: 3%;
-  gap: 5%;
+  gap: 2rem;
 
   h1 {
     display: flex;

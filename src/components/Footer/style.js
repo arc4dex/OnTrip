@@ -12,6 +12,7 @@ export const StyledFooter = styled.footer`
   display: flex;
   align-items: stretch;
   justify-content: center;
+  margin-top: 2rem;
 
   div {
     height: 100%;
