@@ -1,9 +1,15 @@
 import styled from "styled-components";
 
 export const BackGroundModalReadMore = styled.div`
+
+display: flex;
+justify-content: center;
+align-items: center;
+
 inset: 0;
 
-width: 100%;
+width: 100vw;
+height: 100vh;
 
 z-index: 1;
 

@@ -1,8 +1,11 @@
 import styled, { css } from "styled-components";
 
 export const ContainerStyle = styled.div`
+  
   .desktop {
+    width: 25%;
     display: flex;
+    justify-content: space-between;
 
     section {
       margin-top: 0;
@@ -24,8 +27,6 @@ export const ContainerStyle = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-
-    margin-top: 1rem;
 
     .line {
       height: 60%;

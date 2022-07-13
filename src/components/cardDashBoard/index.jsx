@@ -6,15 +6,15 @@ import { CardPaper, ContainerButtons, ContainerInfoCard } from "./styles";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 import ModalBooking from "../modalBooking";
+import ModalReviewAccommodation from "../ModalReviewAccommodation";
 
 function CardDashBoard({ element, conditional, userBookings, setRenderAgain }) {
   const [reviews, setReviews] = useState();
   const [reviewAverage, setReviewAverage] = useState(5);
   const [modal, setModal] = useState(false);
+  const [reviewAccommodation, setReviewAccommodation] = useState(false);
 
   const history = useHistory();
-
-  const price = "";
 
   useEffect(() => {
     Api.get("/accommodationReview")
@@ -52,10 +52,6 @@ function CardDashBoard({ element, conditional, userBookings, setRenderAgain }) {
 
   function bookingModal() {
     setModal(true);
-  }
-
-  function openReviewModal() {
-    console.log("open review modal");
   }
 
   useEffect(() => {
@@ -96,12 +92,12 @@ function CardDashBoard({ element, conditional, userBookings, setRenderAgain }) {
           <MiniCardImg element={element} />
         </ContainerInfoCard>
         <ContainerButtons>
-          {conditional === "cancelled" ? (
+        {conditional === "cancelled" ? (
             <Button variant="contained" onClick={bookingModal}>
               Book Again
             </Button>
           ) : conditional === "finished" ? (
-            <Button variant="contained" onClick={openReviewModal}>
+            <Button variant="contained" onClick={() => setReviewAccommodation(!reviewAccommodation)}>
               Add Review
             </Button>
           ) : (
@@ -116,6 +112,12 @@ function CardDashBoard({ element, conditional, userBookings, setRenderAgain }) {
         </ContainerButtons>
       </CardPaper>
       {modal && <ModalBooking setModal={setModal} price={element.price} />}
+      {reviewAccommodation && (
+        <ModalReviewAccommodation
+          reviews={reviews && reviews[0].idAccommodation}
+          setReviewAccommodation={setReviewAccommodation}
+        />
+      )}
     </>
   );
 }

@@ -144,7 +144,7 @@ export const ContainerPriceCity = styled.div`
 `
 
 export const ContainerAccommodation = styled.div`
-  width: 60%;
+  width: 80%;
   display: flex;
 
   justify-content: space-between;
@@ -155,7 +155,7 @@ export const ContainerAccommodation = styled.div`
   h1 {
     width: 100%;
 
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     margin-bottom: 0.7rem;
   }
 
@@ -252,7 +252,7 @@ export const ContainerReviews = muiStyles.styled(Paper)`
 
   gap: 1.5rem;
 
-  div{
+  .reviews{
     display: flex;
     justify-content: center;
 
@@ -270,7 +270,7 @@ export const ContainerReviews = muiStyles.styled(Paper)`
   }
 
   @media(max-width: 1001px){
-    div{
+    .reviews{
       justify-content: center;
       flex-wrap: wrap;
     }

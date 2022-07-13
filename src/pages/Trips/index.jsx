@@ -3,6 +3,7 @@ import { StyledH1 } from "./style";
 import { Divider, Pagination } from "@mui/material";
 
 import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 
 import Header from "../../components/header";
 import HeaderDesktop from "../../components/headerDesktop";

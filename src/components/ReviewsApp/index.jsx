@@ -78,9 +78,8 @@ function ReviewsApp() {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    })
-      .then((response) => response.data)
-      // .catch((err) => console.log(err));
+    }).then((response) => response.data);
+    // .catch((err) => console.log(err));
 
     const newReview = {
       userName: userInfo.name,
@@ -92,9 +91,8 @@ function ReviewsApp() {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    })
-      .then((response) => response.data)
-      // .catch((err) => console.log(err));
+    }).then((response) => response.data);
+    // .catch((err) => console.log(err));
     handleClose();
   }
 

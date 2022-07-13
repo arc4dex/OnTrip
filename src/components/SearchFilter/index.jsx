@@ -111,9 +111,6 @@ export default function SearchFilter() {
       }
     });
 
-    console.log(bookings);
-    console.log(filteredPlaces);
-
     let arr = [];
 
     for (let i = 0; i < filteredPlaces.length; i++) {
@@ -150,8 +147,13 @@ export default function SearchFilter() {
       }
     }
 
+    const newArr = finalPlaces[0]
+
+    console.log(newArr)
+
     if(finalPlaces.length > 0){
-      dispatch(searchFilters(...finalPlaces));
+      console.log("teste")
+      dispatch(searchFilters(...newArr));
       history.push("/trips")
     }else{
       console.log("indisponível")
