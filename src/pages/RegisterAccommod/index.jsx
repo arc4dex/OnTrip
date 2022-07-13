@@ -6,14 +6,27 @@ import Header from "../../components/header";
 import Footer from "../../components/Footer";
 import HeaderDesktop from "../../components/headerDesktop";
 
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+
 function RegisterAccommod() {
+  const userIsLoggedReducer = useSelector(({ userState }) => userState);
+
+  const history = useHistory();
+
   return (
-    <ErrorBoundary FallbackComponent={ErrorFallback}>
-      <Header />
-      <HeaderDesktop />
-      <FormRegisterAccommod />
-      <Footer />
-    </ErrorBoundary>
+    <>
+      {userIsLoggedReducer ? (
+        <ErrorBoundary FallbackComponent={ErrorFallback}>
+          <Header />
+          <HeaderDesktop />
+          <FormRegisterAccommod />
+          <Footer />
+        </ErrorBoundary>
+      ) : (
+        history.push("/")
+      )}
+    </>
   );
 }
 

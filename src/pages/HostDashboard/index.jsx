@@ -8,11 +8,19 @@ import { Divider } from "@mui/material";
 import { useState, useEffect } from "react";
 import { Api } from "../../services/api";
 import CardDashBoardHost from "../../components/CardDashBoardHost";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 function HostDashboard() {
   const [myAccommodations, setMyAccommodations] = useState([]);
 
   const [user, setUser] = useState({});
+
+  const userIsLoggedReducer = useSelector(
+    ({ userState }) => userState
+  );
+
+  const history = useHistory();
 
   const [lineState, setLineState] = useState(() => {
     if (window.innerWidth < 800) {
@@ -55,29 +63,32 @@ function HostDashboard() {
 
   return (
     <>
-      <Header />
-      <HeaderDesktop />
-      <Divider
-        className="btnAdd"
-        flexItem
-        sx={{
-          bgcolor: "#EE685F",
-          borderWidth: "1px",
-          width: "90%",
-          alignSelf: "center",
-          display: lineState,
-        }}
-      />
-      <HostHeader user={user} />
 
-      {myAccommodations.length > 0 &&
-        myAccommodations.map((element) => {
-          return <CardDashBoardHost key={element.id} element={element} />;
-        })}
-
-      {/* <TODO>Caso o host não tenha nenhuma acomodação, renderizar que ele nao tem nenhuma, e botão para adicionar centralizado</TODO> */}
-
-      <Footer />
+    {userIsLoggedReducer ? 
+      <>
+        <Header />
+        <HeaderDesktop />
+        <Divider
+          className="btnAdd"
+          flexItem
+          sx={{
+            bgcolor: "#EE685F",
+            borderWidth: "1px",
+            width: "90%",
+            alignSelf: "center",
+            display: lineState,
+          }}
+        />
+        <HostHeader user={user} />
+        {myAccommodations.length > 0 &&
+          myAccommodations.map((element) => {
+            return <CardDashBoardHost key={element.id} element={element} />;
+          })}
+        {/* <TODO>Caso o host não tenha nenhuma acomodação, renderizar que ele nao tem nenhuma, e botão para adicionar centralizado</TODO> */}
+        <Footer />
+      </> : history.push("/")
+    }
+      
     </>
   );
 }
