@@ -71,7 +71,7 @@ function ModalBooking({ setModal, price }) {
       setDailys(1);
     }
     setTotalPrice(dailys * price);
-  }, [checkin, checkout, dailys, price, booking]);
+  }, [checkin, checkout, dailys, price]);
 
   const onSubmitFunction = (data) => {
     setBooking({
