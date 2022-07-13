@@ -38,6 +38,13 @@ function Trips() {
       setListAccomodations(response.data);
       setNumberOfPages(Math.ceil(response.data.length / 10));
     },[]);
+    Api.get(`/accommodation?_page={${page}}&_limit=10`).then(
+      (response) => {
+        setListAccomodations(response.data);
+        setNumberOfPages(Math.ceil(response.data.length / 10));
+      },
+      [listAccomodations]
+    );
 
     function handleChangeLineState() {
       if (window.innerWidth < 800) {

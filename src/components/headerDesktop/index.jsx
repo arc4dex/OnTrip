@@ -10,11 +10,10 @@ import { useSelector } from "react-redux";
 function HeaderDesktop() {
   const history = useHistory();
   const userState = useSelector(({ userState }) => userState);
+  const userData = useSelector(({ userData }) => userData);
 
-  
   const [language, setLanguage] = useState(true);
   const [modalUser, setModalUser] = useState(false);
-
 
   function homePage() {
     history.push("/");
@@ -72,10 +71,10 @@ function HeaderDesktop() {
         )}
         {modalUser && <ModalUSer setModalUser={setModalUser} />}
 
-        {userState ? (
+        {/* {userState ? (
           <>
             <img
-              src="https://mundoavatar.com.br/wp-content/uploads/2021/07/avatar-filme.jpeg"
+              src={userData?.profilePicture[0] && userData?.profilePicture[0]}
               alt="Avatar user"
               onClick={modalUserDinamic}
             />
@@ -84,7 +83,11 @@ function HeaderDesktop() {
           <IconButton onClick={modalUserDinamic}>
             <AccountCircleOutlinedIcon color="primary" />
           </IconButton>
-        )}
+        )} */}
+
+        <IconButton onClick={modalUserDinamic}>
+          <AccountCircleOutlinedIcon color="primary" />
+        </IconButton>
       </ContainerIconsNav>
     </NavDesktop>
   );

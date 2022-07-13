@@ -1,5 +1,6 @@
 import { Route, Switch } from "react-router-dom";
 
+
 import AboutUs from "../pages/AboutUs";
 import Accommodation from "../pages/Accommodation";
 import Home from "../pages/Home";
@@ -24,7 +25,7 @@ function Routes() {
         <AboutUs />
       </Route>
 
-      <Route exact path="/accommodation">
+      <Route exact path="/accommodation/:id">
         <Accommodation />
       </Route>
 
@@ -32,7 +33,7 @@ function Routes() {
         <HostDashboard />
       </Route>
 
-      <Route exact path="/registerAccommod/:id">
+      <Route exact path="/registerAccommod">
         <RegisterAccommod />
       </Route>
 
