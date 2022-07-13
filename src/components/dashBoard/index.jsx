@@ -16,6 +16,8 @@ function DashBoard() {
   const [bookHistory, setBookHistory] = useState([]);
   const [myBookedAccommodations, setMyBookedAccommodations] = useState([]);
   const [conditional, setConditional] = useState("booked");
+  const [userBookings, setUserBookings] = useState([]);
+  const [renderAgain, setRenderAgain] = useState(false);
 
   const id = localStorage.getItem("userId");
   const token = localStorage.getItem("userToken");
@@ -24,7 +26,8 @@ function DashBoard() {
     Api.get(`/accommodation`)
       .then((resp) => setMyTrips(resp.data))
       .catch((err) => console.log(err));
-  }, []);
+    setRenderAgain(false);
+  }, [renderAgain]);
 
   useEffect(() => {
     Api.get(`/users/${id}/bookings`, {
@@ -34,11 +37,13 @@ function DashBoard() {
     })
       .then((resp) => setBookHistory(resp.data))
       .catch((err) => err.data);
-  }, []);
+    setRenderAgain(false);
+  }, [renderAgain]);
 
   useEffect(() => {
     let temporaryArray = [];
     let another = [];
+    let temporaryBooking = [];
     for (let i = 0; i < bookHistory.length; i++) {
       for (let j = 0; j < myTrips.length; j++) {
         if (bookHistory[i].accommodationId === myTrips[j].id) {
@@ -48,24 +53,33 @@ function DashBoard() {
               let middle = copy[j];
               another.push("booked");
               temporaryArray.push(middle);
+              temporaryBooking.push(bookHistory[i]);
             } else if (bookHistory[i].status === "cancelled") {
               let copy = [...myTrips];
               let middle = copy[j];
               another.push("cancelled");
               temporaryArray.push(middle);
+              temporaryBooking.push(bookHistory[i]);
             } else if (bookHistory[i].status === "finished") {
               let copy = [...myTrips];
               let middle = copy[j];
               another.push("finished");
               temporaryArray.push(middle);
+              temporaryBooking.push(bookHistory[i]);
             }
           }
         }
       }
+      setUserBookings(temporaryBooking);
       setConditional(another);
       setMyBookedAccommodations(temporaryArray);
+      setRenderAgain(false);
     }
+<<<<<<< HEAD
   }, [myTrips, filterTrips]);
+=======
+  }, [myTrips, filterTrips, renderAgain]);
+>>>>>>> develop
 
   return (
     <>
@@ -91,7 +105,9 @@ function DashBoard() {
           {myBookedAccommodations.length >= 1 ? (
             myBookedAccommodations.map((element, index) => (
               <CardDashBoard
+                setRenderAgain={setRenderAgain}
                 element={element}
+                userBookings={userBookings[index]}
                 key={index}
                 conditional={conditional[index]}
               />

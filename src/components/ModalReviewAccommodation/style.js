@@ -14,11 +14,11 @@ export const Modal = styled.div`
   div {
     background-color: #fefefe;
     margin: auto;
-    padding: 20px;
+    padding: 1.25rem;
     border: 1px solid #888;
     width: 15rem;
     height: 15rem;
-    border-radius: 18px;
+    border-radius: 1.125rem;
     -webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.4);
     box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.4);
     display: flex;

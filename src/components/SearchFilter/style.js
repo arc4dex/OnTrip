@@ -1,4 +1,4 @@
-import { Container, Box, Button, Modal } from "@mui/material";
+import { Container, Box, Button, Modal, TextField } from "@mui/material";
 import * as muiStyles from "@mui/material/styles";
 import styled from "styled-components";
 
@@ -180,4 +180,8 @@ export const MainForm = styled.form`
   div{
     background-color: var(--bgColor);
   }
+`
+
+export const StyledTextField = styled.input`
+  border: none;
 `
