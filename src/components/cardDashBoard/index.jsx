@@ -21,7 +21,7 @@ function CardDashBoard({ element, conditional, userBookings, setRenderAgain }) {
     Api.get("/accommodationReview")
       .then((response) => setReviews(response.data))
       .catch((err) => console.log(err));
-  }, []);
+  }, [reload]);
 
   function readMore() {
     history.push(`/accommodation/${element.id}`);
