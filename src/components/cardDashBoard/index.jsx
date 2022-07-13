@@ -13,6 +13,7 @@ function CardDashBoard({ element, conditional, userBookings, setRenderAgain }) {
   const [reviewAverage, setReviewAverage] = useState(5);
   const [modal, setModal] = useState(false);
   const [reviewAccommodation, setReviewAccommodation] = useState(false);
+  const [reload, setReload] = useState(false);
 
   const history = useHistory();
 
@@ -45,13 +46,18 @@ function CardDashBoard({ element, conditional, userBookings, setRenderAgain }) {
       .then(
         (response) => response.data,
         toast.success("Your trip has been cancelled!"),
-        setRenderAgain(true)
+        setRenderAgain(true),
+        setReload(!reload)
       )
       .catch((err) => toast.error("Something went bad, try again!"));
   }
 
   function bookingModal() {
     setModal(true);
+  }
+
+  function openReviewModal() {
+    setReviewAccommodation(!reviewAccommodation);
   }
 
   useEffect(() => {
@@ -67,13 +73,13 @@ function CardDashBoard({ element, conditional, userBookings, setRenderAgain }) {
     }
     let average = temporaryArray / counter;
     setReviewAverage(average);
-  }, [reviews, element]);
+  }, [reviews, element, reload]);
   return (
     <>
       <CardPaper opacity={conditional} elevation={3}>
         <div className="imgContainer">
           <img src={element?.imageUrl[0]} alt="" />
-          <MiniCardImg imgMobile />
+          <MiniCardImg element={element} imgMobile />
         </div>
         <ContainerInfoCard>
           <h1>{element?.name}</h1>
@@ -92,12 +98,12 @@ function CardDashBoard({ element, conditional, userBookings, setRenderAgain }) {
           <MiniCardImg element={element} />
         </ContainerInfoCard>
         <ContainerButtons>
-        {conditional === "cancelled" ? (
+          {conditional === "cancelled" ? (
             <Button variant="contained" onClick={bookingModal}>
               Book Again
             </Button>
           ) : conditional === "finished" ? (
-            <Button variant="contained" onClick={() => setReviewAccommodation(!reviewAccommodation)}>
+            <Button variant="contained" onClick={openReviewModal}>
               Add Review
             </Button>
           ) : (
@@ -116,6 +122,7 @@ function CardDashBoard({ element, conditional, userBookings, setRenderAgain }) {
         <ModalReviewAccommodation
           reviews={reviews && reviews[0].idAccommodation}
           setReviewAccommodation={setReviewAccommodation}
+          element={element.id}
         />
       )}
     </>

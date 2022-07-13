@@ -48,7 +48,6 @@ function HostDashboard() {
       },
     })
       .then((response) => {
-        console.log(response);
         setMyAccommodations(response.data);
       })
       .catch((error) => console.log(error));
