@@ -19,8 +19,13 @@ import { useParams } from "react-router-dom";
 import { Api } from "../../services/api";
 import { toast } from "react-toastify";
 
-function ModalBooking({ setModal, price }) {
-  const params = useParams();
+function ModalBooking({ setModal, price, idAccommodation = false }) {
+  let params = useParams();
+  if (idAccommodation) {
+    params = {
+      id: idAccommodation,
+    };
+  }
 
   const userData = useSelector(({ userData }) => userData);
 
@@ -30,7 +35,7 @@ function ModalBooking({ setModal, price }) {
   const [checkout, setCheckout] = useState(new Date());
   const [dailys, setDailys] = useState(1);
   const [totalPrice, setTotalPrice] = useState(price);
- 
+
   const formSchema = yup.object().shape({
     checkin: yup.string().required("Checkin is required."),
     checkout: yup.string().required("Date of Birth is required."),
@@ -46,7 +51,7 @@ function ModalBooking({ setModal, price }) {
 
   const handleCheckin = (newValue) => {
     setCheckin(newValue);
-    setCheckout(checkout < newValue? newValue : checkout);
+    setCheckout(checkout < newValue ? newValue : checkout);
   };
 
   const handleCheckout = (newValue) => {
@@ -76,17 +81,16 @@ function ModalBooking({ setModal, price }) {
       status: "booked",
     };
 
-    Api.post("/bookings/", 
-      booking, 
-      { headers: {Authorization: `Bearer ${token}`}}
-    )
+    Api.post("/bookings/", booking, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
       .then((response) => {
-        setModal(false)
-        toast.success('Booking done')
+        setModal(false);
+        toast.success("Booking done");
       })
-      .catch((_) =>{
-        toast.error('some error occurred')
-      })
+      .catch((_) => {
+        toast.error("some error occurred");
+      });
   };
 
   return (

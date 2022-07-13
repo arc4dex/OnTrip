@@ -1,8 +1,8 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-import * as muiStyles from '@mui/material/styles';
+import * as muiStyles from "@mui/material/styles";
 
-import { Button, Paper, Box } from '@mui/material';
+import { Button, Paper, Box } from "@mui/material";
 
 
 export const StyledCard = styled.article`
@@ -48,18 +48,28 @@ export const StyledCard = styled.article`
 		}
 	}
 
-	.btn {
-		height: 7rem;
-		width: 100%;
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
+  .divImg {
+    position: relative;
+    width: 100%;
+    height: 40%;
+    border-radius: 1.25rem;
+    img {
+      width: 100%;
+    }
+  }
 
-		@media (min-width: 32.813rem) {
-			flex-direction: row;
-			height: 3rem;
-		}
-	}
+  .btn {
+    height: 7rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    @media (min-width: 32.813rem) {
+      flex-direction: row;
+      height: 3rem;
+    }
+  }
 `;
 
 export const StyledButton = muiStyles.styled(Button)`
