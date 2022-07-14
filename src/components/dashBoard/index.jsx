@@ -8,6 +8,7 @@ import Header from "../header";
 import HeaderDesktop from "../headerDesktop";
 import ModalReviewAccommodation from "../ModalReviewAccommodation";
 import NomadeHeader from "../NomadeHeader";
+import StartATrip from "../startATrip";
 import { ContainerInfo, MainPaper, MainSection, NoInfo } from "./styles";
 
 function DashBoard() {
@@ -110,9 +111,7 @@ function DashBoard() {
             ))
           ) : (
             <NoInfo>
-              <h1>
-                <i>You don't have any matches with this filter</i>
-              </h1>
+              <StartATrip/>
             </NoInfo>
           )}
         </MainPaper>

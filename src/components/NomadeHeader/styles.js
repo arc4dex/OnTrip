@@ -7,7 +7,7 @@ import * as muiStyled from "@mui/material/styles";
 export const NomadeHeaderContent = styled.section`
     display: flex;
     align-items: end;
-    width: 100vw;
+    width: 100%;
     
     @media (min-width: 768px){
         padding-left:2rem;
