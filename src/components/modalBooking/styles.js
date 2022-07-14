@@ -8,7 +8,7 @@ export const BackGroundModalBooking = styled.div`
 
   inset: 0;
 
-  width: 100vw;
+  width: 100%;
   height: 100vh;
 
   z-index: 101;
