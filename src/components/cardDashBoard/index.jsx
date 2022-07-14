@@ -7,11 +7,15 @@ import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 import ModalBooking from "../modalBooking";
 import ModalReviewAccommodation from "../ModalReviewAccommodation";
+import ModalConfirm from "../ModalConfirm";
+import { StyledButton } from "../ReviewsApp/style";
+import { GiConfirmed, GiCancel } from "react-icons/gi";
 
 function CardDashBoard({ element, conditional, userBookings, setRenderAgain }) {
   const [reviews, setReviews] = useState();
   const [reviewAverage, setReviewAverage] = useState(5);
   const [modal, setModal] = useState(false);
+  const [confirm, setConfirm] = useState(true);
   const [reviewAccommodation, setReviewAccommodation] = useState(false);
   const [reload, setReload] = useState(false);
 
@@ -27,29 +31,42 @@ function CardDashBoard({ element, conditional, userBookings, setRenderAgain }) {
     history.push(`/accommodation/${element.id}`);
   }
 
-  function cancelTrip() {
-    const id = localStorage.getItem("userId");
-    const token = localStorage.getItem("userToken");
+  function cancelButton() {
+    setConfirm(!confirm);
+    setConfirm(!confirm);
+  }
 
-    Api.patch(
-      `/bookings/${userBookings.id}`,
-      {
-        userId: id,
-        status: "cancelled",
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
+  function confirmButton() {
+    cancelTrip();
+  }
+
+  function cancelTrip() {
+    setConfirm(!confirm);
+
+    if (confirm === false) {
+      const id = localStorage.getItem("userId");
+      const token = localStorage.getItem("userToken");
+
+      Api.patch(
+        `/bookings/${userBookings.id}`,
+        {
+          userId: id,
+          status: "cancelled",
         },
-      }
-    )
-      .then(
-        (response) => response.data,
-        toast.success("Your trip has been cancelled!"),
-        setRenderAgain(true),
-        setReload(!reload)
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       )
-      .catch((err) => toast.error("Something went bad, try again!"));
+        .then(
+          (response) => response.data,
+          toast.success("Your trip has been cancelled!"),
+          setRenderAgain(true),
+          setReload(!reload)
+        )
+        .catch((err) => toast.error("Something went bad, try again!"));
+    }
   }
 
   function bookingModal() {
@@ -135,6 +152,19 @@ function CardDashBoard({ element, conditional, userBookings, setRenderAgain }) {
           setReviewAccommodation={setReviewAccommodation}
           element={element.id}
         />
+      )}
+      {!confirm && (
+        <ModalConfirm>
+          <div>
+            <p>Do you really wanna cancel your trip?</p>
+            <span onClick={confirmButton}>
+              Confirm <GiConfirmed color={"green"} />
+            </span>
+            <span onClick={cancelButton}>
+              Cancel <GiCancel color={"red"} />
+            </span>
+          </div>
+        </ModalConfirm>
       )}
     </>
   );
