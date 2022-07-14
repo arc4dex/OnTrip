@@ -10,6 +10,8 @@ import { Api } from "../../services/api";
 import CardDashBoardHost from "../../components/CardDashBoardHost";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { SpecialDiv } from "./style";
+import { BsStars } from "react-icons/bs";
 
 function HostDashboard() {
   const [myAccommodations, setMyAccommodations] = useState([]);
@@ -30,6 +32,10 @@ function HostDashboard() {
     }
   });
 
+  function toAcommodations() {
+    history.push(`/registerAccommod/${user.id}`);
+  }
+
   useEffect(() => {
     function handleChangeLineState() {
       if (window.innerWidth < 800) {
@@ -43,8 +49,6 @@ function HostDashboard() {
   }, []);
 
   useEffect(() => {
-    // TODO Deixar esse useEffect rodando tbm quando alterar a lista --> para quando for editar ou deletar acomodação
-
     const userToken = localStorage.getItem("userToken");
 
     const userId = localStorage.getItem("userId");
@@ -81,7 +85,7 @@ function HostDashboard() {
             }}
           />
           <HostHeader user={user} />
-          {myAccommodations.length > 0 &&
+          {myAccommodations.length > 0 ? (
             myAccommodations.map((element) => {
               return (
                 <CardDashBoardHost
@@ -91,7 +95,20 @@ function HostDashboard() {
                   setReload={setReload}
                 />
               );
-            })}
+            })
+          ) : (
+            <div>
+              <SpecialDiv>
+                <h3>
+                  You don't have any accommodation registered yet,
+                  <span onClick={toAcommodations}>
+                    click here <BsStars />
+                  </span>{" "}
+                  if you want to add
+                </h3>
+              </SpecialDiv>
+            </div>
+          )}
           {/* <TODO>Caso o host não tenha nenhuma acomodação, renderizar que ele nao tem nenhuma, e botão para adicionar centralizado</TODO> */}
           <Footer />
         </>
