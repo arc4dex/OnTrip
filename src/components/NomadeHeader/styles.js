@@ -8,7 +8,7 @@ export const NomadeHeaderContent = styled.section`
     display: flex;
     justify-content: space-around;
     align-items: end;
-    width: 100%;
+    width: 90%;
     
 
     .divInfo{
