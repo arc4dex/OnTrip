@@ -78,23 +78,33 @@ export const StyledPaper = muiStyles.styled(Paper)`
             }
         }
 
-        .AccommodImageDiv {
-            width: 60%;
-            position: relative;
+        .uploadPhotoButton {
+           font-size: 0.875rem;
+           width: 100%;
+           text-transform: capitalize;
 
+        }
+
+        .imageDiv {
+            width: 60%;
+            align-self: center;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            
             button {
                 border: none;
                 outline: none;
                 background-color: transparent;
                 color: var(--red);
-                font-size: 1.2rem;
-                position: absolute;
-                right: 0;
+                font-size: 1rem;
+                margin-left: 0.2rem;
+                z-index: 1;
             }
             
 
             img {
-                width: 92%;
+                width: 80%;
             }
   
         }
@@ -104,59 +114,10 @@ export const StyledPaper = muiStyles.styled(Paper)`
                 font-weight: 400;
                 font-size: 0.75rem;
                 text-align: left;
-                margin-left: 1.2rem;
+                margin-left: 1rem;
                 color: #d32f2f;
             }
 
-        .dropzone-ui-extra{
-            border: 1px solid rgb(198 198 198);
-        }
-        .dz-ui-label {
-            font-size: 1rem;
-            font-family: 'Montserrat';
-            color: rgba(0, 0, 0, 0.6);
-            font-weight: 400;
-        }
-
-        .dropzone-ui .dz-ui-footer {
-            height: 1.3rem;
-            position: absolute;
-            cursor: text;
-            bottom: 0.04rem;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            justify-content: center;
-            border-top: 1px dotted grey;
-            font-size: 0.7rem;
-            padding-left: 0.4rem;
-            color: rgba(0, 0, 0, 0.6);
-            font-weight: 400;
-            background-color: transparent;
-        }
-
-        .dropzone-ui .dz-ui-header {
-            height: 1.3rem;
-            position: absolute;
-            cursor: text;
-            top: 0.04rem;
-            display: flex;
-            width: 100%;
-            flex-direction: row;
-            align-items: center;
-            justify-content: flex-end;
-            padding-right: 0.4rem;
-            font-size: 0.7rem;
-            color: rgba(0, 0, 0, 0.6);
-            font-weight: 400;
-            
-
-            svg {
-                width: 1.2rem;
-                height: 1.2rem;
-            }
-         }
       
     }
 

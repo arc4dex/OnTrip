@@ -10,8 +10,6 @@ import { toast } from "react-toastify";
 
 import { useSelector, useDispatch } from "react-redux";
 
-import { Dropzone, FileItem, FullScreenPreview } from "@dropzone-ui/react";
-
 import { StyledMain, StyledPaper } from "./style";
 
 import {
@@ -66,11 +64,11 @@ function FormRegisterAccommod() {
 
   const inputRef = useRef(null);
 
+  const [imgTypeError, setImgTypeError] = useState(false);
+
   const dispatch = useDispatch();
 
   const accommodAddress = useSelector((store) => store.accommodAddress);
-
-  const [imageSrc, setImageSrc] = useState(undefined);
 
   const [valueName, setValueName] = useState({
     name: "",
@@ -240,7 +238,7 @@ function FormRegisterAccommod() {
       };
       reader.readAsDataURL(file);
     } else {
-      console.log("favor colocar o tipo correto");
+      setImgTypeError(true);
     }
   };
 
@@ -413,6 +411,11 @@ function FormRegisterAccommod() {
           })}
           {errors.imageUrl && (
             <span className="imageError">{errors.imageUrl.message}</span>
+          )}
+          {imgTypeError && (
+            <span className="imageError">
+              Only jpg, png and jpeg files are accepted.
+            </span>
           )}
           <InputLabel id="demo-simple-select-label">
             Name your accommodation

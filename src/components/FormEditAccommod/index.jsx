@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable no-use-before-define */
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -63,15 +63,15 @@ function FormEditAccommod({ currentAccommodation }) {
 
   const [openModal, setOpenModal] = useState(false);
 
-  const [image, setImage] = useState([]);
+  const [images, setImages] = useState(currentAccommodation[0].imageUrl);
 
-  const [files, setFiles] = useState([]);
+  const inputRef = useRef(null);
 
-  const [imageSrc, setImageSrc] = useState(undefined);
+  const [imgTypeError, setImgTypeError] = useState(false);
 
-  const [valueName, setValueName] = useState({
-    name: "",
-  });
+  // const [valueName, setValueName] = useState({
+  //   name: "",
+  // });
 
   const params = useParams();
 
@@ -81,65 +81,19 @@ function FormEditAccommod({ currentAccommodation }) {
 
   const history = useHistory();
 
-  const handleChangeName = (name) => (event) => {
-    setValueName({ ...valueName, [name]: event.target.value });
-  };
+  // const handleChangeName = (name) => (event) => {
+  //   setValueName({ ...valueName, [name]: event.target.value });
+  // };
 
-  const updateFiles = (incommingFiles) => {
-    setFiles(incommingFiles);
+  // function handleChange(event, type) {
+  //   if (type === "category") {
+  //     setCategory(event.target.value);
+  //   }
 
-    const rawFiles = [];
-
-    incommingFiles.forEach((fileObj) => {
-      rawFiles.push(fileObj.file);
-    });
-
-    const reader = new FileReader();
-
-    rawFiles.forEach((file, index) => {
-      if (index === 0) {
-        reader.readAsDataURL(file);
-      }
-
-      if (reader.result) {
-        reader.readAsDataURL(file);
-      }
-    });
-
-    reader.onload = function () {
-      const url = reader.result;
-
-      setImage([...image, url]);
-      setValue("imageUrl", [...image, url]);
-    };
-  };
-
-  const onDelete = (id) => {
-    setFiles(files.filter((file) => file.id !== id));
-    setImage(image.filter((file) => file.id !== id));
-    setValue(
-      "imageUrl",
-      image.filter((file) => file.id !== id)
-    );
-  };
-
-  const handleSeeImage = (imageSource) => {
-    setImageSrc(imageSource);
-  };
-
-  const handleCleanImage = (files) => {
-    console.log("list cleaned", files);
-  };
-
-  function handleChange(event, type) {
-    if (type === "category") {
-      setCategory(event.target.value);
-    }
-
-    if (type === "kindOfPlace") {
-      setKindOfPlace(event.target.value);
-    }
-  }
+  //   if (type === "kindOfPlace") {
+  //     setKindOfPlace(event.target.value);
+  //   }
+  // }
 
   function handleOpenModal() {
     setOpenModal(true);
@@ -183,7 +137,8 @@ function FormEditAccommod({ currentAccommodation }) {
     highlights: yup.array(),
     imageUrl: yup
       .array()
-      .min(1)
+      .nullable()
+      .min(1, "Please upload at least one photo of your accommodation.")
       .required("Please upload at least one photo of your accommodation."),
     name: yup
       .string()
@@ -215,12 +170,25 @@ function FormEditAccommod({ currentAccommodation }) {
     defaultValues: {
       category: currentAccommodation[0].category,
       kindOfPlace: currentAccommodation[0].kindOfPlace,
-      guests: currentAccommodation[0].accommodation?.guests,
-      beds: currentAccommodation[0].accommodation?.beds,
-      rooms: currentAccommodation[0].accommodation?.rooms,
-      bathrooms: currentAccommodation[0].accommodation?.bathrooms,
-      highlights: currentAccommodation[0].accommodation?.highlights,
-      imageUrl: currentAccommodation[0].imageUrl,
+      guests: currentAccommodation[0].accommodation.guests
+        ? currentAccommodation[0].accommodation.guests
+        : currentAccommodation[0].acomodation.guests,
+
+      beds: currentAccommodation[0].accommodation.beds
+        ? currentAccommodation[0].accommodation.beds
+        : currentAccommodation[0].acomodation.beds,
+
+      rooms: currentAccommodation[0].accommodation.rooms
+        ? currentAccommodation[0].accommodation.rooms
+        : currentAccommodation[0].acomodation.rooms,
+
+      bathrooms: currentAccommodation[0].accommodation.bathrooms
+        ? currentAccommodation[0].accommodation.bathrooms
+        : currentAccommodation[0].acomodation.bathrooms,
+      highlights: currentAccommodation[0].accommodation.highlights
+        ? currentAccommodation[0].accommodation.highlights
+        : currentAccommodation[0].acomodation.highlights,
+      imageUrl: images,
       name: currentAccommodation[0].name,
       description: currentAccommodation[0].description,
       minimumRequirements: true,
@@ -230,9 +198,8 @@ function FormEditAccommod({ currentAccommodation }) {
   });
 
   async function onSubmitFunction(data) {
-    const location = accommodAddress;
+    const location = currentAccommodation[0].location;
 
-    // console.log(image);
 
     if (
       location.hasOwnProperty("streetAddress") &&
@@ -244,12 +211,8 @@ function FormEditAccommod({ currentAccommodation }) {
     ) {
       const dataToSend = {
         name: data.name,
-        // userId: parseInt(localStorage.getItem("userId")),
         avaliable: true,
-
-        // TODO Arrumar dado de imagem enviado
-
-        imageUrl: currentAccommodation[0].imageUrl,
+        imageUrl: images,
         price: parseInt(data.price),
         location: {
           streetAddress: location.streetAddress,
@@ -270,9 +233,6 @@ function FormEditAccommod({ currentAccommodation }) {
         },
         description: data.description,
       };
-      console.log(currentAccommodation);
-      console.log(dataToSend);
-
       const accommodationId = currentAccommodation[0].id;
 
       await Api.patch(`/accommodation/${accommodationId}`, dataToSend, {
@@ -282,13 +242,13 @@ function FormEditAccommod({ currentAccommodation }) {
         },
       })
         .then((response) => {
-          console.log(response);
+
           toast.success("Accommodation successfully edited!");
           history.push(`/hostDash/${params.id}`);
           dispatch(setAccommodationData(dataToSend));
         })
         .catch((error) => {
-          console.log(error);
+
           toast.error("Ops! Something went wrong. Please try again.");
         });
     } else {
@@ -297,6 +257,36 @@ function FormEditAccommod({ currentAccommodation }) {
   }
 
   const nameCharacterLimit = 35;
+
+  const onImageChange = (e) => {
+    const [file] = e.target.files;
+
+    if (
+      file?.type === "image/png" ||
+      file?.type === "image/jpeg" ||
+      file?.type === "image/jpg"
+    ) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setValue("imageUrl", [...images, reader.result]);
+        setImages([...images, reader.result]);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setImgTypeError(true);
+    }
+  };
+
+  const deleteImage = (element) => {
+    const newImagesList = images.filter((image) => {
+      if (image !== element) {
+        return image;
+      }
+    });
+    inputRef.current.value = null;
+    setValue("imageUrl", [...newImagesList]);
+    setImages([...newImagesList]);
+  };
 
   return (
     <StyledMain>
@@ -490,69 +480,40 @@ function FormEditAccommod({ currentAccommodation }) {
             control={control}
             name="imageUrl"
             render={({ field: { onChange, value, ref } }) => (
-              <Dropzone
-                inputRef={ref}
-                value={value}
-                onChange={onChange}
-                minHeight="120px"
-                onClean={handleCleanImage}
-                accept=".png,image/*"
-                fakeUploading
-                disableScroll
+              <Button
+                variant="outlined"
+                component="label"
+                className="uploadPhotoButton"
+                sx={{ textTransform: "capitalize", width: "100%" }}
               >
-                {/* {console.log(value)} */}
-
-                {files.map((file) => (
-                  <FileItem
-                    {...file}
-                    key={file.id}
-                    onDelete={onDelete}
-                    onSee={handleSeeImage}
-                    resultOnTooltip
-                    preview
-                    hd
-                  />
-                ))}
-                <FullScreenPreview
-                  imgSource={imageSrc}
-                  openImage={imageSrc}
-                  onClose={(e) => handleSeeImage(undefined)}
+                Upload photos
+                <input
+                  type="file"
+                  onChange={onImageChange}
+                  hidden
+                  ref={inputRef}
+                  inputRef={ref}
                 />
-              </Dropzone>
+              </Button>
             )}
           />
-
-          {/* TODO Arrumar para aparecer as imagens da acomodação */}
-
-          {/* <Dropzone
-            onChange={updateFiles}
-            minHeight="120px"
-            onClean={handleCleanImage}
-            value={files}
-            accept=".png,image/*"
-            fakeUploading
-            disableScroll
-          >
-            {files.map((file) => (
-              <FileItem
-                {...file}
-                key={file.id}
-                onDelete={onDelete}
-                onSee={handleSeeImage}
-                resultOnTooltip
-                preview
-                hd
-              />
-            ))}
-            <FullScreenPreview
-              imgSource={imageSrc}
-              openImage={imageSrc}
-              onClose={(e) => handleSeeImage(undefined)}
-            />
-          </Dropzone> */}
-
+          {images?.map((element, index) => {
+            return (
+              <div key={index} className="imageDiv">
+                <button type="button" onClick={() => deleteImage(element)}>
+                  X
+                </button>
+                <img src={element} alt={"Accommodations Photos"} />
+              </div>
+            );
+          })}
           {errors.imageUrl && (
             <span className="imageError">{errors.imageUrl.message}</span>
+          )}
+          {imgTypeError && (
+            <span className="imageError">
+              Only jpg, png and jpeg files are accepted.
+            </span>
           )}
 
           <InputLabel id="demo-simple-select-label">
