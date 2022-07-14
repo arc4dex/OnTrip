@@ -14,11 +14,10 @@ import { toast } from "react-toastify";
 function ModalDelAcommodation({
   modalDelete,
   closeModal,
-  openModal,
   idAccommodation,
+  reload,
+  setReload,
 }) {
-  // toast.success("Accommodation successfully deleted!");
-
   async function deleteAccommodation() {
     await Api.delete(`/accommodation/${idAccommodation}`, {
       headers: {
@@ -28,8 +27,8 @@ function ModalDelAcommodation({
       .then((response) => {
         console.log(response);
         toast.success("Accommodation successfully deleted!");
-        // <TODO>A função deletar está funcionando, porém os cards não atualizam sozinhos.</TODO>
         closeModal();
+        setReload(!reload);
       })
       .catch((error) => {
         console.log(error);

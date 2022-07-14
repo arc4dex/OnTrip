@@ -7,8 +7,7 @@ import { CardPaper, ContainerButtons, ContainerInfoCard } from "./style.js";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 
-function CardDashBoardHost({ element }) {
-
+function CardDashBoardHost({ element, reload, setReload }) {
   const [reviews, setReviews] = useState();
 
   const [reviewAverage, setReviewAverage] = useState(5);
@@ -29,7 +28,7 @@ function CardDashBoardHost({ element }) {
     Api.get("/accommodationReview")
       .then((response) => setReviews(response.data))
       .catch((err) => console.log(err));
-  }, []);
+  }, [reload]);
 
   useEffect(() => {
     let temporaryArray = 0;
@@ -95,9 +94,10 @@ function CardDashBoardHost({ element }) {
       </CardPaper>
       <ModalDelAcommodation
         modalDelete={modalDelete}
-        openModal={openModalDelete}
         closeModal={closeModalDelete}
         idAccommodation={element?.id}
+        reload={reload}
+        setReload={setReload}
       />
     </>
   );
