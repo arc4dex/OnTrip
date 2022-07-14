@@ -10,8 +10,6 @@ import { toast } from "react-toastify";
 
 import { useSelector, useDispatch } from "react-redux";
 
-import { Dropzone, FileItem, FullScreenPreview } from "@dropzone-ui/react";
-
 import { StyledMain, StyledPaper } from "./style";
 
 import {
@@ -66,11 +64,11 @@ function FormRegisterAccommod() {
 
   const inputRef = useRef(null);
 
+  const [imgTypeError, setImgTypeError] = useState(false);
+
   const dispatch = useDispatch();
 
   const accommodAddress = useSelector((store) => store.accommodAddress);
-
-  const [imageSrc, setImageSrc] = useState(undefined);
 
   const [valueName, setValueName] = useState({
     name: "",
@@ -136,7 +134,7 @@ function FormRegisterAccommod() {
     highlights: yup.array(),
     imageUrl: yup
       .array()
-      .min(1)
+      .min(1, "Please upload at least one photo of your accommodation.")
       .required("Please upload at least one photo of your accommodation."),
     name: yup
       .string()
@@ -225,34 +223,35 @@ function FormRegisterAccommod() {
 
   const nameCharacterLimit = 35;
 
-
   const onImageChange = (e) => {
-
     const [file] = e.target.files;
 
-    if (file?.type === "image/png" || file?.type === "image/jpeg" || file?.type === "image/jpg") {
+    if (
+      file?.type === "image/png" ||
+      file?.type === "image/jpeg" ||
+      file?.type === "image/jpg"
+    ) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setValue("imageUrl",[...images, reader.result]);
+        setValue("imageUrl", [...images, reader.result]);
         setImages([...images, reader.result]);
       };
       reader.readAsDataURL(file);
     } else {
-      console.log("favor colocar o tipo correto")
+      setImgTypeError(true);
     }
   };
 
   const deleteImage = (element) => {
-    const newImagesList = images.filter((image)=>{
-      if(image !== element){
+    const newImagesList = images.filter((image) => {
+      if (image !== element) {
         return image;
       }
-    })
+    });
     inputRef.current.value = null;
-    setValue("imageUrl",[...newImagesList]);
+    setValue("imageUrl", [...newImagesList]);
     setImages([...newImagesList]);
   };
-
 
   return (
     <StyledMain>
@@ -393,29 +392,31 @@ function FormRegisterAccommod() {
             Upload photos of your accomoddation
           </InputLabel>
           <Button
-                variant="outlined"
-                component="label"
-                color="secondary"
-                sx={{ textTransform: "capitalize", width: "100%" }}
-              >
-                Upload photos
-                <input
-                  type="file"                  
-                  onChange={onImageChange}
-                  hidden
-                  ref={inputRef}                  
-                />
-              </Button>
-              {images?.map((element, index) => {
-                return (
-                  <div key={index} className="userImageDiv">
-                    <button type="button" onClick={() => deleteImage(element)}>X</button>
-                    <img src={element} alt={"User Pic"} />
-                  </div>
-                );
-              })}
+            variant="outlined"
+            component="label"
+            color="secondary"
+            sx={{ textTransform: "capitalize", width: "100%" }}
+          >
+            Upload photos
+            <input type="file" onChange={onImageChange} hidden ref={inputRef} />
+          </Button>
+          {images?.map((element, index) => {
+            return (
+              <div key={index} className="userImageDiv">
+                <button type="button" onClick={() => deleteImage(element)}>
+                  X
+                </button>
+                <img src={element} alt={"Accommodations photo"} />
+              </div>
+            );
+          })}
           {errors.imageUrl && (
             <span className="imageError">{errors.imageUrl.message}</span>
+          )}
+          {imgTypeError && (
+            <span className="imageError">
+              Only jpg, png and jpeg files are accepted.
+            </span>
           )}
           <InputLabel id="demo-simple-select-label">
             Name your accommodation

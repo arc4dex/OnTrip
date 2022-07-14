@@ -78,7 +78,7 @@ export const StyledPaper = muiStyles.styled(Paper)`
             }
         }
 
-        .AccommodImageDiv {
+        .userImageDiv {
             width: 60%;
             position: relative;
 

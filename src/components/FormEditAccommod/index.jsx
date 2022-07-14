@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable no-use-before-define */
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -63,15 +63,15 @@ function FormEditAccommod({ currentAccommodation }) {
 
   const [openModal, setOpenModal] = useState(false);
 
-  const [image, setImage] = useState([]);
+  const [images, setImages] = useState([]);
 
-  const [files, setFiles] = useState([]);
+  const inputRef = useRef(null);
 
-  const [imageSrc, setImageSrc] = useState(undefined);
+  const [imgTypeError, setImgTypeError] = useState(false);
 
-  const [valueName, setValueName] = useState({
-    name: "",
-  });
+  // const [valueName, setValueName] = useState({
+  //   name: "",
+  // });
 
   const params = useParams();
 
@@ -81,65 +81,19 @@ function FormEditAccommod({ currentAccommodation }) {
 
   const history = useHistory();
 
-  const handleChangeName = (name) => (event) => {
-    setValueName({ ...valueName, [name]: event.target.value });
-  };
+  // const handleChangeName = (name) => (event) => {
+  //   setValueName({ ...valueName, [name]: event.target.value });
+  // };
 
-  const updateFiles = (incommingFiles) => {
-    setFiles(incommingFiles);
+  // function handleChange(event, type) {
+  //   if (type === "category") {
+  //     setCategory(event.target.value);
+  //   }
 
-    const rawFiles = [];
-
-    incommingFiles.forEach((fileObj) => {
-      rawFiles.push(fileObj.file);
-    });
-
-    const reader = new FileReader();
-
-    rawFiles.forEach((file, index) => {
-      if (index === 0) {
-        reader.readAsDataURL(file);
-      }
-
-      if (reader.result) {
-        reader.readAsDataURL(file);
-      }
-    });
-
-    reader.onload = function () {
-      const url = reader.result;
-
-      setImage([...image, url]);
-      setValue("imageUrl", [...image, url]);
-    };
-  };
-
-  const onDelete = (id) => {
-    setFiles(files.filter((file) => file.id !== id));
-    setImage(image.filter((file) => file.id !== id));
-    setValue(
-      "imageUrl",
-      image.filter((file) => file.id !== id)
-    );
-  };
-
-  const handleSeeImage = (imageSource) => {
-    setImageSrc(imageSource);
-  };
-
-  const handleCleanImage = (files) => {
-    console.log("list cleaned", files);
-  };
-
-  function handleChange(event, type) {
-    if (type === "category") {
-      setCategory(event.target.value);
-    }
-
-    if (type === "kindOfPlace") {
-      setKindOfPlace(event.target.value);
-    }
-  }
+  //   if (type === "kindOfPlace") {
+  //     setKindOfPlace(event.target.value);
+  //   }
+  // }
 
   function handleOpenModal() {
     setOpenModal(true);
@@ -183,7 +137,7 @@ function FormEditAccommod({ currentAccommodation }) {
     highlights: yup.array(),
     imageUrl: yup
       .array()
-      .min(1)
+      .min(1, "Please upload at least one photo of your accommodation.")
       .required("Please upload at least one photo of your accommodation."),
     name: yup
       .string()
@@ -244,7 +198,6 @@ function FormEditAccommod({ currentAccommodation }) {
     ) {
       const dataToSend = {
         name: data.name,
-        // userId: parseInt(localStorage.getItem("userId")),
         avaliable: true,
 
         // TODO Arrumar dado de imagem enviado
@@ -297,6 +250,36 @@ function FormEditAccommod({ currentAccommodation }) {
   }
 
   const nameCharacterLimit = 35;
+
+  const onImageChange = (e) => {
+    const [file] = e.target.files;
+
+    if (
+      file?.type === "image/png" ||
+      file?.type === "image/jpeg" ||
+      file?.type === "image/jpg"
+    ) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setValue("imageUrl", [...images, reader.result]);
+        setImages([...images, reader.result]);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setImgTypeError(true);
+    }
+  };
+
+  const deleteImage = (element) => {
+    const newImagesList = images.filter((image) => {
+      if (image !== element) {
+        return image;
+      }
+    });
+    inputRef.current.value = null;
+    setValue("imageUrl", [...newImagesList]);
+    setImages([...newImagesList]);
+  };
 
   return (
     <StyledMain>
@@ -490,69 +473,43 @@ function FormEditAccommod({ currentAccommodation }) {
             control={control}
             name="imageUrl"
             render={({ field: { onChange, value, ref } }) => (
-              <Dropzone
-                inputRef={ref}
-                value={value}
-                onChange={onChange}
-                minHeight="120px"
-                onClean={handleCleanImage}
-                accept=".png,image/*"
-                fakeUploading
-                disableScroll
+              <Button
+                variant="outlined"
+                component="label"
+                color="secondary"
+                sx={{ textTransform: "capitalize", width: "100%" }}
               >
-                {/* {console.log(value)} */}
-
-                {files.map((file) => (
-                  <FileItem
-                    {...file}
-                    key={file.id}
-                    onDelete={onDelete}
-                    onSee={handleSeeImage}
-                    resultOnTooltip
-                    preview
-                    hd
-                  />
-                ))}
-                <FullScreenPreview
-                  imgSource={imageSrc}
-                  openImage={imageSrc}
-                  onClose={(e) => handleSeeImage(undefined)}
+                Upload photos
+                <input
+                  type="file"
+                  // onChange={onImageChange}
+                  hidden
+                  ref={inputRef}
+                  inputRef={ref}
+                  value={value}
+                  onChange={onChange}
                 />
-              </Dropzone>
+              </Button>
             )}
           />
 
-          {/* TODO Arrumar para aparecer as imagens da acomodação */}
-
-          {/* <Dropzone
-            onChange={updateFiles}
-            minHeight="120px"
-            onClean={handleCleanImage}
-            value={files}
-            accept=".png,image/*"
-            fakeUploading
-            disableScroll
-          >
-            {files.map((file) => (
-              <FileItem
-                {...file}
-                key={file.id}
-                onDelete={onDelete}
-                onSee={handleSeeImage}
-                resultOnTooltip
-                preview
-                hd
-              />
-            ))}
-            <FullScreenPreview
-              imgSource={imageSrc}
-              openImage={imageSrc}
-              onClose={(e) => handleSeeImage(undefined)}
-            />
-          </Dropzone> */}
-
+          {images?.map((element, index) => {
+            return (
+              <div key={index} className="userImageDiv">
+                <button type="button" onClick={() => deleteImage(element)}>
+                  X
+                </button>
+                <img src={element} alt={"Accommodations photo"} />
+              </div>
+            );
+          })}
           {errors.imageUrl && (
             <span className="imageError">{errors.imageUrl.message}</span>
+          )}
+          {imgTypeError && (
+            <span className="imageError">
+              Only jpg, png and jpeg files are accepted.
+            </span>
           )}
 
           <InputLabel id="demo-simple-select-label">
