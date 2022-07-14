@@ -145,6 +145,10 @@ function Register({
           <RegisterModalContainer>
             <RegisterModalHeader>
               <RegisterModalHeaderButton>
+                
+              </RegisterModalHeaderButton>
+              <RegisterModalHeaderText>
+                <p>Create account</p>
                 <Button
                   sx={{ minWidth: "5px" }}
                   onClick={handleCloseRegisterModal}
@@ -153,9 +157,6 @@ function Register({
                 >
                   X
                 </Button>
-              </RegisterModalHeaderButton>
-              <RegisterModalHeaderText>
-                <p>Create account</p>
               </RegisterModalHeaderText>
             </RegisterModalHeader>
             <StyledRegisterForm id="form" onSubmit={handleSubmit(onSubmit)}>
@@ -197,7 +198,7 @@ function Register({
                 placeholder="Please confirm your password"
                 variant="outlined"
               />
-              <label className="dateOfBirth">Your date of birth</label>
+              
               <ThemeProvider theme={themeDate}>
                 <LocalizationProvider
                   color="primary"
@@ -215,7 +216,7 @@ function Register({
                         {...register("dateOfBirth")}
                         error={errors.dateOfBirth?.message}
                         helperText={errors.dateOfBirth?.message}
-                        placeholder={"set"}
+                        placeholder={"Your date of birth"}
                       />
                     )}
                   />
