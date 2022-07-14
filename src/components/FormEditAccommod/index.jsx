@@ -63,7 +63,7 @@ function FormEditAccommod({ currentAccommodation }) {
 
   const [openModal, setOpenModal] = useState(false);
 
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState(currentAccommodation[0].imageUrl);
 
   const inputRef = useRef(null);
 
@@ -137,6 +137,7 @@ function FormEditAccommod({ currentAccommodation }) {
     highlights: yup.array(),
     imageUrl: yup
       .array()
+      .nullable()
       .min(1, "Please upload at least one photo of your accommodation.")
       .required("Please upload at least one photo of your accommodation."),
     name: yup
@@ -169,12 +170,25 @@ function FormEditAccommod({ currentAccommodation }) {
     defaultValues: {
       category: currentAccommodation[0].category,
       kindOfPlace: currentAccommodation[0].kindOfPlace,
-      guests: currentAccommodation[0].accommodation?.guests,
-      beds: currentAccommodation[0].accommodation?.beds,
-      rooms: currentAccommodation[0].accommodation?.rooms,
-      bathrooms: currentAccommodation[0].accommodation?.bathrooms,
-      highlights: currentAccommodation[0].accommodation?.highlights,
-      imageUrl: currentAccommodation[0].imageUrl,
+      guests: currentAccommodation[0].accommodation.guests
+        ? currentAccommodation[0].accommodation.guests
+        : currentAccommodation[0].acomodation.guests,
+
+      beds: currentAccommodation[0].accommodation.beds
+        ? currentAccommodation[0].accommodation.beds
+        : currentAccommodation[0].acomodation.beds,
+
+      rooms: currentAccommodation[0].accommodation.rooms
+        ? currentAccommodation[0].accommodation.rooms
+        : currentAccommodation[0].acomodation.rooms,
+
+      bathrooms: currentAccommodation[0].accommodation.bathrooms
+        ? currentAccommodation[0].accommodation.bathrooms
+        : currentAccommodation[0].acomodation.bathrooms,
+      highlights: currentAccommodation[0].accommodation.highlights
+        ? currentAccommodation[0].accommodation.highlights
+        : currentAccommodation[0].acomodation.highlights,
+      imageUrl: images,
       name: currentAccommodation[0].name,
       description: currentAccommodation[0].description,
       minimumRequirements: true,
@@ -184,9 +198,8 @@ function FormEditAccommod({ currentAccommodation }) {
   });
 
   async function onSubmitFunction(data) {
-    const location = accommodAddress;
+    const location = currentAccommodation[0].location;
 
-    // console.log(image);
 
     if (
       location.hasOwnProperty("streetAddress") &&
@@ -199,10 +212,7 @@ function FormEditAccommod({ currentAccommodation }) {
       const dataToSend = {
         name: data.name,
         avaliable: true,
-
-        // TODO Arrumar dado de imagem enviado
-
-        imageUrl: currentAccommodation[0].imageUrl,
+        imageUrl: images,
         price: parseInt(data.price),
         location: {
           streetAddress: location.streetAddress,
@@ -223,9 +233,6 @@ function FormEditAccommod({ currentAccommodation }) {
         },
         description: data.description,
       };
-      console.log(currentAccommodation);
-      console.log(dataToSend);
-
       const accommodationId = currentAccommodation[0].id;
 
       await Api.patch(`/accommodation/${accommodationId}`, dataToSend, {
@@ -235,13 +242,13 @@ function FormEditAccommod({ currentAccommodation }) {
         },
       })
         .then((response) => {
-          console.log(response);
+
           toast.success("Accommodation successfully edited!");
           history.push(`/hostDash/${params.id}`);
           dispatch(setAccommodationData(dataToSend));
         })
         .catch((error) => {
-          console.log(error);
+
           toast.error("Ops! Something went wrong. Please try again.");
         });
     } else {
@@ -476,30 +483,27 @@ function FormEditAccommod({ currentAccommodation }) {
               <Button
                 variant="outlined"
                 component="label"
-                color="secondary"
+                className="uploadPhotoButton"
                 sx={{ textTransform: "capitalize", width: "100%" }}
               >
                 Upload photos
                 <input
                   type="file"
-                  // onChange={onImageChange}
+                  onChange={onImageChange}
                   hidden
                   ref={inputRef}
                   inputRef={ref}
-                  value={value}
-                  onChange={onChange}
                 />
               </Button>
             )}
           />
-
           {images?.map((element, index) => {
             return (
-              <div key={index} className="userImageDiv">
+              <div key={index} className="imageDiv">
                 <button type="button" onClick={() => deleteImage(element)}>
                   X
                 </button>
-                <img src={element} alt={"Accommodations photo"} />
+                <img src={element} alt={"Accommodations Photos"} />
               </div>
             );
           })}

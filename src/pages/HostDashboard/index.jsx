@@ -43,8 +43,6 @@ function HostDashboard() {
   }, []);
 
   useEffect(() => {
-    // TODO Deixar esse useEffect rodando tbm quando alterar a lista --> para quando for editar ou deletar acomodação
-
     const userToken = localStorage.getItem("userToken");
 
     const userId = localStorage.getItem("userId");
