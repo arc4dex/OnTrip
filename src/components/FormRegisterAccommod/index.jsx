@@ -394,19 +394,18 @@ function FormRegisterAccommod() {
           <Button
             variant="outlined"
             component="label"
-            color="secondary"
-            sx={{ textTransform: "capitalize", width: "100%" }}
+            className="uploadPhotoButton"
           >
             Upload photos
             <input type="file" onChange={onImageChange} hidden ref={inputRef} />
           </Button>
           {images?.map((element, index) => {
             return (
-              <div key={index} className="userImageDiv">
+              <div key={index} className="imageDiv">
+                <img src={element} alt={"Accommodation Photos"} />
                 <button type="button" onClick={() => deleteImage(element)}>
                   X
                 </button>
-                <img src={element} alt={"Accommodations photo"} />
               </div>
             );
           })}
