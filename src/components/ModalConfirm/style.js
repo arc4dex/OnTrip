@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const ConfirmDiv = styled.div`
   position: fixed;
   z-index: 1;
-  padding-top: 100px;
+  padding-top: 6.25rem;
   left: 0;
   top: 0;
   width: 100vw;
