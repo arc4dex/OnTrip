@@ -37,7 +37,7 @@ function SpecialOffers() {
             }}
             breakpoints={{
               600: {
-                slidesPerView: 2,
+                slidesPerView: 1,
                 spaceBetween: 0,
               },
             }}

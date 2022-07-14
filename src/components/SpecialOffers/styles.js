@@ -62,7 +62,7 @@ export const StyledSpecialOffers = styled.section`
         margin-left: 0;
         padding: 1rem;
         max-width: 37.25rem;
-        height: 25rem;
+        height: 38rem;
         
         @media (min-width: 1000px) {
           height: 35rem;
@@ -83,7 +83,7 @@ export const StyledSpecialOffers = styled.section`
     }
 
     .swiper-pagination-bullets {
-      bottom: 2rem;
+      bottom: 1rem;
     }
 
     .swiper-pagination-bullet-active {
