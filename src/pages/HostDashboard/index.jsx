@@ -98,7 +98,7 @@ function HostDashboard() {
             })
           ) : (
             <div>
-              <SpecialDiv>
+              <SpecialDiv style={{ height: "70vh" }}>
                 <h3>
                   You don't have any accommodation registered yet,
                   <span onClick={toAcommodations}>
@@ -109,7 +109,7 @@ function HostDashboard() {
               </SpecialDiv>
             </div>
           )}
-          {/* <TODO>Caso o host não tenha nenhuma acomodação, renderizar que ele nao tem nenhuma, e botão para adicionar centralizado</TODO> */}
+
           <Footer />
         </>
       ) : (
