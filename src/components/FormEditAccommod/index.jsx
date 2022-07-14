@@ -170,24 +170,24 @@ function FormEditAccommod({ currentAccommodation }) {
     defaultValues: {
       category: currentAccommodation[0].category,
       kindOfPlace: currentAccommodation[0].kindOfPlace,
-      guests: currentAccommodation[0].accommodation.guests
-        ? currentAccommodation[0].accommodation.guests
-        : currentAccommodation[0].acomodation.guests,
+      guests: currentAccommodation[0].accommodation?.guests
+        ? currentAccommodation[0].accommodation?.guests
+        : currentAccommodation[0].acomodation?.guests,
 
-      beds: currentAccommodation[0].accommodation.beds
-        ? currentAccommodation[0].accommodation.beds
-        : currentAccommodation[0].acomodation.beds,
+      beds: currentAccommodation[0].accommodation?.beds
+        ? currentAccommodation[0].accommodation?.beds
+        : currentAccommodation[0].acomodation?.beds,
 
-      rooms: currentAccommodation[0].accommodation.rooms
-        ? currentAccommodation[0].accommodation.rooms
-        : currentAccommodation[0].acomodation.rooms,
+      rooms: currentAccommodation[0].accommodation?.rooms
+        ? currentAccommodation[0].accommodation?.rooms
+        : currentAccommodation[0].acomodation?.rooms,
 
-      bathrooms: currentAccommodation[0].accommodation.bathrooms
-        ? currentAccommodation[0].accommodation.bathrooms
-        : currentAccommodation[0].acomodation.bathrooms,
-      highlights: currentAccommodation[0].accommodation.highlights
-        ? currentAccommodation[0].accommodation.highlights
-        : currentAccommodation[0].acomodation.highlights,
+      bathrooms: currentAccommodation[0].accommodation?.bathrooms
+        ? currentAccommodation[0].accommodation?.bathrooms
+        : currentAccommodation[0].acomodation?.bathrooms,
+      highlights: currentAccommodation[0].accommodation?.highlights
+        ? currentAccommodation[0].accommodation?.highlights
+        : currentAccommodation[0].acomodation?.highlights,
       imageUrl: images,
       name: currentAccommodation[0].name,
       description: currentAccommodation[0].description,

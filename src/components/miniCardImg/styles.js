@@ -1,7 +1,6 @@
 import styled, { css } from "styled-components";
 
 export const ContainerStyle = styled.div`
-  
   .desktop {
     width: 25%;
     display: flex;
@@ -53,7 +52,7 @@ export const ContainerStyle = styled.div`
     ${(props) =>
       props.imgMobile &&
       css`
-        width: 95%;
+        width: 75%;
         height: 4.4em;
 
         padding: 0.6rem;
@@ -66,11 +65,9 @@ export const ContainerStyle = styled.div`
         flex-direction: row;
         justify-content: center;
 
-        gap: 1.5rem;
-
         position: absolute;
         bottom: 1rem;
-        left: 6px;
+        left: 22px;
 
         .line {
           width: 0;
