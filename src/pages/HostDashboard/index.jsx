@@ -14,6 +14,8 @@ import { useHistory } from "react-router-dom";
 function HostDashboard() {
   const [myAccommodations, setMyAccommodations] = useState([]);
 
+  const [reload, setReload] = useState(false);
+
   const [user, setUser] = useState({});
 
   const userIsLoggedReducer = useSelector(({ userState }) => userState);
@@ -59,9 +61,7 @@ function HostDashboard() {
         setMyAccommodations(response.data);
       })
       .catch((error) => console.log(error));
-  }, []);
-
-  console.log(myAccommodations);
+  }, [reload]);
 
   return (
     <>
@@ -83,7 +83,14 @@ function HostDashboard() {
           <HostHeader user={user} />
           {myAccommodations.length > 0 &&
             myAccommodations.map((element) => {
-              return <CardDashBoardHost key={element.id} element={element} />;
+              return (
+                <CardDashBoardHost
+                  key={element.id}
+                  element={element}
+                  reload={reload}
+                  setReload={setReload}
+                />
+              );
             })}
           {/* <TODO>Caso o host não tenha nenhuma acomodação, renderizar que ele nao tem nenhuma, e botão para adicionar centralizado</TODO> */}
           <Footer />
