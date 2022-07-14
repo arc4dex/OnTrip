@@ -13,6 +13,7 @@ import SpecialOffers from "../../components/SpecialOffers";
 import Footer from "../../components/Footer";
 import { Api } from "../../services/api";
 import { useSelector } from "react-redux";
+import { StyledButton } from "../../components/SearchFilter/style";
 
 function Trips() {
   const userTripsSearchsReducer = useSelector(
@@ -40,19 +41,19 @@ function Trips() {
     });
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     Api.get("/accommodationReview").then((response) => {
       setReviewUser(response.data);
     });
-  },[])
+  }, []);
 
   const reviewAccommodation = reviewUser.filter((item) => {
-    for(let i = 0; i < listAccomodations.length; i++){
-      if(item.idAccommodation === listAccomodations[i].id){
-       return item
+    for (let i = 0; i < listAccomodations.length; i++) {
+      if (item.idAccommodation === listAccomodations[i].id) {
+        return item;
       }
     }
-  })
+  });
 
   useEffect(() => {
     getAccommodAuto(pages);
@@ -85,6 +86,10 @@ function Trips() {
     setPage(numPag);
   };
 
+  function handlePage(number) {
+    setPage(pages + number);
+  }
+
   return (
     <>
       <Header />
@@ -103,21 +108,26 @@ function Trips() {
         <StyledH1>Trips</StyledH1>
         <SearchFilter />
       </ContainerSearch>
-      <Pagination
-        count={numberOfPages}
-        color="primary"
-        onClick={handleChangePage}
-      />
-      <MainSection>
-      {userTripsSearchsReducer?.length > 0
-        ? userTripsSearchsReducer.map((accommodation) => (
-            <AccommodationCard key={accommodation.id} accom={accommodation} reviewAccommodation={reviewAccommodation} />
-          ))
-        : listAccomodations.map((accommodation) => (
-            <AccommodationCard key={accommodation.id} accom={accommodation} reviewAccommodation={reviewAccommodation}/>
-          ))}
 
-      {/* {searchedTrips.length === 0 ? (
+      
+      <MainSection>
+        {userTripsSearchsReducer?.length > 0
+          ? userTripsSearchsReducer.map((accommodation) => (
+              <AccommodationCard
+                key={accommodation.id}
+                accom={accommodation}
+                reviewAccommodation={reviewAccommodation}
+              />
+            ))
+          : listAccomodations.map((accommodation) => (
+              <AccommodationCard
+                key={accommodation.id}
+                accom={accommodation}
+                reviewAccommodation={reviewAccommodation}
+              />
+            ))}
+
+        {/* {searchedTrips.length === 0 ? (
         listAccomodations.map((item) => {
          return <AccommodationCard key={item.id} accom={item} />;
         })
@@ -127,11 +137,14 @@ function Trips() {
         })
       )} */}
       </MainSection>
-      <Pagination
-        count={numberOfPages}
-        color="primary"
-        onChange={handleChangePage}
-      />
+      <div>
+      <StyledButton sx={{borderRadius:"1.5rem"}} onClick={() => handlePage(-1)} variant="contained">
+        -
+      </StyledButton>
+      <StyledButton sx={{borderRadius:"1.5rem"}} onClick={() => handlePage(1)} variant="contained">
+        +
+      </StyledButton>
+      </div>
       <SpecialOffers />
       <Footer />
     </>
