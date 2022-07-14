@@ -56,7 +56,7 @@ function CardDashBoardHost({ element, reload, setReload }) {
       <CardPaper elevation={3}>
         <div className="imgContainer">
           <img src={element?.imageUrl[0]} alt="" />
-          <MiniCardImg imgMobile />
+          <MiniCardImg imgMobile element={element} />
         </div>
         <ContainerInfoCard>
           <h1>{element?.name}</h1>
