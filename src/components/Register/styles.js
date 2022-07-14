@@ -14,7 +14,7 @@ export const BackgroundRegisterModal = styled.div`
 `;
 
 export const RegisterModalContainer = styled.div`
-  width: 100%;
+  width: 90%;
   max-width: 25rem;
   max-height: 38rem;
   overflow-y: scroll;
@@ -22,6 +22,10 @@ export const RegisterModalContainer = styled.div`
   /* width */
   ::-webkit-scrollbar {
     width: 0.5rem;
+  }
+
+  @media (min-width: 425px){
+    width: 100%;
   }
 
   display: flex;
@@ -57,11 +61,10 @@ export const RegisterModalHeaderText = styled.div`
   height: 1.875rem;
   display: flex;
   flex-direction: row;
-  justify-content: start;
+  justify-content: space-around;
   color: #3d97b4;
   font-weight: bolder;
   font-size: 1.5rem;
-  padding: 0 0 0 1.25rem;
 `;
 
 export const StyledRegisterForm = styled.form`
