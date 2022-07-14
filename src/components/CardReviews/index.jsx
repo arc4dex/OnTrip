@@ -60,6 +60,7 @@ function CardReviews({ element }) {
   }
 
   function editReview(data) {
+    console.log("teste");
     const userToken = localStorage.getItem("userToken");
     const editedReview = {
       userId: element.userId,
@@ -120,7 +121,11 @@ function CardReviews({ element }) {
             defaultValue={element.message}
           />
           <p style={{ color: "#ee685f" }}>{errors.review?.message}</p>
-          <StyledButton onClick={handleSubmit(editReview)} variant="contained">
+          <StyledButton
+            sx={{ display: "block", width: "100%" }}
+            onClick={handleSubmit(editReview)}
+            variant="contained"
+          >
             Edit Review
           </StyledButton>
         </Box>
