@@ -6,13 +6,10 @@ import * as muiStyled from "@mui/material/styles";
 
 export const NomadeHeaderContent = styled.section`
     display: flex;
+    justify-content: space-around;
     align-items: end;
     width: 100%;
     
-    @media (min-width: 768px){
-        padding-left:2rem;
-    }
-
 
     .divInfo{
         display: flex;
@@ -37,16 +34,19 @@ export const NomadeHeaderContent = styled.section`
     }    
 
     section{
+        height: 100%;
         display: flex;
         flex-direction: column;
+        justify-content: flex-start;
 
         a{
             display:none;
-            margin-bottom: 3.125rem;
             cursor: pointer;
             text-decoration: none;
             color: var(--blue);
             font-weight: 600;
+            margin-bottom: 2rem;
+            margin-top: 0.3rem;
 
             @media (min-width: 31.25rem){
                 display: flex;
