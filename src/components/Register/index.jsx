@@ -126,10 +126,10 @@ function Register({
 
       await Api.post("/register", response)
         .then((_) => {
-          toast.success("Successfully registered");
+          toast.success("Successfully registered! Please log in.");
         })
         .catch((_) => {
-          toast.error("Something went wrong");
+          toast.error("Ops! Something went wrong.");
         });
 
       handleCloseRegisterModal();
@@ -144,9 +144,7 @@ function Register({
         <BackgroundRegisterModal>
           <RegisterModalContainer>
             <RegisterModalHeader>
-              <RegisterModalHeaderButton>
-                
-              </RegisterModalHeaderButton>
+              <RegisterModalHeaderButton></RegisterModalHeaderButton>
               <RegisterModalHeaderText>
                 <p>Create account</p>
                 <Button
@@ -198,7 +196,7 @@ function Register({
                 placeholder="Please confirm your password"
                 variant="outlined"
               />
-              
+
               <ThemeProvider theme={themeDate}>
                 <LocalizationProvider
                   color="primary"

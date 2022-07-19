@@ -12,7 +12,9 @@ import { toHaveStyle } from "@testing-library/jest-dom/dist/matchers";
 import { toast } from "react-toastify";
 
 function ModalUSer({ setModalUser }) {
+
   const userState = useSelector(({ userState }) => userState);
+
   const userData = useSelector(({ userData }) => userData);
 
   const dispatch = useDispatch();
@@ -35,6 +37,7 @@ function ModalUSer({ setModalUser }) {
 
   const handleOpenModalLogin = () => {
     setLoginModal(true);
+    
   };
 
   const handleCloseModalLogin = () => {
@@ -51,7 +54,7 @@ function ModalUSer({ setModalUser }) {
 
   const logOff = () => {
     localStorage.clear();
-    toast.success("Successfully Unlogged");
+    toast.success("Successful logout!");
     dispatch(changeUseState(false));
     history.push(`/`);
   };

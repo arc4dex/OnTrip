@@ -13,7 +13,7 @@ function ArgumentsWhyChooseUs() {
           <div>
             <h2>Specific for You</h2>
             <p>
-              We only choose places that have minimum requirements for digital
+              We only offer places that have minimum requirements for digital
               nomads to stay
             </p>
           </div>
@@ -23,7 +23,7 @@ function ArgumentsWhyChooseUs() {
           <div>
             <h2>24/7 Support</h2>
             <p>
-              Is there something you don't understand? Feel free to contact us
+              Need help with something? Feel free to contact us anytime, any day
             </p>
           </div>
         </CardAWCU>
@@ -37,9 +37,9 @@ function ArgumentsWhyChooseUs() {
         <CardAWCU>
           <img src={weAreNiceIcon} alt="paymentIcon" />
           <div>
-            <h2>We Are Nice</h2>
+            <h2>We Are Simple To Use</h2>
             <p>
-              Simple choose process, so you don't waste time on boring
+              Simple booking process, so you don't waste time on boring
               bureaucracy
             </p>
           </div>
