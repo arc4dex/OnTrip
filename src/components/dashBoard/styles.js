@@ -3,6 +3,7 @@ import * as muiStyles from "@mui/material/styles";
 import styled from "styled-components";
 
 export const MainSection = styled.main`
+  width: 100%;
   display: flex;
   flex-direction: column;
 
@@ -26,7 +27,7 @@ export const MainSection = styled.main`
 `;
 
 export const MainPaper = muiStyles.styled(Paper)`
-  width: 90%;
+
   height: auto;
 
   padding: 1.25rem;
@@ -41,8 +42,6 @@ export const MainPaper = muiStyles.styled(Paper)`
   border-radius: 0.62rem;
 `;
 export const ContainerInfo = styled.div`
-  width: 90%;
-
   display: flex;
   justify-content: space-between;
 

@@ -47,11 +47,9 @@ function SpecialOffers() {
           >
             {specialOffer?.map((accom) => {
               return (
-                <>
-                  <SwiperSlide key={accom.id}>
-                    <AccommodationCard accom={accom} />
-                  </SwiperSlide>
-                </>
+                <SwiperSlide key={accom.id}>
+                  <AccommodationCard accom={accom} />
+                </SwiperSlide>
               );
             })}
           </Swiper>

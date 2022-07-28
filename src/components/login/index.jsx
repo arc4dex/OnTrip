@@ -44,11 +44,13 @@ function Login({ loginModal, handleCloseModalLogin, handleOpenRegisterModal }) {
   const onSubmits = async (data) => {
     const registerInfo = await Api.post("/login", data)
       .then((response) => {
-        toast.success("Successfully Logged");
+        toast.success("Successful login!");
         return response.data;
       })
       .catch((_) => {
-        toast.error("Something went Wrong");
+        toast.error(
+          "Ops! Please check if your email and password are correct."
+        );
       });
 
     localStorage.setItem("userToken", registerInfo.accessToken);

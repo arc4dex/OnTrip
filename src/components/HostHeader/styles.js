@@ -5,50 +5,46 @@ import * as muiStyled from "@mui/material/styles";
 import { Button } from "@mui/material";
 
 export const NomadeHeaderContent = styled.section`
-    
-    width: 90%;
-    height: 6rem;
-    margin-bottom: 4rem;
+  width: 90%;
+  height: 6rem;
+  margin-bottom: 4rem;
 
-    @media (min-width: 515px){
-        margin-bottom: 0;
-    }
-    
-    
-    .divInfo{
-        display: flex;
-        height: 100%;
-        justify-content: space-around;
-        flex-direction: column;
-        width: 70vw;
-        width: 12.5rem;
+  @media (min-width: 515px) {
+    margin-bottom: 0;
+  }
 
-        h1{
-            color: var(--blue);
-        }
+  .divInfo {
+    display: flex;
+    height: 100%;
+    justify-content: space-around;
+    flex-direction: column;
 
-        p{
-            font-weight: bold;
-        }
-    }     
-    
-    .btnSection{
-        width:  18.5rem;
-        margin-bottom: 1rem;
-        display: flex;
-        justify-content: start;
-
-        @media (min-width: 515px){
-            justify-content: end;
-        }
+    h1 {
+      color: var(--blue);
     }
 
-    @media (min-width: 32.188rem){
-        display: flex;
-        align-items: end;
-        justify-content: space-between;
-    }   
-`
+    p {
+      font-weight: bold;
+    }
+  }
+
+  .btnSection {
+    width: 18.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: start;
+
+    @media (min-width: 515px) {
+      justify-content: end;
+    }
+  }
+
+  @media (min-width: 32.188rem) {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+  }
+`;
 
 export const StyledButton = muiStyled.styled(Button)`
     margin-left: 1rem;
@@ -60,4 +56,4 @@ export const StyledButton = muiStyled.styled(Button)`
     @media (min-width: 25rem){
         height: 2.281rem;
     }
-`
+`;

@@ -3,15 +3,15 @@ import Header from "../../components/header";
 import HeaderDesktop from "../../components/headerDesktop";
 import HostHeader from "../../components/HostHeader";
 
-import { Divider } from "@mui/material";
+import { Button, Divider, IconButton } from "@mui/material";
+import LoyaltyOutlinedIcon from "@mui/icons-material/LoyaltyOutlined";
 
 import { useState, useEffect } from "react";
 import { Api } from "../../services/api";
 import CardDashBoardHost from "../../components/CardDashBoardHost";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { SpecialDiv } from "./style";
-import { BsStars } from "react-icons/bs";
+import { AppDashHost, StyledPaper } from "./style";
 
 function HostDashboard() {
   const [myAccommodations, setMyAccommodations] = useState([]);
@@ -32,7 +32,7 @@ function HostDashboard() {
     }
   });
 
-  function toAcommodations() {
+  function toRegisterAcommodations() {
     history.push(`/registerAccommod/${user.id}`);
   }
 
@@ -68,7 +68,7 @@ function HostDashboard() {
   }, [reload]);
 
   return (
-    <>
+    <AppDashHost>
       {userIsLoggedReducer ? (
         <>
           <Header />
@@ -97,17 +97,27 @@ function HostDashboard() {
               );
             })
           ) : (
-            <div>
-              <SpecialDiv style={{ height: "70vh" }}>
-                <h3>
-                  You don't have any accommodation registered yet,
-                  <span onClick={toAcommodations}>
-                    click here <BsStars />
-                  </span>{" "}
-                  if you want to add
-                </h3>
-              </SpecialDiv>
-            </div>
+            <StyledPaper elevation={3}>
+              <section>
+                <IconButton className="tag">
+                  <LoyaltyOutlinedIcon color="primary" sx={{ fontSize: 60 }} />
+                </IconButton>
+                <h1>You don't have any accommodations registered.</h1>
+
+                <Button
+                  variant="contained"
+                  sx={{ textTransform: "capitalize" }}
+                  onClick={toRegisterAcommodations}
+                >
+                  Add accommodation
+                </Button>
+              </section>
+
+              <img
+                src="https://www.cvc.com.br/dicas-de-viagem/wp-content/uploads/2018/08/porto-seguro-em-familia-700597240-1.jpg"
+                alt=""
+              />
+            </StyledPaper>
           )}
 
           <Footer />
@@ -115,7 +125,7 @@ function HostDashboard() {
       ) : (
         history.push("/")
       )}
-    </>
+    </AppDashHost>
   );
 }
 
